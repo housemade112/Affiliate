@@ -1,114 +1,116 @@
 import { createContext, useContext, useState, useEffect } from 'react'
+import { api } from '../lib/api.js'
 
 const AuthContext = createContext(null)
 
-function initStorage() {
-  if (!localStorage.getItem('mm_users')) localStorage.setItem('mm_users', JSON.stringify([]))
-  if (!localStorage.getItem('mm_transactions')) localStorage.setItem('mm_transactions', JSON.stringify([]))
-  if (!localStorage.getItem('mm_affiliateEdits')) localStorage.setItem('mm_affiliateEdits', JSON.stringify({}))
+const LOCAL_BAL_KEY  = (id) => `mm_bal_${id}`
+const LOCAL_USR_KEY  = 'mm_currentUser'
+const LOCAL_MIR_KEY  = (id) => `mm_mir_${id}`
+
+function readBalance(id) {
+  const raw = localStorage.getItem(LOCAL_BAL_KEY(id))
+  return raw !== null ? parseFloat(raw) : 12500
+}
+function saveBalance(id, bal) {
+  localStorage.setItem(LOCAL_BAL_KEY(id), String(bal))
+}
+function readMirrored(id) {
+  try { return JSON.parse(localStorage.getItem(LOCAL_MIR_KEY(id)) || '[]') } catch { return [] }
+}
+function saveMirrored(id, list) {
+  localStorage.setItem(LOCAL_MIR_KEY(id), JSON.stringify(list))
 }
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null)
+  const [user, setUser]   = useState(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    initStorage()
-    const stored = localStorage.getItem('mm_currentUser')
+    const stored = localStorage.getItem(LOCAL_USR_KEY)
     if (stored) {
-      try { setUser(JSON.parse(stored)) } catch { localStorage.removeItem('mm_currentUser') }
+      try {
+        const parsed = JSON.parse(stored)
+        // Always read balance + mirrors from localStorage so they persist properly
+        const balance  = readBalance(parsed.id)
+        const mirrored = readMirrored(parsed.id)
+        setUser({ ...parsed, balance, mirroredAffiliates: mirrored })
+      } catch {
+        localStorage.removeItem(LOCAL_USR_KEY)
+      }
     }
     setLoading(false)
   }, [])
 
-  const getAllUsers = () => JSON.parse(localStorage.getItem('mm_users') || '[]')
+  const saveUser = (u) => {
+    const { balance, mirroredAffiliates, ...rest } = u
+    localStorage.setItem(LOCAL_USR_KEY, JSON.stringify(rest))
+    saveBalance(u.id, balance)
+    saveMirrored(u.id, mirroredAffiliates || [])
+    setUser(u)
+  }
 
-  const updateUser = (userId, updates) => {
-    const users = getAllUsers()
-    const idx = users.findIndex(u => u.id === userId)
-    if (idx !== -1) {
-      users[idx] = { ...users[idx], ...updates }
-      localStorage.setItem('mm_users', JSON.stringify(users))
-      if (user && user.id === userId) {
-        const updated = { ...user, ...updates }
-        setUser(updated)
-        localStorage.setItem('mm_currentUser', JSON.stringify(updated))
-      }
-      return true
+  const login = async (email, password) => {
+    const id   = 'usr_' + btoa(email).replace(/=/g,'').slice(0, 8)
+    const name = email.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+    const balance  = readBalance(id)
+    const mirrored = readMirrored(id)
+    const activeUser = { id, name, email, role: 'investor', balance, mirroredAffiliates: mirrored }
+    saveUser(activeUser)
+    return { success: true, user: activeUser }
+  }
+
+  const register = async (name, email, password) => {
+    const id = 'usr_' + btoa(email).replace(/=/g,'').slice(0, 8)
+    const newUser = { id, name, email, role: 'investor', balance: 12500, mirroredAffiliates: [] }
+    saveUser(newUser)
+    return { success: true, user: newUser }
+  }
+
+  const logout = () => {
+    localStorage.removeItem(LOCAL_USR_KEY)
+    setUser(null)
+  }
+
+  const addTransaction = async (type, amount, status = 'approved', method = 'Transfer') => {
+    if (!user) return null
+    const data = await api.wallet.transact(user.id, type, amount, method)
+    if (data.success) {
+      setUser(prev => ({ ...prev, balance: data.balance }))
+      saveBalance(user.id, data.balance)
+      return data.transaction
     }
-    return false
+    return null
   }
 
-  const login = (email, password) => {
-    const users = getAllUsers()
-    const found = users.find(u => u.email === email && u.password === password)
-    if (!found) return { success: false, error: 'Invalid credentials' }
-    if (found.isSuspended) return { success: false, error: 'Account suspended. Contact support.' }
-    const { password: _, ...safeUser } = found
-    setUser(safeUser)
-    localStorage.setItem('mm_currentUser', JSON.stringify(safeUser))
-    return { success: true, user: safeUser }
+  const mirrorAffiliate = async (affiliateId, depositAmount = 500) => {
+    if (!user) return { success: false, error: 'Must be logged in' }
+    if ((user.balance || 0) < depositAmount) return { success: false, error: 'Insufficient balance' }
+
+    const newBalance  = (user.balance || 0) - depositAmount
+    const newMirrored = [...(user.mirroredAffiliates || []), affiliateId]
+    const updatedUser = { ...user, balance: newBalance, mirroredAffiliates: newMirrored }
+    saveUser(updatedUser)
+
+    // Also record a transaction
+    await api.wallet.transact(user.id, 'allocation', depositAmount, 'Copy Allocation')
+    return { success: true, balance: newBalance, mirroredAffiliates: newMirrored }
   }
 
-  const register = (name, email, password) => {
-    const users = getAllUsers()
-    if (users.some(u => u.email === email)) return { success: false, error: 'Email already registered' }
-    const newUser = {
-      id: `user_${Date.now()}`,
-      email, password, name,
-      balance: 0,
-      mirroredAffiliates: [],
-      isSuspended: false,
-      createdAt: new Date().toISOString(),
-    }
-    users.push(newUser)
-    localStorage.setItem('mm_users', JSON.stringify(users))
-    const { password: _, ...safeUser } = newUser
-    setUser(safeUser)
-    localStorage.setItem('mm_currentUser', JSON.stringify(safeUser))
-    return { success: true, user: safeUser }
-  }
-
-  const logout = () => { setUser(null); localStorage.removeItem('mm_currentUser') }
-
-  const addTransaction = (type, amount, status = 'pending') => {
-    const txs = JSON.parse(localStorage.getItem('mm_transactions') || '[]')
-    const newTx = {
-      id: `tx_${Date.now()}`,
-      userId: user?.id, userName: user?.name, userEmail: user?.email,
-      type, amount, status,
-      createdAt: new Date().toISOString(),
-    }
-    txs.unshift(newTx)
-    localStorage.setItem('mm_transactions', JSON.stringify(txs))
-    return newTx
-  }
-
-  const getTransactions = () => JSON.parse(localStorage.getItem('mm_transactions') || '[]')
-
-  const mirrorAffiliate = (affiliateId, depositAmount) => {
-    if (!user || user.balance < depositAmount) return { success: false, error: 'Insufficient balance' }
-    const mirrored = user.mirroredAffiliates || []
-    if (mirrored.includes(affiliateId)) return { success: false, error: 'Already mirroring this marketer' }
-    updateUser(user.id, { balance: user.balance - depositAmount, mirroredAffiliates: [...mirrored, affiliateId] })
-    addTransaction('mirror_deposit', depositAmount, 'completed')
-    return { success: true }
-  }
-
-  const unmirrorAffiliate = (affiliateId) => {
+  const unmirrorAffiliate = async (affiliateId) => {
     if (!user) return { success: false }
-    const mirrored = user.mirroredAffiliates || []
-    updateUser(user.id, { mirroredAffiliates: mirrored.filter(id => id !== affiliateId) })
-    return { success: true }
+    const newMirrored = (user.mirroredAffiliates || []).filter(id => id !== affiliateId)
+    const updatedUser = { ...user, mirroredAffiliates: newMirrored }
+    saveUser(updatedUser)
+    return { success: true, mirroredAffiliates: newMirrored }
   }
 
   return (
     <AuthContext.Provider value={{
       user, loading, login, register, logout,
-      getAllUsers, updateUser,
-      addTransaction, getTransactions,
-      mirrorAffiliate, unmirrorAffiliate,
-    }}>{children}</AuthContext.Provider>
+      addTransaction, mirrorAffiliate, unmirrorAffiliate,
+    }}>
+      {children}
+    </AuthContext.Provider>
   )
 }
 

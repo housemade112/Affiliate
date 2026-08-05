@@ -1,457 +1,378 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.jsx'
 import { getAllAffiliates } from '../data/affiliates.js'
-import { formatCurrency, formatNumber } from '../lib/utils.js'
 import { 
-  Zap, ArrowRight, Users, TrendingUp, Shield, Sparkles, 
-  Copy, Star, CheckCircle2, BarChart3, Wallet, Globe,
-  Heart, MessageCircle, Share2, ShoppingBag
+  ArrowRight, Users, TrendingUp, ShieldCheck, 
+  CheckCircle2, BarChart3, Wallet, Activity, ArrowUpRight, Award, Zap, Globe, Layers, Cpu,
+  Sparkles, Target, LineChart, PlayCircle, ArrowDown, Sliders, Check, Lock, ChevronRight
 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
-function AnimatedCounter({ end, duration = 2000, prefix = '', suffix = '' }) {
-  const [count, setCount] = useState(0)
-  useEffect(() => {
-    let start = 0
-    const step = end / (duration / 16)
-    const timer = setInterval(() => {
-      start += step
-      if (start >= end) { setCount(end); clearInterval(timer) }
-      else setCount(Math.floor(start))
-    }, 16)
-    return () => clearInterval(timer)
-  }, [end, duration])
-  return <span>{prefix}{count.toLocaleString()}{suffix}</span>
-}
+// Real brand logos with authentic brand colors
+const BRAND_LOGOS = [
+  { name: 'Shopify',   logo: 'https://cdn.simpleicons.org/shopify/95BF47' },
+  { name: 'HubSpot',  logo: 'https://cdn.simpleicons.org/hubspot/FF7A59' },
+  { name: 'Stripe',   logo: 'https://cdn.simpleicons.org/stripe/635BFF' },
+  { name: 'Notion',   logo: 'https://cdn.simpleicons.org/notion/000000' },
+  { name: 'Airbnb',   logo: 'https://cdn.simpleicons.org/airbnb/FF5A5F' },
+  { name: 'Slack',    logo: 'https://cdn.simpleicons.org/slack/4A154B' },
+  { name: 'Nike',     logo: 'https://cdn.simpleicons.org/nike/111111' },
+  { name: 'Amazon',   logo: 'https://cdn.simpleicons.org/amazon/FF9900' },
+  { name: 'Figma',    logo: 'https://cdn.simpleicons.org/figma/F24E1E' },
+  { name: 'Atlassian',logo: 'https://cdn.simpleicons.org/atlassian/0052CC' },
+  { name: 'Canva',    logo: 'https://cdn.simpleicons.org/canva/00C4CC' },
+]
+
+const WHY_CARDS = [
+  {
+    icon: Users,
+    title: 'We connect real buyers to real earners',
+    body: "We built Scalely.ai after watching too many talented affiliates burn out chasing cold traffic. We fixed that by putting your strategy in front of audiences that actually convert.",
+  },
+  {
+    icon: BarChart3,
+    title: 'Performance you can actually see',
+    body: "Every click, conversion, and dollar is tracked transparently in your personal dashboard. No black-box algorithms. No hidden fees. Just honest numbers.",
+  },
+  {
+    icon: Sparkles,
+    title: 'AI that does the heavy lifting',
+    body: "Our AI was trained on millions of affiliate campaigns. It knows which creatives work, which audiences buy, and when to push harder so you never have to guess.",
+  },
+  {
+    icon: Sliders,
+    title: 'Built for scale, not just starters',
+    body: "Whether you're earning your first $1,000 a month or managing a seven-figure portfolio, Scalely.ai grows with you. One platform, unlimited ceiling.",
+  },
+]
+
+const STEPS = [
+  {
+    step: '01',
+    icon: Layers,
+    headline: 'Create your free account',
+    body: 'Sign up in under two minutes. No credit card required. Select your niche and goals, and we handle the rest.',
+  },
+  {
+    step: '02',
+    icon: Globe,
+    headline: 'Copy a top-performing partner',
+    body: 'Browse our verified directory of high-Profit affiliates. Pick one you like, allocate your capital, and let their strategy run on autopilot for you.',
+  },
+  {
+    step: '03',
+    icon: TrendingUp,
+    headline: 'Watch your revenue grow',
+    body: 'Track live performance, adjust allocations any time, and withdraw earnings whenever you want. It really is that simple.',
+  },
+]
 
 export default function Landing() {
   const { user } = useAuth()
-  const affiliates = getAllAffiliates()
-  const top3 = [...affiliates].sort((a, b) => b.revenue - a.revenue).slice(0, 3)
-  const totalRevenue = affiliates.reduce((s, a) => s + a.revenue, 0)
+  const navigate = useNavigate()
+
+  const [scrollProgress, setScrollProgress] = useState(0)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const el = document.getElementById('why-scalely-section')
+      if (el) {
+        const rect = el.getBoundingClientRect()
+        const windowHeight = window.innerHeight
+        const progress = Math.max(0, Math.min(1, (windowHeight - rect.top) / (windowHeight + rect.height * 0.5)))
+        setScrollProgress(progress)
+      }
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll()
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const leftTranslate  = (1 - scrollProgress) * -80
+  const rightTranslate = (1 - scrollProgress) * 80
+
+  // Duplicate logos for seamless loop
+  const loopLogos = [...BRAND_LOGOS, ...BRAND_LOGOS]
 
   return (
-    <div className="min-h-screen bg-slate-950">
-      {/* HERO */}
-      <section className="relative overflow-hidden min-h-screen flex items-center">
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-violet-600/10 rounded-full blur-[120px]" />
-          <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-rose-600/10 rounded-full blur-[120px]" />
-        </div>
+    <div className="min-h-screen bg-[#EFF2F0] text-slate-900 font-sans">
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-slate-300">
-                <Sparkles className="w-4 h-4 text-amber-400" />
-                <span>AI-Powered Affiliate Mirroring</span>
-              </div>
+      {/* ── HERO: DARK EMERALD ARCH ── */}
+      <section className="realize-hero pt-28 pb-20 md:pt-36 md:pb-28">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-7">
 
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] tracking-tight">
-                Mirror Top<br />
-                <span className="gradient-text font-display">Affiliate</span><br />
-                Marketers
-              </h1>
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.08]">
+            Performance Advertising Built for<br className="hidden sm:block" />
+            <span className="badge-pink-pill mt-2 inline-block">Affiliates</span>
+          </h1>
 
-              <p className="text-xl text-slate-400 max-w-lg leading-relaxed">
-                Discover proven mompreneurs and creators earning 6-figures. Our AI matches you with their winning product portfolios and content strategies.
-              </p>
-
-              <div className="flex flex-wrap gap-4">
-                {user ? (
-                  <Link to="/dashboard" className="btn-amber flex items-center gap-2 text-lg px-8 py-4">
-                    Go to Dashboard <ArrowRight className="w-5 h-5" />
-                  </Link>
-                ) : (
-                  <>
-                    <Link to="/signup" className="btn-amber flex items-center gap-2 text-lg px-8 py-4">
-                      Start Mirroring Free <ArrowRight className="w-5 h-5" />
-                    </Link>
-                    <Link to="/marketers" className="btn-secondary flex items-center gap-2 text-lg px-8 py-4">
-                      Browse Marketers
-                    </Link>
-                  </>
-                )}
-              </div>
-
-              <div className="flex items-center gap-6 text-sm text-slate-500">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                  <span>No hidden fees</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                  <span>Cancel anytime</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                  <span>Instant setup</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="relative hidden lg:block">
-              <div className="relative z-10 space-y-4 animate-float">
-                {top3.map((aff, i) => (
-                  <div key={aff.id} className={`glass-card p-5 flex items-center gap-4 ${i === 1 ? 'ml-8' : ''} ${i === 2 ? 'ml-4' : ''}`}>
-                    <div className={`w-12 h-12 rounded-xl ${aff.avatarColor} flex items-center justify-center text-white font-bold`}>
-                      {aff.name.split(' ').map(n => n[0]).join('')}
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2">
-                        <span className="font-semibold text-white">{aff.name}</span>
-                        {aff.verified && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />}
-                      </div>
-                      <p className="text-xs text-slate-400">{aff.niche}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-sm font-bold text-emerald-400">+{aff.monthlyReturn}%</p>
-                      <p className="text-xs text-slate-500">{formatCurrency(aff.revenue)}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="absolute -top-10 -right-10 w-32 h-32 bg-amber-500/20 rounded-full blur-2xl" />
-              <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-violet-500/20 rounded-full blur-2xl" />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* STATS STRIP */}
-      <section className="border-y border-white/5 bg-white/[0.02]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <p className="text-3xl md:text-4xl font-bold text-white"><AnimatedCounter end={120} suffix="+" /></p>
-              <p className="text-sm text-slate-400 mt-1">Top Marketers</p>
-            </div>
-            <div className="text-center">
-              <p className="text-3xl md:text-4xl font-bold text-white"><AnimatedCounter end={50000} suffix="+" /></p>
-              <p className="text-sm text-slate-400 mt-1">Active Users</p>
-            </div>
-            <div className="text-center">
-              <p className="text-3xl md:text-4xl font-bold text-white">$<AnimatedCounter end={294} suffix="M+" /></p>
-              <p className="text-sm text-slate-400 mt-1">Revenue Mirrored</p>
-            </div>
-            <div className="text-center">
-              <p className="text-3xl md:text-4xl font-bold text-white"><AnimatedCounter end={99} suffix="%" /></p>
-              <p className="text-sm text-slate-400 mt-1">Uptime</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* HOW IT WORKS */}
-      <section className="py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="section-title">How MirrorMarket Works</h2>
-            <p className="section-subtitle mx-auto">Start earning like top affiliates in three simple steps</p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { icon: Users, title: 'Discover', desc: 'Browse our curated directory of 120+ verified affiliate marketers across every niche from parenting to tech.', color: 'bg-violet-500' },
-              { icon: Copy, title: 'Mirror', desc: 'Select marketers whose strategy matches your goals. Our AI clones their product lineup and content cadence to your account.', color: 'bg-rose-500' },
-              { icon: TrendingUp, title: 'Earn', desc: 'Watch your earnings grow. You keep 75% of profits. 10% goes to the original marketer, 15% to platform fees.', color: 'bg-amber-500' },
-            ].map((step, i) => (
-              <div key={i} className="glass-card-hover p-8 text-center group">
-                <div className={`w-14 h-14 ${step.color} rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform`}>
-                  <step.icon className="w-7 h-7 text-white" />
-                </div>
-                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-4 text-sm font-bold text-white">
-                  {i + 1}
-                </div>
-                <h3 className="text-xl font-semibold text-white mb-3">{step.title}</h3>
-                <p className="text-slate-400 leading-relaxed">{step.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* AI FEATURES */}
-      <section className="py-24 bg-white/[0.01]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-violet-500/10 text-violet-400 text-sm font-medium mb-6">
-                <Sparkles className="w-4 h-4" /> AI-Powered
-              </div>
-              <h2 className="section-title">Built for Serious<br />Affiliate Earners</h2>
-              <p className="section-subtitle mt-4">Every feature designed to give you an edge in the creator economy.</p>
-
-              <div className="mt-10 space-y-6">
-                {[
-                  { icon: Sparkles, title: 'Smart Matching Engine', desc: 'Our AI analyzes your niche, budget, and goals to recommend the perfect marketers to mirror.' },
-                  { icon: Shield, title: 'Verified Performance', desc: 'Every marketer is vetted. Revenue figures are verified. No fake gurus allowed.' },
-                  { icon: BarChart3, title: 'Real-Time Analytics', desc: 'Track clicks, conversions, and earnings as they happen. See exactly what is working.' },
-                  { icon: Wallet, title: 'Transparent Splits', desc: '75% to you, 10% to the marketer, 15% platform fee. No surprises. Ever.' },
-                ].map((feat, i) => (
-                  <div key={i} className="flex gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-violet-500/10 flex items-center justify-center flex-shrink-0">
-                      <feat.icon className="w-5 h-5 text-violet-400" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-white">{feat.title}</h4>
-                      <p className="text-sm text-slate-400 mt-1">{feat.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="relative">
-              <div className="glass-card p-6 space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-slate-400">Your Earnings This Month</span>
-                  <span className="text-sm font-bold text-emerald-400">+$3,247.50</span>
-                </div>
-                <div className="h-48 bg-slate-900/50 rounded-xl flex items-end justify-around px-4 pb-4">
-                  {[30, 45, 35, 60, 50, 80, 65, 95, 75, 100].map((h, i) => (
-                    <div key={i} className="w-6 bg-gradient-to-t from-violet-500 to-violet-400 rounded-t" style={{ height: `${h}%`, opacity: 0.3 + (i * 0.07) }} />
-                  ))}
-                </div>
-                <div className="grid grid-cols-3 gap-3">
-                  <div className="p-3 bg-white/5 rounded-lg text-center">
-                    <p className="text-lg font-bold text-white">$12,450</p>
-                    <p className="text-xs text-slate-400">Invested</p>
-                  </div>
-                  <div className="p-3 bg-white/5 rounded-lg text-center">
-                    <p className="text-lg font-bold text-emerald-400">+$3,080</p>
-                    <p className="text-xs text-slate-400">Profit</p>
-                  </div>
-                  <div className="p-3 bg-white/5 rounded-lg text-center">
-                    <p className="text-lg font-bold text-white">8</p>
-                    <p className="text-xs text-slate-400">Mirrored</p>
-                  </div>
-                </div>
-              </div>
-              <div className="absolute -top-4 -right-4 w-24 h-24 bg-amber-500/20 rounded-full blur-2xl" />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* TOP MARKETERS */}
-      <section className="py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-end justify-between mb-12">
-            <div>
-              <h2 className="section-title">Top Performing Marketers</h2>
-              <p className="section-subtitle mt-2">Verified professionals with proven track records</p>
-            </div>
-            <Link to="/marketers" className="hidden md:flex items-center gap-2 text-violet-400 hover:text-violet-300 font-medium transition-colors">
-              View All <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {top3.map((aff, i) => (
-              <div key={aff.id} className="glass-card-hover p-6 group cursor-pointer">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className={`w-14 h-14 rounded-2xl ${aff.avatarColor} flex items-center justify-center text-white font-bold text-xl`}>
-                    {aff.name.split(' ').map(n => n[0]).join('')}
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-semibold text-white text-lg">{aff.name}</span>
-                      {aff.verified && <CheckCircle2 className="w-4 h-4 text-emerald-400" />}
-                    </div>
-                    <p className="text-sm text-slate-400">{aff.niche}</p>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4 mb-6">
-                  <div className="p-3 bg-white/5 rounded-lg">
-                    <p className="text-lg font-bold text-white">{formatCurrency(aff.revenue)}</p>
-                    <p className="text-xs text-slate-400">Revenue</p>
-                  </div>
-                  <div className="p-3 bg-white/5 rounded-lg">
-                    <p className="text-lg font-bold text-emerald-400">+{aff.monthlyReturn}%</p>
-                    <p className="text-xs text-slate-400">Monthly</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1 text-amber-400">
-                    <Star className="w-4 h-4 fill-amber-400" />
-                    <span className="font-medium">{aff.rating}</span>
-                  </div>
-                  <span className="text-sm text-slate-400">{formatNumber(aff.followers)} followers</span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-8 text-center md:hidden">
-            <Link to="/marketers" className="btn-secondary inline-flex items-center gap-2">
-              View All Marketers <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* NICHE SHOWCASE */}
-      <section className="py-24 bg-white/[0.01] border-y border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="section-title">Every Niche. Every Strategy.</h2>
-            <p className="section-subtitle mx-auto mt-3">From mom bloggers to tech reviewers — find your perfect match</p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              { icon: Heart, label: 'Parenting & Family', count: '28 marketers' },
-              { icon: ShoppingBag, label: 'Fashion & Beauty', count: '24 marketers' },
-              { icon: Zap, label: 'Tech & Gadgets', count: '19 marketers' },
-              { icon: BarChart3, label: 'Finance & Investing', count: '15 marketers' },
-              { icon: Globe, label: 'Travel & Lifestyle', count: '12 marketers' },
-              { icon: MessageCircle, label: 'Health & Wellness', count: '11 marketers' },
-              { icon: Share2, label: 'Social Media', count: '9 marketers' },
-              { icon: TrendingUp, label: 'Real Estate', count: '4 marketers' },
-            ].map((niche, i) => (
-              <div key={i} className="glass-card p-5 text-center hover:border-violet-500/20 transition-all cursor-pointer group">
-                <niche.icon className="w-8 h-8 text-violet-400 mx-auto mb-3 group-hover:scale-110 transition-transform" />
-                <p className="font-medium text-white text-sm">{niche.label}</p>
-                <p className="text-xs text-slate-400 mt-1">{niche.count}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* TESTIMONIALS */}
-      <section className="py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="section-title">Trusted by Affiliate Earners Worldwide</h2>
-            <p className="section-subtitle mx-auto mt-3">Join a community of creators who found their edge</p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { name: 'Sarah Chen', role: 'Mom Blogger', text: 'I went from $200/month to $4,500 in 90 days mirroring just 3 parenting marketers. The AI matching is scary accurate.' },
-              { name: 'Marcus Johnson', role: 'Side Hustler', text: 'Finally a platform that treats affiliate marketing seriously. The revenue splits are transparent and the marketers are legit.' },
-              { name: 'Elena Rodriguez', role: 'Fitness Creator', desc: 'I mirrored a wellness marketer and within a month I had my first $1K week. The content cadence cloning is genius.' },
-            ].map((t, i) => (
-              <div key={i} className="glass-card p-6">
-                <div className="flex items-center gap-1 mb-4">
-                  {[1,2,3,4,5].map(s => <Star key={s} className="w-4 h-4 text-amber-400 fill-amber-400" />)}
-                </div>
-                <p className="text-slate-300 leading-relaxed mb-6">"{t.text}"</p>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-violet-500/20 flex items-center justify-center text-violet-400 font-bold text-sm">
-                    {t.name.split(' ').map(n => n[0]).join('')}
-                  </div>
-                  <div>
-                    <p className="font-medium text-white text-sm">{t.name}</p>
-                    <p className="text-xs text-slate-400">{t.role}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* REVENUE SPLIT */}
-      <section className="py-24 bg-white/[0.01] border-y border-white/5">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="section-title">Fair & Transparent Revenue Split</h2>
-          <p className="section-subtitle mx-auto mt-3">You do the work, you keep the majority. Simple.</p>
-
-          <div className="mt-12 grid grid-cols-3 gap-6">
-            <div className="glass-card p-8">
-              <p className="text-5xl font-bold text-emerald-400">75%</p>
-              <p className="text-white font-medium mt-2">You Keep</p>
-              <p className="text-sm text-slate-400 mt-1">Direct to your wallet</p>
-            </div>
-            <div className="glass-card p-8">
-              <p className="text-5xl font-bold text-violet-400">10%</p>
-              <p className="text-white font-medium mt-2">To Marketer</p>
-              <p className="text-sm text-slate-400 mt-1">Their mirroring fee</p>
-            </div>
-            <div className="glass-card p-8">
-              <p className="text-5xl font-bold text-rose-400">15%</p>
-              <p className="text-white font-medium mt-2">Platform Fee</p>
-              <p className="text-sm text-slate-400 mt-1">Operational costs</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-24 relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-violet-600/10 rounded-full blur-[120px]" />
-        </div>
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Ready to Mirror<br />
-            <span className="gradient-text">Top Marketers?</span>
-          </h2>
-          <p className="text-xl text-slate-400 mb-10 max-w-2xl mx-auto">
-            Create your free account in 30 seconds. No credit card required.
+          <p className="mx-auto text-base sm:text-lg text-[#D1F0E6] max-w-2xl font-normal leading-relaxed">
+            Drive affiliate sales through performance marketing built to scale. Stop wasting thousands on manual courses. Our AI handles offer selection, ad creatives, and daily payouts.
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            {user ? (
-              <Link to="/dashboard" className="btn-amber text-lg px-10 py-4">
-                Go to Dashboard
-              </Link>
-            ) : (
-              <>
-                <Link to="/signup" className="btn-amber text-lg px-10 py-4">
-                  Create Free Account
-                </Link>
-                <Link to="/marketers" className="btn-secondary text-lg px-10 py-4">
-                  Browse Marketers
-                </Link>
-              </>
-            )}
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+            <Link
+              to="/signup"
+              className="btn-lime text-base px-10 py-4 font-extrabold shadow-xl w-full sm:w-auto text-center"
+            >
+              Create Account
+            </Link>
+            <Link
+              to="/login"
+              className="inline-flex items-center justify-center gap-2 px-10 py-4 rounded-full border-2 border-white/30 text-white font-bold text-base hover:bg-white/10 transition-all w-full sm:w-auto"
+            >
+              Sign In <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+
+          <p className="text-xs text-emerald-300/70 pt-2">
+            No credit card required · Join 14,000+ affiliates already earning
+          </p>
+
+        </div>
+      </section>
+
+      {/* ── BRAND TRUST TICKER (FULL COLOR LOGOS) ── */}
+      <section className="py-12 bg-white border-y border-slate-200/80 overflow-hidden">
+        <p className="text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-8 font-mono">
+          Trusted by brands scaling on Scalely.ai
+        </p>
+        <div className="relative flex w-full overflow-hidden" aria-hidden="true">
+          {/* Fade edges */}
+          <div className="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-white to-transparent pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-white to-transparent pointer-events-none" />
+
+          <div className="flex gap-16 items-center animate-marquee whitespace-nowrap">
+            {loopLogos.map((brand, i) => (
+              <div
+                key={`${brand.name}-${i}`}
+                className="flex items-center gap-3 flex-shrink-0 hover:scale-105 transition-all duration-300"
+              >
+                <img
+                  src={brand.logo}
+                  alt={brand.name}
+                  className="h-8 w-8 rounded-lg object-contain shadow-sm"
+                  loading="lazy"
+                  onError={(e) => { e.target.style.display = 'none' }}
+                />
+                <span className="text-base font-black text-slate-800 tracking-tight">{brand.name}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="border-t border-white/5 bg-slate-900/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid md:grid-cols-4 gap-8 mb-12">
-            <div className="md:col-span-2">
-              <div className="flex items-center gap-2.5 mb-4">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-rose-500 flex items-center justify-center">
-                  <Zap className="w-4 h-4 text-white" />
-                </div>
-                <span className="text-lg font-bold text-white">MirrorMarket</span>
-              </div>
-              <p className="text-sm text-slate-400 max-w-sm">
-                The AI-powered affiliate mirroring platform. Connect with top marketers, clone their strategies, and grow your earnings.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-semibold text-white mb-4">Platform</h4>
-              <ul className="space-y-2 text-sm text-slate-400">
-                <li><Link to="/marketers" className="hover:text-white transition-colors">Browse Marketers</Link></li>
-                <li><Link to="/leaderboard" className="hover:text-white transition-colors">Leaderboard</Link></li>
-                <li><Link to="/wallet" className="hover:text-white transition-colors">Wallet</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold text-white mb-4">Company</h4>
-              <ul className="space-y-2 text-sm text-slate-400">
-                <li><span className="hover:text-white transition-colors cursor-pointer">About</span></li>
-                <li><span className="hover:text-white transition-colors cursor-pointer">Support</span></li>
-                <li><span className="hover:text-white transition-colors cursor-pointer">Terms</span></li>
-                <li><span className="hover:text-white transition-colors cursor-pointer">Privacy</span></li>
-              </ul>
-            </div>
-          </div>
-          <div className="pt-8 border-t border-white/5 text-center text-xs text-slate-500">
-            <p>MirrorMarket. All rights reserved. All affiliate marketing involves risk. Past performance does not guarantee future results.</p>
-          </div>
+      {/* ── HOW IT WORKS ── */}
+      <section className="py-24 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
+            From zero to earning<br />
+            <span className="text-[#005645]">in three steps</span>
+          </h2>
+          <p className="text-slate-500 text-base leading-relaxed">
+            We stripped out the complexity so you can focus on what matters: growing your income.
+          </p>
         </div>
-      </footer>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          {STEPS.map((step) => (
+            <div
+              key={step.step}
+              className="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col gap-6"
+            >
+              <div className="flex items-center justify-between">
+                <div className="w-12 h-12 rounded-2xl bg-[#005645] text-[#C3F53C] font-black text-lg flex items-center justify-center shadow-md">
+                  {step.step}
+                </div>
+                <step.icon className="w-8 h-8 text-slate-300" />
+              </div>
+              <div className="space-y-2 text-left">
+                <h3 className="text-xl font-extrabold text-slate-900 leading-snug">{step.headline}</h3>
+                <p className="text-sm text-slate-500 leading-relaxed">{step.body}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="text-center mt-12">
+          <Link to="/signup" className="btn-lime inline-flex text-sm px-10 py-4 font-extrabold shadow-xl gap-2">
+            Get Started Free <ChevronRight className="w-4 h-4" />
+          </Link>
+        </div>
+      </section>
+
+      {/* ── SOCIAL PROOF STATS BAR ── */}
+      <section className="py-16 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-[#005645] rounded-[40px] p-10 grid grid-cols-2 md:grid-cols-4 gap-8 text-white text-center">
+          {[
+            { value: '$214M+', label: 'Paid out to affiliates' },
+            { value: '14,000+', label: 'Active earners on platform' },
+            { value: '91%',    label: 'Average partner win rate' },
+            { value: '< 48h',  label: 'Time to first payout' },
+          ].map((stat) => (
+            <div key={stat.label} className="space-y-1">
+              <p className="text-3xl sm:text-4xl font-black text-[#C3F53C] font-mono">{stat.value}</p>
+              <p className="text-sm text-emerald-200/80 font-medium">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── WHY SCALELY? REALIZE.COM EXACT RADIAL GLOW CIRCLE CARDS ── */}
+      <section id="why-scalely-section" className="py-24 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <div className="text-center mb-12 space-y-3">
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
+            Why Scalely?
+          </h2>
+          <p className="text-slate-500 text-base max-w-xl mx-auto leading-relaxed">
+            We're not another ad platform. We built Scalely.ai to solve the exact problems we saw real affiliates struggling with every day.
+          </p>
+        </div>
+
+        {/* 2x2 Clustered Radial Glowing Circles */}
+        <div className="grid md:grid-cols-2 gap-6 items-center justify-center">
+          {WHY_CARDS.map((card, idx) => {
+            const isLeft = idx % 2 === 0
+            return (
+              <div
+                key={card.title}
+                className="realize-circle-animated"
+                style={{
+                  transform: `translateX(${isLeft ? leftTranslate * 0.4 : rightTranslate * 0.4}px)`,
+                  transition: 'transform 0.4s ease-out',
+                }}
+              >
+                <div className="w-12 h-12 rounded-full bg-[#005645] text-white flex items-center justify-center mb-4 shadow-sm">
+                  <card.icon className="w-6 h-6" />
+                </div>
+                <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 mb-2 max-w-[260px] leading-snug">
+                  {card.title}
+                </h3>
+                <p className="text-xs text-slate-700 leading-relaxed max-w-[280px]">
+                  {card.body}
+                </p>
+              </div>
+            )
+          })}
+        </div>
+
+        <div className="text-center mt-12">
+          <Link to="/signup" className="btn-pink inline-flex text-sm px-10 py-4 font-extrabold shadow-xl">
+            Create Account
+          </Link>
+        </div>
+      </section>
+
+      {/* ── WHO WE ARE / MISSION (REDESIGNED INSTITUTIONAL DARK TEAL CARD) ── */}
+      <section className="py-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-[#005645] rounded-[48px] p-8 sm:p-14 border border-emerald-800/60 shadow-2xl relative overflow-hidden text-white grid lg:grid-cols-12 gap-10 items-center">
+          
+          {/* Subtle Glow Orb */}
+          <div className="absolute -top-20 -right-20 w-80 h-80 bg-[#C3F53C]/10 rounded-full blur-3xl pointer-events-none" />
+
+          {/* Left Column: Mission Story */}
+          <div className="lg:col-span-7 space-y-6 text-left relative z-10">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#C3F53C]/15 border border-[#C3F53C]/30 text-[#C3F53C] text-xs font-bold font-mono">
+              <Sparkles className="w-3.5 h-3.5 text-[#C3F53C]" />
+              OUR MISSION & PURPOSE
+            </div>
+
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
+              We built this because<br />
+              <span className="text-[#C3F53C]">affiliates deserved better.</span>
+            </h2>
+
+            <p className="text-sm sm:text-base text-[#D1F0E6] leading-relaxed">
+              The affiliate industry was broken with opaque earnings, inconsistent payouts, and a market dominated by whoever had the biggest ad budget. We built Scalely.ai to flip that script.
+            </p>
+
+            <p className="text-sm sm:text-base text-[#D1F0E6] leading-relaxed">
+              Our platform gives every affiliate, from first-timers to seasoned pros, direct access to copy proven strategies from verified top earners, backed by audited data and real-time execution tracking.
+            </p>
+
+            <div className="pt-2">
+              <Link to="/signup" className="btn-lime inline-flex items-center gap-2 text-xs sm:text-sm font-extrabold px-8 py-4 shadow-xl">
+                Start Earning With Us <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Right Column: High-Density Metric Terminal Cards */}
+          <div className="lg:col-span-5 grid grid-cols-2 gap-4 relative z-10">
+            <div className="bg-[#004235] border border-emerald-700/60 p-6 rounded-2xl space-y-2 text-left shadow-md hover:border-[#C3F53C]/50 transition-all">
+              <span className="text-[11px] font-bold font-mono text-emerald-300/70 uppercase tracking-wider block">FOUNDED</span>
+              <p className="text-2xl font-black text-white font-mono">2022</p>
+              <p className="text-xs text-emerald-200/80 font-medium">Born from frustration</p>
+            </div>
+
+            <div className="bg-[#004235] border border-emerald-700/60 p-6 rounded-2xl space-y-2 text-left shadow-md hover:border-[#C3F53C]/50 transition-all">
+              <span className="text-[11px] font-bold font-mono text-emerald-300/70 uppercase tracking-wider block">AFFILIATES</span>
+              <p className="text-2xl font-black text-[#C3F53C] font-mono">14K+</p>
+              <p className="text-xs text-emerald-200/80 font-medium">↑ Verified active earners</p>
+            </div>
+
+            <div className="bg-[#004235] border border-emerald-700/60 p-6 rounded-2xl space-y-2 text-left shadow-md hover:border-[#C3F53C]/50 transition-all">
+              <span className="text-[11px] font-bold font-mono text-emerald-300/70 uppercase tracking-wider block">AVG MONTHLY RETURN</span>
+              <p className="text-2xl font-black text-[#C3F53C] font-mono">22.4%</p>
+              <p className="text-xs text-emerald-200/80 font-medium">Audited partner Profit</p>
+            </div>
+
+            <div className="bg-[#004235] border border-emerald-700/60 p-6 rounded-2xl space-y-2 text-left shadow-md hover:border-[#C3F53C]/50 transition-all">
+              <span className="text-[11px] font-bold font-mono text-emerald-300/70 uppercase tracking-wider block">TOTAL PAID OUT</span>
+              <p className="text-2xl font-black text-white font-mono">$214M+</p>
+              <p className="text-xs text-emerald-200/80 font-medium">100% On-time payouts</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ── FOOTER CTA ── */}
+      <section className="bg-[#005645] rounded-t-[48px] sm:rounded-t-[64px] text-white pt-20 pb-12 mt-16 shadow-2xl">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-10">
+
+          <div className="space-y-6">
+            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white max-w-3xl mx-auto leading-tight">
+              Your best-performing affiliate quarter starts right now.
+            </h2>
+            <p className="text-emerald-200/80 text-base max-w-xl mx-auto">
+              Join thousands of affiliates already using Scalely.ai to copy elite strategies and earn on autopilot.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link to="/signup" className="btn-lime text-sm px-10 py-4 font-bold shadow-xl w-full sm:w-auto text-center">
+                Create Free Account
+              </Link>
+              <Link to="/login" className="inline-flex items-center justify-center gap-2 px-10 py-4 rounded-full border-2 border-white/30 text-white font-bold text-sm hover:bg-white/10 transition-all w-full sm:w-auto">
+                Sign In <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+
+          <div className="border-t border-emerald-800/80 pt-10">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-emerald-200">
+
+              <div className="flex items-center gap-2">
+                <div className="w-7 h-7 rounded-full bg-[#C3F53C] text-[#005645] flex items-center justify-center font-bold text-sm">
+                  S
+                </div>
+                <span className="font-extrabold text-xl tracking-tight text-white font-mono">scalely.ai</span>
+              </div>
+
+              <div className="flex flex-wrap items-center justify-center gap-6 font-medium text-emerald-100/80">
+                <a href="#privacy" className="hover:text-white transition-colors">Privacy Policy</a>
+                <a href="#cookie"  className="hover:text-white transition-colors">Cookie Policy</a>
+                <a href="#terms"   className="hover:text-white transition-colors">Terms of Use</a>
+                <a href="#optout"  className="hover:text-white transition-colors">Opt Out</a>
+              </div>
+
+              <span className="text-emerald-300/60 font-mono text-xs">© 2025 Scalely.ai · All rights reserved</span>
+
+            </div>
+          </div>
+
+        </div>
+      </section>
+
     </div>
   )
 }

@@ -1,4 +1,12 @@
-﻿node_modules/
+node_modules/
 dist/
 .env
+.env.local
 .DS_Store
+*.log
+.vscode/
+.idea/
+.antigravity/
+.antigravityignore
+antigravity_ide/
+*.tmp

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.jsx'
 import { useToast } from '../context/ToastContext.jsx'
-import { Zap, Eye, EyeOff, ArrowRight } from 'lucide-react'
+import { Eye, EyeOff, ArrowRight, CheckCircle2 } from 'lucide-react'
 
 export default function Signup() {
   const [name, setName] = useState('')
@@ -28,51 +28,118 @@ export default function Signup() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center px-4 relative overflow-hidden">
-      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-violet-600/10 rounded-full blur-[120px]" />
-      <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-rose-600/10 rounded-full blur-[120px]" />
+    <div className="min-h-screen bg-[#0A0A0A] text-white flex items-center justify-center px-4 py-12 relative overflow-hidden font-sans">
+      
+      {/* Background emerald radial glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#005645]/20 rounded-full blur-[160px] pointer-events-none" />
 
-      <div className="relative w-full max-w-md">
-        <div className="text-center mb-8">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-500 to-rose-500 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-violet-500/20">
-            <Zap className="w-7 h-7 text-white" />
-          </div>
-          <h1 className="text-2xl font-bold text-white">Create Account</h1>
-          <p className="text-slate-400 mt-1">Start mirroring top marketers today</p>
+      <div className="relative w-full max-w-md space-y-8">
+        
+        {/* Brand Header */}
+        <div className="text-center space-y-3">
+          <Link to="/" className="inline-flex items-center gap-2 group">
+            <div className="w-10 h-10 rounded-xl bg-[#C3F53C] flex items-center justify-center text-[#005645] font-black text-xl shadow-md">
+              S
+            </div>
+            <span className="text-2xl font-black text-white tracking-tight">
+              scalely<span className="text-[#C3F53C] font-normal">.ai</span>
+            </span>
+          </Link>
+          <h1 className="text-2xl font-extrabold text-white tracking-tight pt-2">Create your account</h1>
+          <p className="text-xs text-slate-400 font-mono">Start copying top performance affiliate strategies</p>
         </div>
 
-        <div className="glass-card p-8">
+        {/* Card Form Surface */}
+        <div className="bg-neutral-900 border border-neutral-800 p-8 rounded-3xl shadow-xl space-y-6">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-slate-400 mb-1.5">Full Name</label>
-              <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="input-field" placeholder="John Doe" required />
+              <label className="block text-xs font-bold text-slate-300 uppercase font-mono mb-2">Full Name</label>
+              <input 
+                type="text" 
+                value={name} 
+                onChange={(e) => setName(e.target.value)} 
+                className="w-full px-4 py-3.5 bg-neutral-950 border border-neutral-800 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-[#C3F53C] focus:ring-1 focus:ring-[#C3F53C] font-mono text-sm transition-all" 
+                placeholder="Jane Doe" 
+                required 
+              />
             </div>
+
             <div>
-              <label className="block text-sm font-medium text-slate-400 mb-1.5">Email</label>
-              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="input-field" placeholder="you@example.com" required />
+              <label className="block text-xs font-bold text-slate-300 uppercase font-mono mb-2">Email Address</label>
+              <input 
+                type="email" 
+                value={email} 
+                onChange={(e) => setEmail(e.target.value)} 
+                className="w-full px-4 py-3.5 bg-neutral-950 border border-neutral-800 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-[#C3F53C] focus:ring-1 focus:ring-[#C3F53C] font-mono text-sm transition-all" 
+                placeholder="you@example.com" 
+                required 
+              />
             </div>
+
             <div>
-              <label className="block text-sm font-medium text-slate-400 mb-1.5">Password</label>
+              <label className="block text-xs font-bold text-slate-300 uppercase font-mono mb-2">Password</label>
               <div className="relative">
-                <input type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} className="input-field pr-10" placeholder="Min 6 characters" required minLength={6} />
-                <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300">
+                <input 
+                  type={showPassword ? 'text' : 'password'} 
+                  value={password} 
+                  onChange={(e) => setPassword(e.target.value)} 
+                  className="w-full px-4 py-3.5 bg-neutral-950 border border-neutral-800 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-[#C3F53C] focus:ring-1 focus:ring-[#C3F53C] font-mono text-sm pr-12 transition-all" 
+                  placeholder="At least 6 characters" 
+                  required 
+                  minLength={6} 
+                />
+                <button 
+                  type="button" 
+                  onClick={() => setShowPassword(!showPassword)} 
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors"
+                >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
             </div>
-            <button type="submit" disabled={loading} className="btn-primary w-full flex items-center justify-center gap-2">
-              {loading ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <>Create Account <ArrowRight className="w-4 h-4" /></>}
+
+            <button 
+              type="submit" 
+              disabled={loading} 
+              className="btn-lime w-full font-extrabold py-3.5 text-sm shadow-md mt-2"
+            >
+              {loading ? (
+                <div className="w-5 h-5 border-2 border-[#005645]/30 border-t-[#005645] rounded-full animate-spin mx-auto" />
+              ) : (
+                <>Create Free Account <ArrowRight className="w-4 h-4" /></>
+              )}
+            </button>
+
+            <div className="relative py-2 flex items-center justify-center">
+              <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-neutral-800" /></div>
+              <span className="relative px-3 bg-neutral-900 text-[11px] font-mono text-slate-500 uppercase">Or</span>
+            </div>
+
+            <button 
+              type="button" 
+              onClick={() => { register('Demo Member', 'alex.morgan@scalely.ai', 'demo'); addToast('Instant Demo Access granted!', 'success'); navigate('/dashboard') }}
+              className="w-full py-3.5 px-4 bg-neutral-950 border border-neutral-800 hover:border-emerald-800/60 rounded-xl text-white text-xs font-bold font-mono flex items-center justify-center gap-2 transition-all hover:bg-neutral-800"
+            >
+              ⚡ Instant Demo Access (Skip Form)
             </button>
           </form>
 
-          <div className="mt-6 text-center">
-            <p className="text-sm text-slate-400">Already have an account? <Link to="/login" className="text-violet-400 hover:text-violet-300 font-medium">Sign in</Link></p>
+          <div className="pt-4 border-t border-neutral-800 text-center">
+            <p className="text-xs text-slate-400">
+              Already have an account?{' '}
+              <Link to="/login" className="text-[#C3F53C] font-bold hover:underline">
+                Sign In
+              </Link>
+            </p>
           </div>
         </div>
 
-        <div className="mt-6 text-center">
-          <Link to="/" className="text-sm text-slate-500 hover:text-slate-300 transition-colors">Back to home</Link>
+        <div className="text-center">
+          <Link to="/" className="text-xs text-slate-500 hover:text-slate-300 transition-colors font-mono">
+            ← Back to Home Page
+          </Link>
         </div>
+
       </div>
     </div>
   )

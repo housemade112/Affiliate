@@ -1,152 +1,118 @@
+// affiliates.js
+
 const firstNames = [
   'James','Michael','William','David','Robert','John','Richard','Thomas',
   'Christopher','Daniel','Matthew','Anthony','Mark','Donald','Steven','Paul',
   'Andrew','Joshua','Kenneth','Kevin','Brian','George','Timothy','Ronald',
-  'Edward','Jason','Jeffrey','Ryan','Jacob','Gary','Nicholas','Eric',
+  'Jason','Edward','Jeffrey','Ryan','Jacob','Gary','Nicholas','Eric',
   'Jonathan','Stephen','Larry','Justin','Scott','Brandon','Benjamin','Samuel',
-  'Frank','Gregory','Raymond','Alexander','Patrick','Jack','Dennis','Jerry',
-  'Tyler','Aaron','Jose','Adam','Nathan','Henry','Douglas','Zachary',
-  'Peter','Kyle','Ethan','Walter','Noah','Jeremy','Christian','Keith',
-  'Roger','Terry','Gerald','Harold','Sean','Austin','Carl','Arthur',
-  'Lawrence','Dylan','Jesse','Jordan','Bryan','Billy','Joe','Bruce',
-  'Gabriel','Logan','Albert','Willie','Alan','Juan','Wayne','Elijah',
-  'Randy','Roy','Vincent','Ralph','Eugene','Russell','Bobby','Mason',
-  'Philip','Louis','Mary','Patricia','Jennifer','Linda','Elizabeth','Barbara',
-  'Susan','Jessica','Sarah','Karen','Nancy','Lisa','Betty','Margaret',
-  'Sandra','Ashley','Kimberly','Emily','Donna','Michelle','Dorothy','Carol',
-  'Amanda','Melissa','Deborah','Stephanie','Rebecca','Laura','Sharon','Cynthia',
-  'Kathleen','Amy','Shirley','Angela','Helen','Anna','Brenda','Pamela',
-  'Nicole','Emma','Samantha','Katherine','Christine','Debra','Rachel','Catherine',
-  'Carolyn','Janet','Ruth','Maria','Heather','Diane','Virginia','Julie',
-  'Joyce','Victoria','Olivia','Kelly','Christina','Lauren','Joan','Evelyn',
-  'Judith','Megan','Cheryl','Andrea','Hannah','Martha','Jacqueline','Frances',
-  'Gloria','Ann','Teresa','Kathryn','Sara','Janice','Jean','Alice',
-  'Madison','Doris','Abigail','Julia','Judy','Grace','Denise','Amber',
-  'Marilyn','Beverly','Danielle','Theresa','Sophia','Marie','Diana','Brittany',
-  'Natalie','Isabella','Charlotte','Rose','Alexis','Kayla'
+  'Gregory','Alexander','Frank','Patrick','Raymond','Jack','Dennis','Jerry',
+  'Tyler','Aaron','Jose','Adam','Nathan','Henry','Douglas','Zachary','Peter',
+  'Mary','Patricia','Linda','Barbara','Elizabeth','Jennifer','Maria','Susan',
+  'Margaret','Dorothy','Lisa','Nancy','Karen','Betty','Helen','Sandra','Donna',
+  'Carol','Ruth','Sharon','Michelle','Laura','Sarah','Kimberly','Deborah','Jessica',
+  'Shirley','Cynthia','Angela','Melissa','Brenda','Amy','Anna','Rebecca','Virginia',
+  'Kathleen','Pamela','Martha','Debra','Amanda','Stephanie','Carolyn','Christine','Marie',
+  'Janet','Catherine','Frances','Ann','Joyce','Diane','Alice','Julie','Heather','Teresa'
 ]
 
 const lastNames = [
-  'Smith','Johnson','Williams','Brown','Jones','Garcia','Miller','Davis',
-  'Rodriguez','Martinez','Hernandez','Lopez','Gonzalez','Wilson','Anderson',
-  'Thomas','Taylor','Moore','Jackson','Martin','Lee','Perez','Thompson',
-  'White','Harris','Sanchez','Clark','Ramirez','Lewis','Robinson','Walker',
-  'Young','Allen','King','Wright','Scott','Torres','Nguyen','Hill','Flores',
-  'Green','Adams','Nelson','Baker','Hall','Rivera','Campbell','Mitchell',
-  'Carter','Roberts','Gomez','Phillips','Evans','Turner','Diaz','Parker',
-  'Cruz','Edwards','Collins','Reyes','Stewart','Morris','Morales','Murphy',
-  'Cook','Rogers','Gutierrez','Ortiz','Morgan','Cooper','Peterson','Bailey',
-  'Reed','Kelly','Howard','Ramos','Kim','Cox','Ward','Richardson','Watson',
-  'Brooks','Chavez','Wood','James','Bennett','Gray','Mendoza','Ruiz','Hughes',
-  'Price','Alvarez','Castillo','Sanders','Patel','Myers','Long','Ross',
-  'Foster','Jimenez','Powell','Jenkins','Perry','Russell','Sullivan','Bell',
-  'Coleman','Butler','Henderson','Barnes','Gonzales','Fisher','Vasquez','Simpson',
-  'Romero','Jordan','Patterson','Alexander','Hamilton','Graham','Reynolds','Griffin',
-  'Wallace','Moreno','West','Cole','Hayes','Bryant','Herrera','Gibson','Ellis',
-  'Tran','Medina','Aguilar','Stevens','Murray','Ford','Castro','Marshall',
-  'Owens','Harrison','Fernandez','Woods','Washington','Kennedy','Wells','Vargas',
-  'Henry','Chen','Freeman','Webb','Tucker','Guzman','Burns','Crawford','Olson',
-  'Simpson','Porter','Hunter','Gordon','Mendez','Silva','Shaw','Snyder','Mason',
-  'Dixon','Munoz','Hunt','Hicks','Holmes','Palmer','Wagner','Black','Robertson',
-  'Boyd','Rose','Stone','Salazar','Fox','Warren','Mills','Meyer','Rice','Schmidt',
-  'Garza','Daniels','Ferguson','Nichols','Stephens','Soto','Weaver','Ryan','Gardner',
-  'Payne','Grant','Dunn','Kelley','Spencer','Hawkins','Arnold','Pierce','Vazquez',
-  'Hansen','Peters','Santos','Hart','Bradley','Knight','Elliott','Cunningham','Duncan'
+  'Smith','Johnson','Williams','Brown','Jones','Garcia','Miller','Davis','Rodriguez','Martinez',
+  'Hernandez','Lopez','Gonzalez','Wilson','Anderson','Thomas','Taylor','Moore','Jackson','Martin',
+  'Lee','Perez','Thompson','White','Harris','Sanchez','Clark','Ramirez','Lewis','Robinson',
+  'Walker','Young','Allen','King','Wright','Scott','Torres','Nguyen','Hill','Flores',
+  'Green','Adams','Nelson','Baker','Hall','Rivera','Campbell','Mitchell','Carter','Roberts',
+  'Gomez','Phillips','Evans','Turner','Diaz','Parker','Cruz','Edwards','Collins','Reyes'
 ]
 
 const niches = [
-  'Crypto Day Trading','Forex Scalping','Swing Trading','Options Strategies',
-  'Dividend Investing','Growth Stocks','Value Investing','Penny Stocks',
-  'Commodities','Index Funds','Technical Analysis','Algorithmic Trading',
-  'Social Trading','Copy Trading','Portfolio Management','Risk Management',
-  'Arbitrage','Futures Trading','Bond Trading','REITs','NFT Flipping',
-  'DeFi Yield Farming','Staking Strategies','Metaverse Assets','AI Trading Bots'
+  'Finance & Options', 'E-Commerce Arbitrage', 'Real Estate Wholesaling',
+  'Digital Wellness', 'B2B SaaS Subscriptions', 'Fitness Coaching',
+  'Web3 & Crypto', 'High-Ticket Sales', 'Personal Brand Monetization'
 ]
 
-const avatarColors = [
-  'bg-indigo-500','bg-emerald-500','bg-amber-500','bg-rose-500',
-  'bg-cyan-500','bg-violet-500','bg-fuchsia-500','bg-lime-500',
-  'bg-sky-500','bg-orange-500','bg-teal-500','bg-pink-500'
-]
-
-function generateGrowthArray() {
-  const base = 100
-  const data = [base]
-  for (let i = 1; i < 12; i++) {
-    const change = (Math.random() - 0.3) * 25
-    data.push(Math.max(data[i - 1] + change, 50))
-  }
-  return data.map(v => Math.round(v * 10) / 10)
-}
-
-function generateAffiliate(index) {
-  const firstName = firstNames[Math.floor(Math.random() * firstNames.length)]
-  const lastName = lastNames[Math.floor(Math.random() * lastNames.length)]
-  const niche = niches[Math.floor(Math.random() * niches.length)]
-  const revenue = Math.floor(200000 + Math.random() * 4800000)
-  const rating = Math.round((3.0 + Math.random() * 2.0) * 10) / 10
-  const minDeposit = Math.floor(2 + Math.random() * 8) * 100
-  const followers = Math.floor(1000 + Math.random() * 499000)
-  const winRate = Math.floor(55 + Math.random() * 35)
-  const totalTrades = Math.floor(500 + Math.random() * 9500)
-  const profitFactor = Math.round((1.2 + Math.random() * 2.3) * 100) / 100
-  const sharpeRatio = Math.round((0.8 + Math.random() * 2.5) * 100) / 100
-  const maxDrawdown = Math.round((5 + Math.random() * 25) * 10) / 10
-  const monthlyReturn = Math.round((2 + Math.random() * 18) * 10) / 10
-  const yearsExperience = Math.floor(2 + Math.random() * 13)
-  const verified = Math.random() > 0.3
-  const premium = Math.random() > 0.7
-  const avatarColor = avatarColors[Math.floor(Math.random() * avatarColors.length)]
-
-  return {
-    id: `aff-${index + 1}`,
-    name: `${firstName} ${lastName}`,
-    niche,
-    revenue,
-    rating,
-    minDeposit,
-    followers,
-    winRate,
-    totalTrades,
-    profitFactor,
-    sharpeRatio,
-    maxDrawdown,
-    monthlyReturn,
-    yearsExperience,
-    verified,
-    premium,
-    avatarColor,
-    growth: generateGrowthArray(),
-    bio: `Professional ${niche.toLowerCase()} specialist with ${yearsExperience}+ years of market experience. Consistent performer with a ${winRate}% win rate across ${totalTrades.toLocaleString()} trades.`,
-    strategy: `Primary approach combines ${niche.toLowerCase()} with advanced technical indicators. Entry signals generated through multi-timeframe analysis. Risk per trade capped at 2% of portfolio.`,
-    location: ['New York, USA','London, UK','Singapore','Dubai, UAE','Zurich, Switzerland','Hong Kong','Sydney, Australia','Toronto, Canada'][Math.floor(Math.random() * 8)],
-    joinedDate: new Date(2020 + Math.floor(Math.random() * 4), Math.floor(Math.random() * 12), 1).toISOString(),
+// Simple seeded PRNG
+function mulberry32(a) {
+  return function() {
+    var t = a += 0x6D2B79F5;
+    t = Math.imul(t ^ t >>> 15, t | 1);
+    t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
   }
 }
+const seedRandom = mulberry32(12345);
 
-const affiliates = Array.from({ length: 120 }, (_, i) => generateAffiliate(i))
+const generatedAffiliates = []
+const usedNames = new Set()
 
-export default affiliates
+// Generate 120 authentic-looking affiliates
+for (let i = 1; i <= 120; i++) {
+  let fName, lName, fullName;
+  do {
+    fName = firstNames[Math.floor(seedRandom() * firstNames.length)]
+    lName = lastNames[Math.floor(seedRandom() * lastNames.length)]
+    fullName = `${fName} ${lName}`
+  } while (usedNames.has(fullName))
+  usedNames.add(fullName)
+  
+  // Use DiceBear for illustrated avatars
+  const avatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(fullName)}&backgroundColor=b6e3f4,c0aede,d1d4f9`
 
-export const getAffiliateById = (id) => {
-  const edits = JSON.parse(localStorage.getItem('ct_affiliateEdits') || '{}')
-  const base = affiliates.find(a => a.id === id)
-  if (!base) return null
-  return { ...base, ...(edits[id] || {}) }
+  const niche = niches[Math.floor(seedRandom() * niches.length)]
+  
+  // Exponentially scale revenues to make it look like a real distribution
+  const revenueBase = Math.floor(seedRandom() * 100) + 10
+  const multiplier = seedRandom() > 0.9 ? 100000 : (seedRandom() > 0.7 ? 10000 : 1000)
+  const revenue = revenueBase * multiplier
+  
+  const monthlyReturn = (seedRandom() * 30 + 5).toFixed(1) // 5.0 to 35.0
+  const followers = Math.floor(seedRandom() * 500) + 10 // 10k to 510k
+  const followersStr = `${followers}K`
+  
+  const rating = (seedRandom() * 1 + 4).toFixed(1) // 4.0 to 5.0
+  
+  let minDeposit = 500
+  if (revenue > 2000000) minDeposit = 2500
+  else if (revenue > 500000) minDeposit = 1000
+
+  // Standardize 3 products per affiliate
+  const products = [
+    { name: `Advanced ${niche} Masterclass`, price: 997, type: 'Course' },
+    { name: '1-on-1 Strategy Call', price: 497, type: 'Consulting' },
+    { name: 'Private Discord Community', price: 97, type: 'Subscription' }
+  ]
+
+  generatedAffiliates.push({
+    id: `aff_${i}`,
+    name: fullName,
+    avatar: avatarUrl,
+    niche: niche,
+    revenue: revenue, // raw number for sorting
+    monthlyReturn: parseFloat(monthlyReturn), // percentage
+    followers: followersStr,
+    rating: parseFloat(rating),
+    minDeposit: minDeposit,
+    products: products
+  })
 }
 
-export const getAllAffiliates = () => {
-  const edits = JSON.parse(localStorage.getItem('ct_affiliateEdits') || '{}')
-  return affiliates.map(a => ({ ...a, ...(edits[a.id] || {}) }))
+// Ensure the array is sorted by revenue descending for the default leaderboard view
+generatedAffiliates.sort((a, b) => b.revenue - a.revenue)
+
+export function getAllAffiliates() {
+  return generatedAffiliates
 }
 
-export const updateAffiliate = (id, updates) => {
-  const edits = JSON.parse(localStorage.getItem('ct_affiliateEdits') || '{}')
-  edits[id] = { ...(edits[id] || {}), ...updates }
-  localStorage.setItem('ct_affiliateEdits', JSON.stringify(edits))
-  return true
+export function getAffiliateById(id) {
+  return generatedAffiliates.find(a => a.id === id)
 }
 
-export const getTopAffiliates = (limit = 10) => {
-  return getAllAffiliates().sort((a, b) => b.revenue - a.revenue).slice(0, limit)
+// Only used for the Admin panel to simulate editing
+export function updateAffiliate(id, updates) {
+  const index = generatedAffiliates.findIndex(a => a.id === id)
+  if (index !== -1) {
+    generatedAffiliates[index] = { ...generatedAffiliates[index], ...updates }
+    return true
+  }
+  return false
 }

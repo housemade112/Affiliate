@@ -1,103 +1,254 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext.jsx'
-import { useToast } from '../context/ToastContext.jsx'
 import { formatCurrency } from '../lib/utils.js'
-import { Wallet as WalletIcon, ArrowDownLeft, ArrowUpRight, Clock, CheckCircle, XCircle } from 'lucide-react'
+import { api } from '../lib/api.js'
+import WalletModal from '../components/WalletModal.jsx'
+import {
+  Wallet as WalletIcon, ArrowDownLeft, ArrowUpRight,
+  Clock, CheckCircle, XCircle, PlusCircle, ShieldCheck, ArrowDownToLine, ArrowUpFromLine
+} from 'lucide-react'
+import { useTheme } from '../context/ThemeContext.jsx'
 
 export default function Wallet() {
-  const { user, addTransaction, getTransactions } = useAuth()
-  const { addToast } = useToast()
-  const [amount, setAmount] = useState('')
-  const [type, setType] = useState('deposit')
-  const [loading, setLoading] = useState(false)
+  const { user } = useAuth()
+  const { theme } = useTheme()
+  const isDark = theme === 'dark'
+  
+  const [transactions, setTransactions] = useState([])
+  const [txLoading, setTxLoading]       = useState(true)
+  const [modalOpen, setModalOpen]       = useState(false)
+  const [defaultType, setDefaultType]   = useState('deposit')
 
-  const transactions = getTransactions().filter(t => t.userId === user?.id)
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    const val = parseFloat(amount)
-    if (!val || val <= 0) { addToast('Enter a valid amount', 'error'); return }
-    setLoading(true)
-    addTransaction(type, val, 'pending')
-    setLoading(false)
-    setAmount('')
-    addToast(`${type === 'deposit' ? 'Deposit' : 'Withdrawal'} request submitted`, 'success')
+  const load = () => {
+    if (!user) return
+    api.wallet.transactions(user.id)
+      .then(d => { setTransactions(d.transactions); setTxLoading(false) })
+      .catch(() => setTxLoading(false))
   }
 
-  const statusIcon = (status) => {
-    if (status === 'approved') return <CheckCircle className="w-4 h-4 text-emerald-400" />
-    if (status === 'declined') return <XCircle className="w-4 h-4 text-rose-400" />
-    return <Clock className="w-4 h-4 text-amber-400" />
+  useEffect(() => { load() }, [user?.id])
+
+  const openDeposit    = () => { setDefaultType('deposit');    setModalOpen(true) }
+  const openWithdrawal = () => { setDefaultType('withdrawal'); setModalOpen(true) }
+
+  const statusMeta = {
+    approved: { icon: CheckCircle, pill: 'bg-emerald-100 text-emerald-700 border-emerald-200' },
+    declined: { icon: XCircle,    pill: 'bg-rose-100 text-rose-700 border-rose-200' },
+    pending:  { icon: Clock,      pill: 'bg-amber-100 text-amber-700 border-amber-200' },
   }
 
-  const statusClass = (status) => {
-    if (status === 'approved') return 'text-emerald-400 bg-emerald-500/10'
-    if (status === 'declined') return 'text-rose-400 bg-rose-500/10'
-    return 'text-amber-400 bg-amber-500/10'
-  }
+  const totalDeposited  = transactions.filter(t => t.type === 'deposit'    && t.status === 'approved').reduce((s, t) => s + t.amount, 0)
+  const totalWithdrawn  = transactions.filter(t => t.type === 'withdrawal' && t.status === 'approved').reduce((s, t) => s + t.amount, 0)
 
   return (
-    <div className="space-y-8 animate-fade-in">
-      <div>
-        <h1 className="text-2xl font-bold text-white">Wallet</h1>
-        <p className="text-slate-400 mt-1">Manage your funds and transactions</p>
+    <div className="animate-fade-in pb-24 font-sans space-y-6">
+
+      {/* Hero Header */}
+      <div className="bg-[#005645] rounded-[28px] p-8 sm:p-10 relative overflow-hidden flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 shadow-xl">
+        <div className="absolute right-0 top-0 w-64 h-64 bg-[#C3F53C]/10 rounded-full blur-[60px] pointer-events-none" />
+        <div className="relative z-10">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/20 text-emerald-300 text-[10px] uppercase font-extrabold tracking-widest mb-3">
+            <WalletIcon className="w-3 h-3" /> Capital Console
+          </span>
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">Wallet & Ledger</h1>
+          <p className="text-emerald-100/80 font-medium mt-2">Manage crypto deposits, withdrawals, and transfers</p>
+        </div>
+        <div className="flex gap-3 relative z-10 w-full sm:w-auto">
+          <button onClick={openDeposit}
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-[#C3F53C] text-[#005645] font-extrabold text-sm rounded-2xl shadow-lg hover:bg-[#b0e22b] active:scale-95 transition-all">
+            <ArrowDownToLine className="w-4 h-4" /> Deposit
+          </button>
+          <button onClick={openWithdrawal}
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-white/10 border border-white/20 text-white font-extrabold text-sm rounded-2xl hover:bg-white/20 active:scale-95 transition-all">
+            <ArrowUpFromLine className="w-4 h-4" /> Withdraw
+          </button>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="glass-card p-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl bg-violet-500/10 flex items-center justify-center">
-              <WalletIcon className="w-5 h-5 text-violet-400" />
-            </div>
-            <div>
-              <p className="text-sm text-slate-400">Available Balance</p>
-              <p className="text-2xl font-bold text-white">{formatCurrency(user?.balance || 0)}</p>
-            </div>
+      {/* Stat Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className={`rounded-[24px] p-8 shadow-sm flex flex-col gap-3 hover:-translate-y-1 transition-all border ${isDark ? 'bg-[#1A1D21] border-white/5' : 'bg-white border-slate-200/80'}`}>
+          <div className="w-12 h-12 rounded-2xl bg-[#005645] text-[#C3F53C] flex items-center justify-center shadow-md">
+            <WalletIcon className="w-6 h-6" />
           </div>
-
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-slate-400 mb-1.5">Amount (USD)</label>
-              <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} className="input-field" placeholder="0.00" min="1" step="0.01" required />
-            </div>
-            <div className="flex gap-2">
-              <button type="button" onClick={() => setType('deposit')} className={`flex-1 py-2.5 rounded-xl text-sm font-medium transition-all ${type === 'deposit' ? 'bg-emerald-500 text-white' : 'bg-white/5 text-slate-400 hover:bg-white/10'}`}>Deposit</button>
-              <button type="button" onClick={() => setType('withdrawal')} className={`flex-1 py-2.5 rounded-xl text-sm font-medium transition-all ${type === 'withdrawal' ? 'bg-rose-500 text-white' : 'bg-white/5 text-slate-400 hover:bg-white/10'}`}>Withdraw</button>
-            </div>
-            <button type="submit" disabled={loading} className={`w-full py-3 rounded-xl font-semibold text-white transition-all ${type === 'deposit' ? 'bg-emerald-500 hover:bg-emerald-450' : 'bg-rose-500 hover:bg-rose-450'} disabled:opacity-50`}>
-              {loading ? 'Processing...' : `Request ${type === 'deposit' ? 'Deposit' : 'Withdrawal'}`}
-            </button>
-          </form>
+          <div>
+            <p className={`text-sm font-bold ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Available Balance</p>
+            <p className={`text-4xl font-extrabold mt-1 tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>{formatCurrency(user?.balance || 0)}</p>
+          </div>
+          <div className="flex items-center gap-2 text-xs font-bold text-[#005645] dark:text-[#C3F53C]">
+            <ShieldCheck className="w-4 h-4" /> Verified & Secured
+          </div>
         </div>
 
-        <div className="lg:col-span-2 glass-card p-6">
-          <h3 className="text-lg font-semibold text-white mb-4">Transaction History</h3>
-          {transactions.length === 0 ? (
-            <div className="text-center py-12">
-              <Clock className="w-12 h-12 text-slate-600 mx-auto mb-3" />
-              <p className="text-slate-400">No transactions yet</p>
+        <div className={`rounded-[24px] p-8 shadow-sm flex flex-col gap-3 hover:-translate-y-1 transition-all border ${isDark ? 'bg-[#1A1D21] border-white/5' : 'bg-white border-slate-200/80'}`}>
+          <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm ${isDark ? 'bg-emerald-500/10 text-emerald-400' : 'bg-emerald-100 text-emerald-600'}`}>
+            <ArrowDownLeft className="w-6 h-6" />
+          </div>
+          <div>
+            <p className={`text-sm font-bold ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Total Deposited</p>
+            <p className={`text-4xl font-extrabold mt-1 tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>{formatCurrency(totalDeposited)}</p>
+          </div>
+          <p className={`text-xs font-bold ${isDark ? 'text-white/30' : 'text-slate-400'}`}>{transactions.filter(t => t.type === 'deposit').length} transactions</p>
+        </div>
+
+        <div className={`rounded-[24px] p-8 shadow-sm flex flex-col gap-3 hover:-translate-y-1 transition-all border ${isDark ? 'bg-[#1A1D21] border-white/5' : 'bg-white border-slate-200/80'}`}>
+          <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm ${isDark ? 'bg-rose-500/10 text-rose-400' : 'bg-rose-100 text-rose-600'}`}>
+            <ArrowUpRight className="w-6 h-6" />
+          </div>
+          <div>
+            <p className={`text-sm font-bold ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Total Withdrawn</p>
+            <p className={`text-4xl font-extrabold mt-1 tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>{formatCurrency(totalWithdrawn)}</p>
+          </div>
+          <p className={`text-xs font-bold ${isDark ? 'text-white/30' : 'text-slate-400'}`}>{transactions.filter(t => t.type === 'withdrawal').length} transactions</p>
+        </div>
+      </div>
+
+      {/* Transaction Table */}
+      <div className={`rounded-[28px] shadow-sm overflow-hidden flex flex-col border transition-colors ${isDark ? 'bg-[#1A1D21] border-white/5' : 'bg-white border-slate-200/80'}`}>
+        <div className={`px-8 py-6 border-b flex items-center justify-between ${isDark ? 'border-white/5' : 'border-slate-100'}`}>
+          <div>
+            <h3 className={`text-xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>Transaction Ledger</h3>
+            <p className={`text-xs font-semibold mt-1 ${isDark ? 'text-white/40' : 'text-slate-400'}`}>{transactions.length} total records</p>
+          </div>
+          <button onClick={openDeposit}
+            className="flex items-center gap-2 text-xs font-extrabold text-[#005645] bg-emerald-50 border border-emerald-100 px-4 py-2.5 rounded-xl hover:bg-emerald-100 transition-colors">
+            <PlusCircle className="w-4 h-4" /> New Transfer
+          </button>
+        </div>
+
+        <div className="flex-1 overflow-x-auto">
+          {txLoading ? (
+            <div className="p-8 space-y-4">
+              {[1,2,3].map(i => <div key={i} className="h-16 bg-slate-100 rounded-2xl animate-pulse" />)}
+            </div>
+          ) : transactions.length === 0 ? (
+            <div className="p-20 text-center flex flex-col items-center gap-5">
+              <div className="w-20 h-20 rounded-[24px] bg-slate-50 border border-slate-200 flex items-center justify-center">
+                <WalletIcon className="w-8 h-8 text-slate-300" />
+              </div>
+              <div>
+                <h4 className="font-extrabold text-slate-900 text-xl">No transactions yet</h4>
+                <p className="text-slate-500 font-medium mt-2 max-w-xs mx-auto text-sm">Deposit funds to start allocating capital to top-performing affiliate partners.</p>
+              </div>
+              <button onClick={openDeposit} className="btn-lime px-8 py-3 text-sm shadow-lg">Make a Deposit</button>
             </div>
           ) : (
-            <div className="space-y-2 max-h-[500px] overflow-y-auto">
-              {transactions.map(tx => (
-                <div key={tx.id} className="flex items-center gap-4 p-4 bg-white/5 rounded-xl">
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${tx.type === 'deposit' ? 'bg-emerald-500/10' : tx.type === 'withdrawal' ? 'bg-rose-500/10' : 'bg-violet-500/10'}`}>
-                    {tx.type === 'deposit' ? <ArrowDownLeft className="w-5 h-5 text-emerald-400" /> : tx.type === 'withdrawal' ? <ArrowUpRight className="w-5 h-5 text-rose-400" /> : <WalletIcon className="w-5 h-5 text-violet-400" />}
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-white capitalize">{tx.type.replace('_', ' ')}</p>
-                    <p className="text-xs text-slate-400">{new Date(tx.createdAt).toLocaleDateString()}</p>
-                  </div>
-                  <div className="text-right">
-                    <p className={`text-sm font-bold ${tx.type === 'withdrawal' ? 'text-rose-400' : 'text-emerald-400'}`}>{tx.type === 'withdrawal' ? '-' : '+'}{formatCurrency(tx.amount)}</p>
-                    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${statusClass(tx.status)}`}>{statusIcon(tx.status)}{tx.status}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <>
+              {/* Desktop Ledger Table */}
+              <table className="hidden md:table w-full text-sm whitespace-nowrap">
+                <thead className={`border-b text-xs font-bold uppercase tracking-wider ${isDark ? 'bg-white/5 border-white/5 text-white/40' : 'bg-slate-50 border-slate-100 text-slate-400'}`}>
+                  <tr>
+                    <th className="px-8 py-4 text-left">Transaction Details</th>
+                    <th className="px-6 py-4 text-left">Date & Time</th>
+                    <th className="px-6 py-4 text-left">Amount</th>
+                    <th className="px-6 py-4 text-right">Status</th>
+                  </tr>
+                </thead>
+                <tbody className={`divide-y ${isDark ? 'divide-white/5' : 'divide-slate-50'}`}>
+                  {transactions.map(tx => {
+                    const isDeposit = tx.type === 'deposit'
+                    const meta = statusMeta[tx.status] || statusMeta.pending
+                    const txId = tx.id.substring(0, 8).toUpperCase()
+                    return (
+                      <tr key={tx.id} className={`transition-colors ${isDark ? 'hover:bg-white/5' : 'hover:bg-slate-50/80'}`}>
+                        <td className="px-8 py-5">
+                          <div className="flex items-center gap-4">
+                            <div className={`w-11 h-11 rounded-2xl flex items-center justify-center border shadow-sm
+                              ${isDeposit 
+                                ? isDark ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' : 'bg-emerald-50 border-emerald-100 text-[#005645]' 
+                                : isDark ? 'bg-white/5 border-white/10 text-white/60' : 'bg-slate-50 border-slate-200 text-slate-600'}`}>
+                              {isDeposit ? <ArrowDownLeft className="w-5 h-5" /> : <ArrowUpRight className="w-5 h-5" />}
+                            </div>
+                            <div>
+                              <p className={`font-extrabold capitalize flex items-center gap-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                                {tx.type} 
+                                <span className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded ${isDark ? 'bg-white/10 text-white/50' : 'bg-slate-100 text-slate-400'}`}>#{txId}</span>
+                              </p>
+                              <p className={`text-xs font-semibold ${isDark ? 'text-white/40' : 'text-slate-400'}`}>{tx.method || 'Platform Transfer'}</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-5">
+                          <p className={`font-semibold ${isDark ? 'text-white/80' : 'text-slate-700'}`}>
+                            {new Date(tx.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+                          </p>
+                          <p className={`text-xs font-semibold mt-0.5 ${isDark ? 'text-white/40' : 'text-slate-400'}`}>
+                            {new Date(tx.date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
+                          </p>
+                        </td>
+                        <td className="px-6 py-5">
+                          <span className={`font-extrabold text-lg ${isDeposit ? (isDark ? 'text-emerald-400' : 'text-[#005645]') : (isDark ? 'text-white' : 'text-slate-900')}`}>
+                            {isDeposit ? '+' : '-'}{formatCurrency(tx.amount)}
+                          </span>
+                        </td>
+                        <td className="px-6 py-5 text-right">
+                          <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-extrabold uppercase tracking-wide ${meta.pill}`}>
+                            <meta.icon className="w-3.5 h-3.5" />{tx.status}
+                          </span>
+                        </td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+
+              {/* Mobile Ledger List */}
+              <div className="md:hidden flex flex-col divide-y divide-slate-100">
+                {transactions.map(tx => {
+                  const isDeposit = tx.type === 'deposit'
+                  const meta = statusMeta[tx.status] || statusMeta.pending
+                  const txId = tx.id.substring(0, 8).toUpperCase()
+                  
+                  return (
+                    <div key={tx.id} className="p-4 sm:p-5 flex flex-col gap-4">
+                      <div className="flex items-start justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border shadow-sm
+                              ${isDeposit ? 'bg-emerald-50 border-emerald-100 text-[#005645]' : 'bg-slate-50 border-slate-200 text-slate-600'}`}>
+                            {isDeposit ? <ArrowDownLeft className="w-5 h-5" /> : <ArrowUpRight className="w-5 h-5" />}
+                          </div>
+                          <div>
+                            <p className="font-extrabold text-slate-900 capitalize leading-tight">{tx.type}</p>
+                            <p className="text-xs text-slate-400 font-semibold mt-0.5">{tx.method || 'Platform Transfer'}</p>
+                          </div>
+                        </div>
+                        <span className={`font-extrabold text-lg ${isDeposit ? 'text-[#005645]' : 'text-slate-900'}`}>
+                          {isDeposit ? '+' : '-'}{formatCurrency(tx.amount)}
+                        </span>
+                      </div>
+                      
+                      <div className="flex items-center justify-between bg-slate-50 p-3 rounded-xl border border-slate-100">
+                        <div>
+                          <p className="text-[10px] font-bold text-slate-400 uppercase">Date</p>
+                          <p className="text-xs font-bold text-slate-700 mt-0.5">
+                            {new Date(tx.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-[10px] font-bold text-slate-400 uppercase">TxID</p>
+                          <p className="text-xs font-mono font-bold text-slate-500 mt-0.5">#{txId}</p>
+                        </div>
+                        <div className="text-right">
+                          <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-md border text-[10px] font-extrabold uppercase tracking-wide ${meta.pill}`}>
+                            <meta.icon className="w-3 h-3" />{tx.status}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </>
           )}
         </div>
       </div>
+
+      <WalletModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        onSuccess={() => load()}
+        defaultType={defaultType}
+      />
     </div>
   )
 }
