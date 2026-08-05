@@ -88,7 +88,7 @@ export default function Layout() {
         ))}
       </div>
 
-      {/* User Info — NO balance shown here */}
+      {/* User Info (NO balance shown here) */}
       {user && (
         <div className={`p-4 border-t ${isDark ? 'border-white/5' : 'border-emerald-800/30'}`}>
           <Link to="/profile"
@@ -154,19 +154,19 @@ export default function Layout() {
 
             {/* Deposit */}
             <button onClick={openDeposit}
-              className={`flex items-center gap-1.5 px-3 sm:px-4 py-2 text-xs font-extrabold rounded-xl active:scale-95 transition-all shadow-sm ${
+              className={`flex items-center justify-center gap-1.5 w-9 sm:w-auto h-9 sm:h-auto sm:px-4 py-2 text-xs font-extrabold rounded-xl active:scale-95 transition-all shadow-sm ${
                 isDark ? 'bg-emerald-900/40 text-emerald-400 hover:bg-emerald-900/60' : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200/50'
               }`}>
-              <ArrowDownToLine className="w-3.5 h-3.5" />
+              <ArrowDownToLine className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
               <span className="hidden sm:inline">Deposit</span>
             </button>
 
             {/* Withdraw */}
             <button onClick={openWithdrawal}
-              className={`flex items-center gap-1.5 px-3 sm:px-4 py-2 text-xs font-extrabold rounded-xl active:scale-95 transition-all ${
+              className={`flex items-center justify-center gap-1.5 w-9 sm:w-auto h-9 sm:h-auto sm:px-4 py-2 text-xs font-extrabold rounded-xl active:scale-95 transition-all ${
                 isDark ? 'bg-white/5 border border-white/10 text-white hover:bg-white/10' : 'bg-white border border-slate-200 text-slate-700 hover:border-slate-300 shadow-sm'
               }`}>
-              <ArrowUpFromLine className="w-3.5 h-3.5" />
+              <ArrowUpFromLine className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
               <span className="hidden sm:inline">Withdraw</span>
             </button>
 
@@ -245,6 +245,20 @@ export default function Layout() {
         <main className="flex-1 px-4 sm:px-6 lg:px-10 py-8 max-w-[1400px] mx-auto w-full">
           <Outlet />
         </main>
+
+        {/* ── MANDATORY DASHBOARD FOOTER ── */}
+        <footer className={`mt-auto py-8 px-4 sm:px-6 lg:px-10 border-t ${isDark ? 'border-white/5 bg-[#111317]' : 'border-slate-200/60 bg-white/50'}`}>
+          <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className={`text-sm font-medium ${isDark ? 'text-white/40' : 'text-slate-500'}`}>
+              © 2025 Scalely.ai · All rights reserved.
+            </div>
+            <div className={`flex items-center gap-6 text-sm font-medium ${isDark ? 'text-white/60' : 'text-slate-500'}`}>
+              <a href="#terms" className={`hover:underline ${isDark ? 'hover:text-white' : 'hover:text-slate-900'}`}>Terms of Service</a>
+              <a href="#privacy" className={`hover:underline ${isDark ? 'hover:text-white' : 'hover:text-slate-900'}`}>Privacy Policy</a>
+              <a href="#support" className={`hover:underline ${isDark ? 'hover:text-white' : 'hover:text-slate-900'}`}>Support Center</a>
+            </div>
+          </div>
+        </footer>
       </div>
 
       {/* ── WALLET MODAL ── */}

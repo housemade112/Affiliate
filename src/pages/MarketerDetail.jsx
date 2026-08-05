@@ -141,7 +141,7 @@ export default function MarketerDetail() {
           </div>
 
           {/* Revenue Block */}
-          <div className={`flex-shrink-0 text-right p-6 rounded-[20px] ${isDark ? 'bg-white/5 border border-white/5' : 'bg-slate-50 border border-slate-100'}`}>
+          <div className={`flex-shrink-0 text-left md:text-right p-6 rounded-[20px] w-full md:w-auto ${isDark ? 'bg-white/5 border border-white/5' : 'bg-slate-50 border border-slate-100'}`}>
             <p className={`text-xs font-bold uppercase tracking-wider ${isDark ? 'text-white/30' : 'text-slate-400'}`}>Lifetime Revenue</p>
             <p className={`text-4xl font-extrabold mt-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>{revenue}</p>
             <p className="text-xl font-extrabold text-[#005645] mt-2 bg-emerald-50 border border-emerald-100 px-3 py-1 rounded-xl inline-block">
@@ -151,14 +151,14 @@ export default function MarketerDetail() {
         </div>
 
         {/* Stats Row */}
-        <div className={`grid grid-cols-3 gap-4 mt-8 p-4 rounded-[18px] ${isDark ? 'bg-white/5 border border-white/5' : 'bg-slate-50 border border-slate-100'}`}>
+        <div className={`grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x mt-8 rounded-[18px] ${isDark ? 'bg-white/5 border border-white/5 divide-white/5' : 'bg-slate-50 border border-slate-100 divide-slate-100'}`}>
           {[
             { label: 'Min Deposit', value: formatCurrency(aff.minDeposit) },
             { label: 'Monthly Profit', value: `+${aff.monthlyReturn}%`, highlight: true },
             { label: 'Est. Monthly Return', value: formatCurrency((aff.minDeposit * aff.monthlyReturn) / 100) },
           ].map(s => (
-            <div key={s.label} className="text-center">
-              <p className={`text-sm font-extrabold ${s.highlight ? 'text-[#005645] dark:text-[#C3F53C]' : isDark ? 'text-white' : 'text-slate-900'}`}>{s.value}</p>
+            <div key={s.label} className="text-center p-4">
+              <p className={`text-base sm:text-sm font-extrabold ${s.highlight ? 'text-[#005645] dark:text-[#C3F53C]' : isDark ? 'text-white' : 'text-slate-900'}`}>{s.value}</p>
               <p className={`text-[10px] font-bold uppercase tracking-wider mt-0.5 ${isDark ? 'text-white/30' : 'text-slate-400'}`}>{s.label}</p>
             </div>
           ))}
@@ -194,7 +194,7 @@ export default function MarketerDetail() {
       {/* ── PERFORMANCE HISTORY ── */}
       {history.length > 0 && (
         <div className={`${card} p-8`}>
-          <div className={`flex items-center justify-between border-b pb-5 mb-6 ${isDark ? 'border-white/5' : 'border-slate-100'}`}>
+          <div className={`flex flex-col sm:flex-row sm:items-center justify-between border-b pb-5 mb-6 gap-4 ${isDark ? 'border-white/5' : 'border-slate-100'}`}>
             <div>
               <h3 className={`text-xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>12-Month Performance</h3>
               <p className={`text-xs font-semibold mt-1 ${isDark ? 'text-white/40' : 'text-slate-400'}`}>Audited monthly revenue data</p>
@@ -212,7 +212,7 @@ export default function MarketerDetail() {
           </div>
 
           {/* Bar chart via CSS */}
-          <div className="flex items-end gap-3 h-48 w-full mt-8">
+          <div className="flex items-end gap-1.5 sm:gap-3 h-48 w-full mt-8">
             {history.map((m, i) => {
               const maxRev = Math.max(...history.map(h => h.revenue))
               const pct    = (m.revenue / maxRev) * 100
@@ -223,13 +223,13 @@ export default function MarketerDetail() {
                     <div className="w-full bg-[#AA96F7] transition-all" style={{height:'40%'}} />
                     <div className="w-full bg-[#C3F53C] transition-all" style={{height:'60%'}} />
                   </div>
-                  <span className={`text-[10px] font-bold uppercase tracking-wider ${isDark ? 'text-white/40' : 'text-slate-400'}`}>{m.month}</span>
+                  <span className={`text-[8px] sm:text-[10px] font-bold uppercase tracking-wider ${isDark ? 'text-white/40' : 'text-slate-400'}`}>{m.month}</span>
                 </div>
               )
             })}
           </div>
 
-          <div className="grid grid-cols-3 gap-4 mt-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
             {[
               { label: 'Best Month', value: formatCurrency(Math.max(...history.map(h => h.revenue))) },
               { label: 'Avg Monthly', value: formatCurrency(history.reduce((s, h) => s + h.revenue, 0) / history.length) },

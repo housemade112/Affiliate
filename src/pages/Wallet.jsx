@@ -45,7 +45,7 @@ export default function Wallet() {
 
       {/* Hero Header */}
       <div className="bg-[#005645] rounded-[28px] p-8 sm:p-10 relative overflow-hidden flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 shadow-xl">
-        <div className="absolute right-0 top-0 w-64 h-64 bg-[#C3F53C]/10 rounded-full blur-[60px] pointer-events-none" />
+
         <div className="relative z-10">
           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/20 text-emerald-300 text-[10px] uppercase font-extrabold tracking-widest mb-3">
             <WalletIcon className="w-3 h-3" /> Capital Console
@@ -135,7 +135,8 @@ export default function Wallet() {
           ) : (
             <>
               {/* Desktop Ledger Table */}
-              <table className="hidden md:table w-full text-sm whitespace-nowrap">
+              <div className="overflow-x-auto">
+                <table className="hidden md:table w-full text-sm whitespace-nowrap">
                 <thead className={`border-b text-xs font-bold uppercase tracking-wider ${isDark ? 'bg-white/5 border-white/5 text-white/40' : 'bg-slate-50 border-slate-100 text-slate-400'}`}>
                   <tr>
                     <th className="px-8 py-4 text-left">Transaction Details</th>
@@ -191,9 +192,10 @@ export default function Wallet() {
                   })}
                 </tbody>
               </table>
+              </div>
 
               {/* Mobile Ledger List */}
-              <div className="md:hidden flex flex-col divide-y divide-slate-100">
+              <div className="md:hidden overflow-x-auto flex flex-col divide-y divide-slate-100">
                 {transactions.map(tx => {
                   const isDeposit = tx.type === 'deposit'
                   const meta = statusMeta[tx.status] || statusMeta.pending

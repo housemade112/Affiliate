@@ -1,7 +1,7 @@
 import { getAllAffiliates, getAffiliateById } from '../data/affiliates.js'
 
 // ---------------------------------------------------------------------------
-// Pure client-side mock API — no backend needed
+// Pure client-side mock API - no backend needed
 // All data comes from affiliates.js (localStorage for wallet/transactions)
 // ---------------------------------------------------------------------------
 

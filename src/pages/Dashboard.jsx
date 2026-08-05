@@ -92,7 +92,7 @@ export default function Dashboard() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
             {/* Dark Stats Card */}
-            <div className={`lg:col-span-5 rounded-[24px] p-6 sm:p-8 flex flex-col justify-between min-h-[280px] shadow-xl relative overflow-hidden ${
+            <div className={`lg:col-span-5 rounded-[24px] p-6 flex flex-col justify-between min-h-[280px] shadow-xl relative overflow-hidden ${
               isDark ? 'bg-[#1A1D21] border border-white/5' : 'bg-[#1E2128]'
             }`}>
               <div className="absolute right-8 top-8 opacity-10 pointer-events-none">
@@ -147,9 +147,9 @@ export default function Dashboard() {
             </div>
 
             {/* Current Balance Card */}
-            <div className={`lg:col-span-7 rounded-[24px] p-4 sm:p-6 flex flex-col justify-between min-h-[280px] shadow-sm relative overflow-hidden bg-[#C3F53C]`}>
+            <div className={`lg:col-span-7 rounded-[24px] p-6 flex flex-col justify-between min-h-[280px] shadow-sm relative overflow-hidden bg-[#C3F53C]`}>
               {/* Arch decoration */}
-              <div className="absolute right-4 bottom-4 w-44 h-44 border-[10px] border-[#005645] rounded-full border-l-transparent border-b-transparent rotate-[-35deg] opacity-80" />
+              <div className="absolute -right-4 -bottom-4 w-40 h-40 border-[10px] border-[#005645] rounded-full border-l-transparent border-b-transparent rotate-[-35deg] opacity-80" />
               
               <div className="flex justify-between items-center mb-6 relative z-10">
                 <h2 className="text-xl font-bold text-[#005645]">Current Balance</h2>
@@ -292,7 +292,7 @@ export default function Dashboard() {
           </div>
 
           {/* ROW 3: Top Partners */}
-          <div className={`${card} p-8`}>
+          <div className={`${card} p-6 sm:p-8`}>
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-2xl bg-[#C3F53C] text-[#005645] flex items-center justify-center">

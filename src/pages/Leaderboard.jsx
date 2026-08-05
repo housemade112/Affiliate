@@ -32,7 +32,7 @@ export default function Leaderboard() {
 
       {/* Header */}
       <div className="bg-[#005645] rounded-[28px] p-8 sm:p-10 relative overflow-hidden shadow-xl">
-        <div className="absolute right-0 top-0 w-64 h-64 bg-[#C3F53C]/10 rounded-full blur-[60px] pointer-events-none" />
+
         <div className="relative z-10">
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#C3F53C] text-[#005645] text-xs font-extrabold mb-3 shadow-sm">
             <Award className="w-3.5 h-3.5" /> LEADERBOARD

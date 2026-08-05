@@ -29,8 +29,7 @@ export default function Login() {
   return (
     <div className="min-h-screen bg-[#0A0A0A] text-white flex items-center justify-center px-4 py-12 relative overflow-hidden font-sans">
       
-      {/* Background emerald radial glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#005645]/20 rounded-full blur-[160px] pointer-events-none" />
+
 
       <div className="relative w-full max-w-md space-y-8">
         

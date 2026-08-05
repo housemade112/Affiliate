@@ -143,7 +143,7 @@ export default function Marketers() {
 
       {/* Header */}
       <div className="bg-[#005645] rounded-[28px] p-8 sm:p-10 relative overflow-hidden flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 shadow-xl">
-        <div className="absolute right-0 top-0 w-64 h-64 bg-[#C3F53C]/10 rounded-full blur-[60px] pointer-events-none" />
+
         <div className="relative z-10">
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#C3F53C] text-[#005645] text-xs font-extrabold mb-3 shadow-sm">
             DIRECTORY

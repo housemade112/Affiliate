@@ -17,7 +17,7 @@ export default function Profile() {
       
       {/* Header */}
       <div className={`${card} p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden`}>
-        <div className="absolute right-0 top-0 w-64 h-64 bg-[#C3F53C]/10 rounded-full blur-[60px] pointer-events-none" />
+
         
         <div className="flex flex-col md:flex-row items-center gap-6 relative z-10 w-full md:w-auto">
           <div className="relative group cursor-pointer">
