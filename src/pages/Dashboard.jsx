@@ -4,9 +4,9 @@ import { useTheme } from '../context/ThemeContext.jsx'
 import { getAllAffiliates } from '../data/affiliates.js'
 import { formatCurrency } from '../lib/utils.js'
 import { api } from '../lib/api.js'
-import {
-  TrendingUp, Wallet, ArrowUpRight, Copy, LayoutGrid, Clock, Users, ArrowRight
-} from 'lucide-react'
+import { ArrowUpRight, TrendingUp, Wallet, ArrowDownToLine, Users, ChevronRight, Activity, Copy, Clock, Search } from 'lucide-react'
+import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer } from 'recharts'
+import GaugeComponent from 'react-gauge-component'
 import { useState, useMemo, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Marketers from './Marketers.jsx'
@@ -57,6 +57,21 @@ export default function Dashboard() {
 
   const card = `rounded-[24px] shadow-sm border transition-colors ${isDark ? 'bg-[#1A1D21] border-white/5' : 'bg-white border-slate-200/80'}`
 
+  // Prepare data for the real BarChart
+  const barData = [
+    { name: 'Sep', profit: 450, loss: 120 },
+    { name: 'Oct', profit: 620, loss: 150 },
+    { name: 'Nov', profit: 800, loss: 200 },
+  ];
+
+  // Prepare data for the real Gauge PieChart
+  const targetCapital = 20000;
+  const gaugeData = [
+    { name: 'Current', value: totalCapital },
+    { name: 'Remaining', value: Math.max(0, targetCapital - totalCapital) }
+  ];
+  const gaugePercent = Math.min(100, Math.round((totalCapital / targetCapital) * 100));
+
   return (
     <div className="animate-fade-in pb-24 font-sans space-y-6">
 
@@ -95,7 +110,9 @@ export default function Dashboard() {
             <div className={`lg:col-span-5 rounded-[24px] p-6 flex flex-col justify-between min-h-[280px] shadow-xl relative overflow-hidden ${
               isDark ? 'bg-[#1A1D21] border border-white/5' : 'bg-[#1E2128]'
             }`}>
-              {/* Abstract Ring removed for cleaner structural look */}
+              <div className="absolute -right-10 -top-10 opacity-20 pointer-events-none">
+                <div className="w-56 h-56 rounded-full border-[24px] border-[#C3F53C]" />
+              </div>
               <div className="flex justify-between items-start">
                 <div>
                   <h2 className="text-xl font-bold text-white">Profit Statistics</h2>
@@ -123,52 +140,87 @@ export default function Dashboard() {
                     </div>
                     <h3 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">+{formatCurrency(estimatedReturn)}</h3>
                   </div>
-                  {/* CSS Bar Chart */}
-                  <div className="flex items-end gap-2 sm:gap-3 h-24 sm:h-28 pr-2 sm:mr-4">
-                    <div className="flex flex-col items-center gap-1">
-                      <span className="text-[10px] text-neutral-500">Prev</span>
-                      <div className="w-10 sm:w-14 rounded-t-xl rounded-b-md overflow-hidden flex flex-col-reverse" style={{height:'60px'}}>
-                        <div className="w-full bg-[#AA96F7]" style={{height:'40%'}} />
-                        <div className="w-full bg-[#C3F53C]" style={{height:'60%'}} />
-                      </div>
-                    </div>
-                    <div className="flex flex-col items-center gap-1">
-                      <span className="text-[10px] text-neutral-500">Now</span>
-                      <div className="w-10 sm:w-14 rounded-t-xl rounded-b-md overflow-hidden flex flex-col-reverse" style={{height:'90px'}}>
-                        <div className="w-full bg-[#AA96F7]" style={{height:'35%'}} />
-                        <div className="w-full bg-[#C3F53C]" style={{height:'65%'}} />
-                      </div>
-                    </div>
+                  {/* Real Recharts BarChart */}
+                  <div className="w-40 sm:w-48 h-28 pr-2 sm:mr-4">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={barData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }} barSize={32}>
+                        <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#737373' }} dy={10} />
+                        <Tooltip 
+                          cursor={{fill: 'transparent'}}
+                          contentStyle={{ backgroundColor: '#1A1D21', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', fontSize: '12px' }}
+                        />
+                        <Bar dataKey="loss" stackId="a" fill="#AA96F7" radius={[0, 0, 4, 4]} />
+                        <Bar dataKey="profit" stackId="a" fill="#C3F53C" radius={[4, 4, 0, 0]} />
+                      </BarChart>
+                    </ResponsiveContainer>
                   </div>
                 </div>
               )}
             </div>
 
-            {/* Current Balance Card */}
-            <div className={`lg:col-span-7 rounded-[24px] p-6 sm:p-8 flex flex-col justify-between min-h-[280px] shadow-xl ${
-              isDark ? 'bg-[#1A1D21] border border-white/5' : 'bg-white border border-slate-200'
-            }`}>
+            {/* Current Balance Card - Reference Design Replica */}
+            <div className="lg:col-span-7 rounded-[24px] p-6 sm:p-8 flex flex-col justify-between min-h-[280px] shadow-sm relative overflow-hidden bg-[#9EE86F]">
               
-              <div className="flex justify-between items-start mb-6">
-                <div>
-                  <h2 className={`text-base font-bold ${isDark ? 'text-white/60' : 'text-slate-500'}`}>Current Balance</h2>
-                  <h3 className={`text-4xl sm:text-5xl font-extrabold tracking-tight mt-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+              <div className="flex justify-between items-start relative z-10">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm">
+                    <TrendingUp className="w-5 h-5 text-slate-800" />
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                   <button className="w-8 h-8 rounded-full bg-white/40 hover:bg-white/60 flex items-center justify-center transition-colors">
+                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5M5 12L12 19M5 12L12 5"/></svg>
+                   </button>
+                   <button className="w-8 h-8 rounded-full bg-white/40 hover:bg-white/60 flex items-center justify-center transition-colors">
+                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12H19M19 12L12 5M19 12L12 19"/></svg>
+                   </button>
+                </div>
+              </div>
+
+              <div className="mt-8 mb-2 relative z-10">
+                <h2 className="text-xl font-bold text-slate-900">Current balance</h2>
+              </div>
+              
+              <div className="flex items-end justify-between relative z-10 mt-auto">
+                <div className="mb-2">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-lg font-bold text-slate-900">14%</span>
+                    <span className="w-4 h-4 rounded-full bg-white flex items-center justify-center">
+                      <ArrowUpRight className="w-2.5 h-2.5 text-slate-900" />
+                    </span>
+                  </div>
+                  <span className="text-xs font-semibold text-slate-700">Avg score: {formatCurrency(totalCapital + 5824)}</span>
+                </div>
+              </div>
+
+              {/* Real Interactive Gauge Chart Library */}
+              <div className="absolute right-0 bottom-4 w-[240px] h-[120px] sm:w-[280px] sm:h-[140px] pointer-events-none translate-x-4 sm:translate-x-0">
+                <GaugeComponent
+                  value={gaugePercent}
+                  type="semicircle"
+                  arc={{
+                    colorArray: ['#EF4444', '#F59E0B', '#10B981'],
+                    padding: 0.02,
+                    width: 0.2
+                  }}
+                  pointer={{
+                    type: 'blob',
+                    animationDelay: 0
+                  }}
+                  labels={{
+                    valueLabel: { matchColorWithArc: true, style: {display: 'none'} },
+                    tickLabels: { hideMinMax: true }
+                  }}
+                />
+                
+                {/* Center Value Text */}
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex flex-col items-center">
+                  <span className="text-[26px] font-extrabold text-slate-900 tracking-tight">
                     {formatCurrency(totalCapital)}
-                  </h3>
-                </div>
-                <div className={`p-3 rounded-2xl ${isDark ? 'bg-white/5 text-[#C3F53C]' : 'bg-emerald-50 text-[#005645]'}`}>
-                  <Wallet className="w-6 h-6" />
-                </div>
-              </div>
-              
-              <div className="mt-auto">
-                <div className={`flex flex-wrap items-center gap-3 pt-6 border-t ${isDark ? 'border-white/5' : 'border-slate-100'}`}>
-                  <span className={`px-2.5 py-1 rounded-md text-xs font-bold ${isDark ? 'bg-[#C3F53C]/20 text-[#C3F53C]' : 'bg-emerald-100 text-[#005645]'}`}>
-                    +{ProfitPct}%
                   </span>
-                  <span className={`text-xs font-semibold ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Estimated Monthly Return on Investment</span>
                 </div>
               </div>
+
             </div>
           </div>
 
