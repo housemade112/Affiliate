@@ -208,7 +208,7 @@ export default function Dashboard() {
                     animationDelay: 0
                   }}
                   labels={{
-                    valueLabel: { matchColorWithArc: true, style: {display: 'none'} },
+                    valueLabel: { hide: true },
                     tickLabels: { hideMinMax: true }
                   }}
                 />
