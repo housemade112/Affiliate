@@ -95,9 +95,7 @@ export default function Dashboard() {
             <div className={`lg:col-span-5 rounded-[24px] p-6 flex flex-col justify-between min-h-[280px] shadow-xl relative overflow-hidden ${
               isDark ? 'bg-[#1A1D21] border border-white/5' : 'bg-[#1E2128]'
             }`}>
-              <div className="absolute right-8 top-8 opacity-10 pointer-events-none">
-                <div className="w-40 h-40 rounded-full border-[20px] border-[#C3F53C]" />
-              </div>
+              {/* Abstract Ring removed for cleaner structural look */}
               <div className="flex justify-between items-start">
                 <div>
                   <h2 className="text-xl font-bold text-white">Profit Statistics</h2>
@@ -147,28 +145,28 @@ export default function Dashboard() {
             </div>
 
             {/* Current Balance Card */}
-            <div className={`lg:col-span-7 rounded-[24px] p-6 flex flex-col justify-between min-h-[280px] shadow-sm relative overflow-hidden bg-[#C3F53C]`}>
-              {/* Arch decoration */}
-              <div className="absolute -right-4 -bottom-4 w-40 h-40 border-[10px] border-[#005645] rounded-full border-l-transparent border-b-transparent rotate-[-35deg] opacity-80" />
+            <div className={`lg:col-span-7 rounded-[24px] p-6 sm:p-8 flex flex-col justify-between min-h-[280px] shadow-xl ${
+              isDark ? 'bg-[#1A1D21] border border-white/5' : 'bg-white border border-slate-200'
+            }`}>
               
-              <div className="flex justify-between items-center mb-6 relative z-10">
-                <h2 className="text-xl font-bold text-[#005645]">Current Balance</h2>
-                <div className="p-2.5 rounded-xl bg-white/50 text-[#005645]">
-                  <Wallet className="w-5 h-5" />
+              <div className="flex justify-between items-start mb-6">
+                <div>
+                  <h2 className={`text-base font-bold ${isDark ? 'text-white/60' : 'text-slate-500'}`}>Current Balance</h2>
+                  <h3 className={`text-4xl sm:text-5xl font-extrabold tracking-tight mt-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                    {formatCurrency(totalCapital)}
+                  </h3>
+                </div>
+                <div className={`p-3 rounded-2xl ${isDark ? 'bg-white/5 text-[#C3F53C]' : 'bg-emerald-50 text-[#005645]'}`}>
+                  <Wallet className="w-6 h-6" />
                 </div>
               </div>
               
-              <div className="mt-auto relative z-10">
-                <p className="text-sm font-bold mb-1 text-[#005645]/70">Total Available Funds</p>
-                <h3 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[#005645]">
-                  {formatCurrency(totalCapital)}
-                </h3>
-                
-                <div className="flex items-center gap-3 mt-4 pt-4 border-t border-[#005645]/10">
-                  <span className="px-2.5 py-1 rounded-md text-xs font-bold bg-[#005645]/10 text-[#005645]">
+              <div className="mt-auto">
+                <div className={`flex flex-wrap items-center gap-3 pt-6 border-t ${isDark ? 'border-white/5' : 'border-slate-100'}`}>
+                  <span className={`px-2.5 py-1 rounded-md text-xs font-bold ${isDark ? 'bg-[#C3F53C]/20 text-[#C3F53C]' : 'bg-emerald-100 text-[#005645]'}`}>
                     +{ProfitPct}%
                   </span>
-                  <span className="text-xs font-semibold text-[#005645]/70">Est. Monthly ROI</span>
+                  <span className={`text-xs font-semibold ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Estimated Monthly Return on Investment</span>
                 </div>
               </div>
             </div>
