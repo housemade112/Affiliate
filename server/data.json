@@ -254,454 +254,454 @@
   ],
   "tradeLogs": [
     {
-      "id": "trd_msgvnubd",
-      "trader": "Sarah Chen",
-      "copier": "Sarah M.",
-      "amount": "$500",
-      "returnVal": "+18.7%",
-      "niche": "Parenting & E-Commerce",
-      "timestamp": "2026-08-06T02:09:14.809Z"
-    },
-    {
-      "id": "trd_msgvnqg7",
-      "trader": "David Kim",
-      "copier": "Jessica W.",
-      "amount": "$800",
-      "returnVal": "+14.6%",
-      "niche": "Options Strategies & Finance",
-      "timestamp": "2026-08-06T02:09:09.799Z"
-    },
-    {
-      "id": "trd_msgvnml9",
-      "trader": "Patricia Williams",
-      "copier": "Sarah M.",
-      "amount": "$4,500",
-      "returnVal": "+17.1%",
-      "niche": "Real Estate & Wealth Building",
-      "timestamp": "2026-08-06T02:09:04.797Z"
-    },
-    {
-      "id": "trd_msgvniq0",
-      "trader": "Patricia Williams",
-      "copier": "Elena R.",
-      "amount": "$4,700",
-      "returnVal": "+14.4%",
-      "niche": "Real Estate & Wealth Building",
-      "timestamp": "2026-08-06T02:08:59.784Z"
-    },
-    {
-      "id": "trd_msgvneur",
-      "trader": "Sarah Chen",
-      "copier": "Marcus K.",
-      "amount": "$3,100",
-      "returnVal": "+13.2%",
-      "niche": "Parenting & E-Commerce",
-      "timestamp": "2026-08-06T02:08:54.772Z"
-    },
-    {
-      "id": "trd_msgvnazn",
-      "trader": "David Kim",
-      "copier": "Marcus K.",
-      "amount": "$3,800",
-      "returnVal": "+16.6%",
-      "niche": "Options Strategies & Finance",
-      "timestamp": "2026-08-06T02:08:49.763Z"
-    },
-    {
-      "id": "trd_msgvn74k",
-      "trader": "Sarah Chen",
-      "copier": "Sarah M.",
-      "amount": "$4,800",
-      "returnVal": "+16.2%",
-      "niche": "Parenting & E-Commerce",
-      "timestamp": "2026-08-06T02:08:44.756Z"
-    },
-    {
-      "id": "trd_msgvn39n",
+      "id": "trd_msgwlnnj",
       "trader": "Elena Rodriguez",
       "copier": "Elena R.",
-      "amount": "$4,900",
-      "returnVal": "+17.5%",
-      "niche": "Fitness & Digital Wellness",
-      "timestamp": "2026-08-06T02:08:39.755Z"
-    },
-    {
-      "id": "trd_msgvmzeq",
-      "trader": "Patricia Williams",
-      "copier": "Elena R.",
-      "amount": "$1,800",
-      "returnVal": "+19.1%",
-      "niche": "Real Estate & Wealth Building",
-      "timestamp": "2026-08-06T02:08:34.754Z"
-    },
-    {
-      "id": "trd_msgvmvjl",
-      "trader": "Sarah Chen",
-      "copier": "Elena R.",
-      "amount": "$1,400",
-      "returnVal": "+19.6%",
-      "niche": "Parenting & E-Commerce",
-      "timestamp": "2026-08-06T02:08:29.745Z"
-    },
-    {
-      "id": "trd_msgvmrob",
-      "trader": "Patricia Williams",
-      "copier": "Alex P.",
-      "amount": "$3,000",
-      "returnVal": "+16.6%",
-      "niche": "Real Estate & Wealth Building",
-      "timestamp": "2026-08-06T02:08:24.731Z"
-    },
-    {
-      "id": "trd_msgvmnt4",
-      "trader": "Patricia Williams",
-      "copier": "Sarah M.",
-      "amount": "$2,200",
-      "returnVal": "+17.4%",
-      "niche": "Real Estate & Wealth Building",
-      "timestamp": "2026-08-06T02:08:19.720Z"
-    },
-    {
-      "id": "trd_msgvmjxt",
-      "trader": "Sarah Chen",
-      "copier": "Sarah M.",
-      "amount": "$1,200",
-      "returnVal": "+14.4%",
-      "niche": "Parenting & E-Commerce",
-      "timestamp": "2026-08-06T02:08:14.705Z"
-    },
-    {
-      "id": "trd_msgvmg2q",
-      "trader": "David Kim",
-      "copier": "Sarah M.",
-      "amount": "$4,000",
-      "returnVal": "+19.6%",
-      "niche": "Options Strategies & Finance",
-      "timestamp": "2026-08-06T02:08:09.698Z"
-    },
-    {
-      "id": "trd_msgvmc7l",
-      "trader": "David Kim",
-      "copier": "Alex P.",
-      "amount": "$1,400",
-      "returnVal": "+19.1%",
-      "niche": "Options Strategies & Finance",
-      "timestamp": "2026-08-06T02:08:04.689Z"
-    },
-    {
-      "id": "trd_msgvm8cp",
-      "trader": "Marcus Johnson",
-      "copier": "Sarah M.",
-      "amount": "$1,800",
-      "returnVal": "+18.5%",
-      "niche": "Tech & SaaS Subscriptions",
-      "timestamp": "2026-08-06T02:07:59.689Z"
-    },
-    {
-      "id": "trd_msgvm4hr",
-      "trader": "Patricia Williams",
-      "copier": "David T.",
-      "amount": "$4,600",
-      "returnVal": "+16.1%",
-      "niche": "Real Estate & Wealth Building",
-      "timestamp": "2026-08-06T02:07:54.687Z"
-    },
-    {
-      "id": "trd_msgvm0mp",
-      "trader": "Elena Rodriguez",
-      "copier": "Jessica W.",
-      "amount": "$1,200",
-      "returnVal": "+12.3%",
-      "niche": "Fitness & Digital Wellness",
-      "timestamp": "2026-08-06T02:07:49.682Z"
-    },
-    {
-      "id": "trd_msgvlwrn",
-      "trader": "Elena Rodriguez",
-      "copier": "Marcus K.",
-      "amount": "$1,400",
-      "returnVal": "+15.2%",
-      "niche": "Fitness & Digital Wellness",
-      "timestamp": "2026-08-06T02:07:44.675Z"
-    },
-    {
-      "id": "trd_msgvlswl",
-      "trader": "Marcus Johnson",
-      "copier": "Sarah M.",
-      "amount": "$1,900",
-      "returnVal": "+19.8%",
-      "niche": "Tech & SaaS Subscriptions",
-      "timestamp": "2026-08-06T02:07:39.669Z"
-    },
-    {
-      "id": "trd_msgvlp1o",
-      "trader": "David Kim",
-      "copier": "Marcus K.",
-      "amount": "$2,000",
-      "returnVal": "+13.5%",
-      "niche": "Options Strategies & Finance",
-      "timestamp": "2026-08-06T02:07:34.668Z"
-    },
-    {
-      "id": "trd_msgvll6o",
-      "trader": "Patricia Williams",
-      "copier": "Alex P.",
-      "amount": "$1,200",
-      "returnVal": "+19.9%",
-      "niche": "Real Estate & Wealth Building",
-      "timestamp": "2026-08-06T02:07:29.664Z"
-    },
-    {
-      "id": "trd_msgvlhbo",
-      "trader": "Patricia Williams",
-      "copier": "Marcus K.",
-      "amount": "$2,100",
-      "returnVal": "+13.4%",
-      "niche": "Real Estate & Wealth Building",
-      "timestamp": "2026-08-06T02:07:24.660Z"
-    },
-    {
-      "id": "trd_msgvldgp",
-      "trader": "Sarah Chen",
-      "copier": "Marcus K.",
       "amount": "$4,200",
-      "returnVal": "+13.2%",
-      "niche": "Parenting & E-Commerce",
-      "timestamp": "2026-08-06T02:07:19.657Z"
-    },
-    {
-      "id": "trd_msgvl9le",
-      "trader": "Elena Rodriguez",
-      "copier": "Marcus K.",
-      "amount": "$1,100",
-      "returnVal": "+15.4%",
+      "returnVal": "+14.1%",
       "niche": "Fitness & Digital Wellness",
-      "timestamp": "2026-08-06T02:07:14.642Z"
+      "timestamp": "2026-08-06T02:35:32.479Z"
     },
     {
-      "id": "trd_msgvl5qa",
-      "trader": "David Kim",
-      "copier": "Marcus K.",
-      "amount": "$1,000",
-      "returnVal": "+14.9%",
-      "niche": "Options Strategies & Finance",
-      "timestamp": "2026-08-06T02:07:09.634Z"
-    },
-    {
-      "id": "trd_msgvl1v3",
-      "trader": "Elena Rodriguez",
-      "copier": "Marcus K.",
-      "amount": "$1,300",
-      "returnVal": "+14.3%",
-      "niche": "Fitness & Digital Wellness",
-      "timestamp": "2026-08-06T02:07:04.623Z"
-    },
-    {
-      "id": "trd_msgvky04",
-      "trader": "Elena Rodriguez",
-      "copier": "Sarah M.",
-      "amount": "$2,000",
-      "returnVal": "+12.8%",
-      "niche": "Fitness & Digital Wellness",
-      "timestamp": "2026-08-06T02:06:59.621Z"
-    },
-    {
-      "id": "trd_msgvku4y",
-      "trader": "David Kim",
-      "copier": "Sarah M.",
-      "amount": "$2,100",
-      "returnVal": "+17.5%",
-      "niche": "Options Strategies & Finance",
-      "timestamp": "2026-08-06T02:06:54.610Z"
-    },
-    {
-      "id": "trd_msgvkq9n",
-      "trader": "Marcus Johnson",
-      "copier": "Jessica W.",
-      "amount": "$600",
-      "returnVal": "+14.0%",
-      "niche": "Tech & SaaS Subscriptions",
-      "timestamp": "2026-08-06T02:06:49.595Z"
-    },
-    {
-      "id": "trd_msgvkmee",
-      "trader": "Elena Rodriguez",
-      "copier": "Elena R.",
-      "amount": "$3,200",
-      "returnVal": "+13.8%",
-      "niche": "Fitness & Digital Wellness",
-      "timestamp": "2026-08-06T02:06:44.582Z"
-    },
-    {
-      "id": "trd_msgvkij8",
+      "id": "trd_msgwljsl",
       "trader": "David Kim",
       "copier": "Jessica W.",
-      "amount": "$2,300",
-      "returnVal": "+14.0%",
+      "amount": "$3,800",
+      "returnVal": "+17.7%",
       "niche": "Options Strategies & Finance",
-      "timestamp": "2026-08-06T02:06:39.572Z"
+      "timestamp": "2026-08-06T02:35:27.477Z"
     },
     {
-      "id": "trd_msgvkeo3",
-      "trader": "Marcus Johnson",
-      "copier": "Alex P.",
-      "amount": "$4,400",
-      "returnVal": "+14.4%",
-      "niche": "Tech & SaaS Subscriptions",
-      "timestamp": "2026-08-06T02:06:34.563Z"
-    },
-    {
-      "id": "trd_msgvkasx",
-      "trader": "Patricia Williams",
-      "copier": "Alex P.",
-      "amount": "$4,800",
-      "returnVal": "+19.1%",
-      "niche": "Real Estate & Wealth Building",
-      "timestamp": "2026-08-06T02:06:29.553Z"
-    },
-    {
-      "id": "trd_msgvk6xt",
-      "trader": "Marcus Johnson",
-      "copier": "David T.",
-      "amount": "$2,600",
-      "returnVal": "+19.3%",
-      "niche": "Tech & SaaS Subscriptions",
-      "timestamp": "2026-08-06T02:06:24.545Z"
-    },
-    {
-      "id": "trd_msgvk32j",
+      "id": "trd_msgwlfxf",
       "trader": "David Kim",
-      "copier": "Marcus K.",
-      "amount": "$700",
-      "returnVal": "+18.9%",
+      "copier": "Alex P.",
+      "amount": "$3,800",
+      "returnVal": "+19.4%",
       "niche": "Options Strategies & Finance",
-      "timestamp": "2026-08-06T02:06:19.531Z"
+      "timestamp": "2026-08-06T02:35:22.467Z"
     },
     {
-      "id": "trd_msgvjz7o",
+      "id": "trd_msgwlc2f",
       "trader": "Sarah Chen",
-      "copier": "Elena R.",
-      "amount": "$1,400",
-      "returnVal": "+15.1%",
+      "copier": "David T.",
+      "amount": "$4,000",
+      "returnVal": "+15.5%",
       "niche": "Parenting & E-Commerce",
-      "timestamp": "2026-08-06T02:06:14.532Z"
+      "timestamp": "2026-08-06T02:35:17.463Z"
     },
     {
-      "id": "trd_msgvjvcc",
-      "trader": "Elena Rodriguez",
-      "copier": "Elena R.",
-      "amount": "$3,000",
-      "returnVal": "+13.4%",
-      "niche": "Fitness & Digital Wellness",
-      "timestamp": "2026-08-06T02:06:09.516Z"
-    },
-    {
-      "id": "trd_msgvjrh8",
-      "trader": "Marcus Johnson",
-      "copier": "Jessica W.",
-      "amount": "$2,000",
-      "returnVal": "+12.8%",
-      "niche": "Tech & SaaS Subscriptions",
-      "timestamp": "2026-08-06T02:06:04.508Z"
-    },
-    {
-      "id": "trd_msgvjnm2",
+      "id": "trd_msgwl87f",
       "trader": "David Kim",
       "copier": "David T.",
-      "amount": "$2,500",
-      "returnVal": "+13.8%",
+      "amount": "$2,000",
+      "returnVal": "+13.6%",
       "niche": "Options Strategies & Finance",
-      "timestamp": "2026-08-06T02:05:59.499Z"
+      "timestamp": "2026-08-06T02:35:12.459Z"
     },
     {
-      "id": "trd_msgvjjr7",
-      "trader": "Marcus Johnson",
-      "copier": "Marcus K.",
-      "amount": "$3,100",
-      "returnVal": "+18.7%",
-      "niche": "Tech & SaaS Subscriptions",
-      "timestamp": "2026-08-06T02:05:54.499Z"
-    },
-    {
-      "id": "trd_msgvjfw8",
-      "trader": "Marcus Johnson",
-      "copier": "David T.",
-      "amount": "$2,700",
-      "returnVal": "+18.9%",
-      "niche": "Tech & SaaS Subscriptions",
-      "timestamp": "2026-08-06T02:05:49.496Z"
-    },
-    {
-      "id": "trd_msgvjc16",
-      "trader": "Patricia Williams",
+      "id": "trd_msgwl4cc",
+      "trader": "Sarah Chen",
       "copier": "Alex P.",
-      "amount": "$4,000",
+      "amount": "$1,500",
+      "returnVal": "+18.7%",
+      "niche": "Parenting & E-Commerce",
+      "timestamp": "2026-08-06T02:35:07.452Z"
+    },
+    {
+      "id": "trd_msgwl0hd",
+      "trader": "Patricia Williams",
+      "copier": "Marcus K.",
+      "amount": "$2,100",
       "returnVal": "+15.9%",
       "niche": "Real Estate & Wealth Building",
-      "timestamp": "2026-08-06T02:05:44.490Z"
+      "timestamp": "2026-08-06T02:35:02.449Z"
     },
     {
-      "id": "trd_msgvj868",
-      "trader": "Elena Rodriguez",
-      "copier": "Jessica W.",
-      "amount": "$2,500",
-      "returnVal": "+12.1%",
-      "niche": "Fitness & Digital Wellness",
-      "timestamp": "2026-08-06T02:05:39.488Z"
+      "id": "trd_msgwkwm2",
+      "trader": "Marcus Johnson",
+      "copier": "Elena R.",
+      "amount": "$3,700",
+      "returnVal": "+18.4%",
+      "niche": "Tech & SaaS Subscriptions",
+      "timestamp": "2026-08-06T02:34:57.434Z"
     },
     {
-      "id": "trd_msgvj4ba",
+      "id": "trd_msgwksr2",
+      "trader": "Patricia Williams",
+      "copier": "Marcus K.",
+      "amount": "$2,600",
+      "returnVal": "+16.4%",
+      "niche": "Real Estate & Wealth Building",
+      "timestamp": "2026-08-06T02:34:52.430Z"
+    },
+    {
+      "id": "trd_msgwkow3",
       "trader": "Elena Rodriguez",
       "copier": "Elena R.",
-      "amount": "$4,500",
-      "returnVal": "+19.3%",
+      "amount": "$3,100",
+      "returnVal": "+19.6%",
       "niche": "Fitness & Digital Wellness",
-      "timestamp": "2026-08-06T02:05:34.486Z"
+      "timestamp": "2026-08-06T02:34:47.427Z"
     },
     {
-      "id": "trd_msgvj0g8",
-      "trader": "David Kim",
+      "id": "trd_msgwkl0s",
+      "trader": "Marcus Johnson",
+      "copier": "Marcus K.",
+      "amount": "$1,700",
+      "returnVal": "+18.1%",
+      "niche": "Tech & SaaS Subscriptions",
+      "timestamp": "2026-08-06T02:34:42.412Z"
+    },
+    {
+      "id": "trd_msgwkh5n",
+      "trader": "Patricia Williams",
       "copier": "Alex P.",
-      "amount": "$4,300",
-      "returnVal": "+12.3%",
-      "niche": "Options Strategies & Finance",
-      "timestamp": "2026-08-06T02:05:29.480Z"
+      "amount": "$600",
+      "returnVal": "+13.4%",
+      "niche": "Real Estate & Wealth Building",
+      "timestamp": "2026-08-06T02:34:37.403Z"
     },
     {
-      "id": "trd_msgviwl7",
-      "trader": "Sarah Chen",
-      "copier": "Elena R.",
-      "amount": "$1,000",
-      "returnVal": "+16.0%",
-      "niche": "Parenting & E-Commerce",
-      "timestamp": "2026-08-06T02:05:24.475Z"
+      "id": "trd_msgwkdak",
+      "trader": "Elena Rodriguez",
+      "copier": "David T.",
+      "amount": "$2,500",
+      "returnVal": "+19.6%",
+      "niche": "Fitness & Digital Wellness",
+      "timestamp": "2026-08-06T02:34:32.396Z"
     },
     {
-      "id": "trd_msgvisq9",
+      "id": "trd_msgwk9fl",
       "trader": "Marcus Johnson",
       "copier": "Sarah M.",
-      "amount": "$4,300",
+      "amount": "$2,200",
+      "returnVal": "+18.1%",
+      "niche": "Tech & SaaS Subscriptions",
+      "timestamp": "2026-08-06T02:34:27.393Z"
+    },
+    {
+      "id": "trd_msgwk5kp",
+      "trader": "David Kim",
+      "copier": "Marcus K.",
+      "amount": "$500",
+      "returnVal": "+15.1%",
+      "niche": "Options Strategies & Finance",
+      "timestamp": "2026-08-06T02:34:22.393Z"
+    },
+    {
+      "id": "trd_msgwk1pn",
+      "trader": "David Kim",
+      "copier": "Marcus K.",
+      "amount": "$4,500",
+      "returnVal": "+16.4%",
+      "niche": "Options Strategies & Finance",
+      "timestamp": "2026-08-06T02:34:17.387Z"
+    },
+    {
+      "id": "trd_msgwjxuq",
+      "trader": "Sarah Chen",
+      "copier": "Marcus K.",
+      "amount": "$1,800",
+      "returnVal": "+16.0%",
+      "niche": "Parenting & E-Commerce",
+      "timestamp": "2026-08-06T02:34:12.386Z"
+    },
+    {
+      "id": "trd_msgwjtzk",
+      "trader": "Marcus Johnson",
+      "copier": "Sarah M.",
+      "amount": "$4,400",
+      "returnVal": "+18.0%",
+      "niche": "Tech & SaaS Subscriptions",
+      "timestamp": "2026-08-06T02:34:07.376Z"
+    },
+    {
+      "id": "trd_msgwjq4n",
+      "trader": "Marcus Johnson",
+      "copier": "David T.",
+      "amount": "$3,400",
+      "returnVal": "+12.7%",
+      "niche": "Tech & SaaS Subscriptions",
+      "timestamp": "2026-08-06T02:34:02.375Z"
+    },
+    {
+      "id": "trd_msgwjm9d",
+      "trader": "Patricia Williams",
+      "copier": "Sarah M.",
+      "amount": "$900",
+      "returnVal": "+16.9%",
+      "niche": "Real Estate & Wealth Building",
+      "timestamp": "2026-08-06T02:33:57.361Z"
+    },
+    {
+      "id": "trd_msgwjie4",
+      "trader": "Sarah Chen",
+      "copier": "Alex P.",
+      "amount": "$3,200",
+      "returnVal": "+13.4%",
+      "niche": "Parenting & E-Commerce",
+      "timestamp": "2026-08-06T02:33:52.348Z"
+    },
+    {
+      "id": "trd_msgwjej4",
+      "trader": "Marcus Johnson",
+      "copier": "Jessica W.",
+      "amount": "$2,800",
+      "returnVal": "+17.3%",
+      "niche": "Tech & SaaS Subscriptions",
+      "timestamp": "2026-08-06T02:33:47.344Z"
+    },
+    {
+      "id": "trd_msgwjanz",
+      "trader": "Sarah Chen",
+      "copier": "Alex P.",
+      "amount": "$1,200",
+      "returnVal": "+12.4%",
+      "niche": "Parenting & E-Commerce",
+      "timestamp": "2026-08-06T02:33:42.336Z"
+    },
+    {
+      "id": "trd_msgwj6st",
+      "trader": "David Kim",
+      "copier": "David T.",
+      "amount": "$2,600",
+      "returnVal": "+18.5%",
+      "niche": "Options Strategies & Finance",
+      "timestamp": "2026-08-06T02:33:37.325Z"
+    },
+    {
+      "id": "trd_msgwj2xj",
+      "trader": "Marcus Johnson",
+      "copier": "David T.",
+      "amount": "$2,200",
       "returnVal": "+19.5%",
       "niche": "Tech & SaaS Subscriptions",
-      "timestamp": "2026-08-06T02:05:19.473Z"
+      "timestamp": "2026-08-06T02:33:32.312Z"
     },
     {
-      "id": "trd_msgviouy",
+      "id": "trd_msgwiz2l",
+      "trader": "Marcus Johnson",
+      "copier": "David T.",
+      "amount": "$3,800",
+      "returnVal": "+15.0%",
+      "niche": "Tech & SaaS Subscriptions",
+      "timestamp": "2026-08-06T02:33:27.309Z"
+    },
+    {
+      "id": "trd_msgwiv7i",
+      "trader": "Patricia Williams",
+      "copier": "Elena R.",
+      "amount": "$1,200",
+      "returnVal": "+16.9%",
+      "niche": "Real Estate & Wealth Building",
+      "timestamp": "2026-08-06T02:33:22.302Z"
+    },
+    {
+      "id": "trd_msgwirci",
+      "trader": "Sarah Chen",
+      "copier": "Jessica W.",
+      "amount": "$900",
+      "returnVal": "+16.2%",
+      "niche": "Parenting & E-Commerce",
+      "timestamp": "2026-08-06T02:33:17.298Z"
+    },
+    {
+      "id": "trd_msgwinhb",
+      "trader": "Sarah Chen",
+      "copier": "Alex P.",
+      "amount": "$2,200",
+      "returnVal": "+13.9%",
+      "niche": "Parenting & E-Commerce",
+      "timestamp": "2026-08-06T02:33:12.287Z"
+    },
+    {
+      "id": "trd_msgwijm6",
+      "trader": "Marcus Johnson",
+      "copier": "Alex P.",
+      "amount": "$4,300",
+      "returnVal": "+17.0%",
+      "niche": "Tech & SaaS Subscriptions",
+      "timestamp": "2026-08-06T02:33:07.278Z"
+    },
+    {
+      "id": "trd_msgwifr4",
+      "trader": "Elena Rodriguez",
+      "copier": "Jessica W.",
+      "amount": "$4,600",
+      "returnVal": "+15.5%",
+      "niche": "Fitness & Digital Wellness",
+      "timestamp": "2026-08-06T02:33:02.272Z"
+    },
+    {
+      "id": "trd_msgwibw6",
+      "trader": "Sarah Chen",
+      "copier": "Marcus K.",
+      "amount": "$1,200",
+      "returnVal": "+15.8%",
+      "niche": "Parenting & E-Commerce",
+      "timestamp": "2026-08-06T02:32:57.270Z"
+    },
+    {
+      "id": "trd_msgwi814",
+      "trader": "Patricia Williams",
+      "copier": "Alex P.",
+      "amount": "$1,500",
+      "returnVal": "+18.3%",
+      "niche": "Real Estate & Wealth Building",
+      "timestamp": "2026-08-06T02:32:52.264Z"
+    },
+    {
+      "id": "trd_msgwi460",
+      "trader": "Marcus Johnson",
+      "copier": "David T.",
+      "amount": "$4,800",
+      "returnVal": "+17.6%",
+      "niche": "Tech & SaaS Subscriptions",
+      "timestamp": "2026-08-06T02:32:47.256Z"
+    },
+    {
+      "id": "trd_msgwi0ar",
+      "trader": "Sarah Chen",
+      "copier": "Jessica W.",
+      "amount": "$3,800",
+      "returnVal": "+15.1%",
+      "niche": "Parenting & E-Commerce",
+      "timestamp": "2026-08-06T02:32:42.243Z"
+    },
+    {
+      "id": "trd_msgwhwfo",
+      "trader": "Patricia Williams",
+      "copier": "Alex P.",
+      "amount": "$1,500",
+      "returnVal": "+13.2%",
+      "niche": "Real Estate & Wealth Building",
+      "timestamp": "2026-08-06T02:32:37.236Z"
+    },
+    {
+      "id": "trd_msgwhskc",
+      "trader": "Marcus Johnson",
+      "copier": "Elena R.",
+      "amount": "$1,800",
+      "returnVal": "+16.2%",
+      "niche": "Tech & SaaS Subscriptions",
+      "timestamp": "2026-08-06T02:32:32.220Z"
+    },
+    {
+      "id": "trd_msgwhop1",
+      "trader": "Elena Rodriguez",
+      "copier": "David T.",
+      "amount": "$3,300",
+      "returnVal": "+15.7%",
+      "niche": "Fitness & Digital Wellness",
+      "timestamp": "2026-08-06T02:32:27.205Z"
+    },
+    {
+      "id": "trd_msgwhku2",
       "trader": "Patricia Williams",
       "copier": "David T.",
-      "amount": "$600",
-      "returnVal": "+12.9%",
+      "amount": "$1,500",
+      "returnVal": "+19.1%",
       "niche": "Real Estate & Wealth Building",
-      "timestamp": "2026-08-06T02:05:14.458Z"
+      "timestamp": "2026-08-06T02:32:22.202Z"
     },
     {
-      "id": "trd_msgvikzs",
-      "trader": "Sarah Chen",
+      "id": "trd_msgwhgyy",
+      "trader": "Patricia Williams",
+      "copier": "David T.",
+      "amount": "$4,400",
+      "returnVal": "+15.7%",
+      "niche": "Real Estate & Wealth Building",
+      "timestamp": "2026-08-06T02:32:17.194Z"
+    },
+    {
+      "id": "trd_msgwhd3t",
+      "trader": "David Kim",
       "copier": "Elena R.",
-      "amount": "$1,300",
-      "returnVal": "+18.3%",
-      "niche": "Parenting & E-Commerce",
-      "timestamp": "2026-08-06T02:05:09.448Z"
+      "amount": "$2,500",
+      "returnVal": "+13.0%",
+      "niche": "Options Strategies & Finance",
+      "timestamp": "2026-08-06T02:32:12.185Z"
+    },
+    {
+      "id": "trd_msgwh98p",
+      "trader": "Marcus Johnson",
+      "copier": "Jessica W.",
+      "amount": "$1,700",
+      "returnVal": "+15.4%",
+      "niche": "Tech & SaaS Subscriptions",
+      "timestamp": "2026-08-06T02:32:07.178Z"
+    },
+    {
+      "id": "trd_msgwh5dq",
+      "trader": "Patricia Williams",
+      "copier": "Elena R.",
+      "amount": "$2,000",
+      "returnVal": "+18.0%",
+      "niche": "Real Estate & Wealth Building",
+      "timestamp": "2026-08-06T02:32:02.174Z"
+    },
+    {
+      "id": "trd_msgwh1if",
+      "trader": "Elena Rodriguez",
+      "copier": "David T.",
+      "amount": "$4,000",
+      "returnVal": "+13.1%",
+      "niche": "Fitness & Digital Wellness",
+      "timestamp": "2026-08-06T02:31:57.159Z"
+    },
+    {
+      "id": "trd_msgwgxne",
+      "trader": "Elena Rodriguez",
+      "copier": "David T.",
+      "amount": "$1,400",
+      "returnVal": "+14.6%",
+      "niche": "Fitness & Digital Wellness",
+      "timestamp": "2026-08-06T02:31:52.154Z"
+    },
+    {
+      "id": "trd_msgwgts8",
+      "trader": "Marcus Johnson",
+      "copier": "Sarah M.",
+      "amount": "$3,400",
+      "returnVal": "+16.2%",
+      "niche": "Tech & SaaS Subscriptions",
+      "timestamp": "2026-08-06T02:31:47.144Z"
+    },
+    {
+      "id": "trd_msgwgpx6",
+      "trader": "Patricia Williams",
+      "copier": "David T.",
+      "amount": "$4,100",
+      "returnVal": "+20.0%",
+      "niche": "Real Estate & Wealth Building",
+      "timestamp": "2026-08-06T02:31:42.138Z"
+    },
+    {
+      "id": "trd_msgwgm26",
+      "trader": "Elena Rodriguez",
+      "copier": "Jessica W.",
+      "amount": "$2,300",
+      "returnVal": "+18.2%",
+      "niche": "Fitness & Digital Wellness",
+      "timestamp": "2026-08-06T02:31:37.134Z"
+    },
+    {
+      "id": "trd_msgwgi6v",
+      "trader": "David Kim",
+      "copier": "David T.",
+      "amount": "$4,700",
+      "returnVal": "+17.5%",
+      "niche": "Options Strategies & Finance",
+      "timestamp": "2026-08-06T02:31:32.119Z"
+    },
+    {
+      "id": "trd_msgwgebq",
+      "trader": "Patricia Williams",
+      "copier": "Alex P.",
+      "amount": "$4,500",
+      "returnVal": "+16.4%",
+      "niche": "Real Estate & Wealth Building",
+      "timestamp": "2026-08-06T02:31:27.110Z"
     }
   ]
 }

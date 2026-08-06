@@ -67,37 +67,39 @@ export default function Wallet() {
 
       {/* Stat Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className={`rounded-[24px] p-8 shadow-sm flex flex-col gap-3 hover:-translate-y-1 transition-all border ${isDark ? 'bg-[#1A1D21] border-white/5' : 'bg-white border-slate-200/80'}`}>
-          <div className="w-12 h-12 rounded-2xl bg-[#005645] text-[#C3F53C] flex items-center justify-center shadow-md">
+        <div className={`rounded-[32px] p-8 shadow-2xl flex flex-col justify-between gap-4 hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300 relative overflow-hidden border ${isDark ? 'bg-gradient-to-br from-[#0F172A] via-[#13161C] to-[#064E3B] border-emerald-500/10' : 'bg-gradient-to-br from-slate-900 to-[#005645] border-emerald-500/20'}`}>
+          <div className="absolute -right-10 -top-10 w-40 h-40 bg-[#C3F53C]/10 rounded-full blur-[50px] pointer-events-none" />
+          
+          <div className="relative z-10 w-12 h-12 rounded-2xl bg-[#005645] text-[#C3F53C] flex items-center justify-center shadow-lg shadow-[#005645]/30">
             <WalletIcon className="w-6 h-6" />
           </div>
-          <div>
-            <p className={`text-sm font-bold ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Available Balance</p>
-            <p className={`text-4xl font-extrabold mt-1 tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>{formatCurrency(user?.balance || 0)}</p>
+          <div className="relative z-10">
+            <p className="text-[11px] font-bold uppercase tracking-wider text-emerald-100/70">Available Balance</p>
+            <p className="text-4xl font-black mt-1 tracking-tighter bg-gradient-to-br from-white to-white/70 bg-clip-text text-transparent">{formatCurrency(user?.balance || 0)}</p>
           </div>
-          <div className="flex items-center gap-2 text-xs font-bold text-[#005645] dark:text-[#C3F53C]">
+          <div className="relative z-10 flex items-center gap-2 text-xs font-bold text-[#C3F53C]">
             <ShieldCheck className="w-4 h-4" /> Verified & Secured
           </div>
         </div>
 
-        <div className={`rounded-[24px] p-8 shadow-sm flex flex-col gap-3 hover:-translate-y-1 transition-all border ${isDark ? 'bg-[#1A1D21] border-white/5' : 'bg-white border-slate-200/80'}`}>
+        <div className={`rounded-[32px] p-8 shadow-xl flex flex-col gap-3 hover:-translate-y-1 transition-all duration-300 border ${isDark ? 'bg-gradient-to-b from-[#13161C] to-[#0A0C10] border-white/5' : 'bg-white border-slate-100'}`}>
           <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm ${isDark ? 'bg-emerald-500/10 text-emerald-400' : 'bg-emerald-100 text-emerald-600'}`}>
             <ArrowDownLeft className="w-6 h-6" />
           </div>
           <div>
-            <p className={`text-sm font-bold ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Total Deposited</p>
-            <p className={`text-4xl font-extrabold mt-1 tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>{formatCurrency(totalDeposited)}</p>
+            <p className={`text-[11px] font-bold uppercase tracking-wider ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Total Deposited</p>
+            <p className={`text-3xl font-black mt-1 tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>{formatCurrency(totalDeposited)}</p>
           </div>
           <p className={`text-xs font-bold ${isDark ? 'text-white/30' : 'text-slate-400'}`}>{transactions.filter(t => t.type === 'deposit').length} transactions</p>
         </div>
 
-        <div className={`rounded-[24px] p-8 shadow-sm flex flex-col gap-3 hover:-translate-y-1 transition-all border ${isDark ? 'bg-[#1A1D21] border-white/5' : 'bg-white border-slate-200/80'}`}>
+        <div className={`rounded-[32px] p-8 shadow-xl flex flex-col gap-3 hover:-translate-y-1 transition-all duration-300 border ${isDark ? 'bg-gradient-to-b from-[#13161C] to-[#0A0C10] border-white/5' : 'bg-white border-slate-100'}`}>
           <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm ${isDark ? 'bg-rose-500/10 text-rose-400' : 'bg-rose-100 text-rose-600'}`}>
             <ArrowUpRight className="w-6 h-6" />
           </div>
           <div>
-            <p className={`text-sm font-bold ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Total Withdrawn</p>
-            <p className={`text-4xl font-extrabold mt-1 tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>{formatCurrency(totalWithdrawn)}</p>
+            <p className={`text-[11px] font-bold uppercase tracking-wider ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Total Withdrawn</p>
+            <p className={`text-3xl font-black mt-1 tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>{formatCurrency(totalWithdrawn)}</p>
           </div>
           <p className={`text-xs font-bold ${isDark ? 'text-white/30' : 'text-slate-400'}`}>{transactions.filter(t => t.type === 'withdrawal').length} transactions</p>
         </div>

@@ -52,7 +52,7 @@ export default function MarketerDetail() {
     addToast('Stopped copying strategy', 'info')
   }
 
-  const card = `rounded-[24px] border shadow-sm transition-colors ${isDark ? 'bg-[#1A1D21] border-white/5' : 'bg-white border-slate-200/80'}`
+  const card = `rounded-[32px] shadow-2xl transition-all duration-300 hover:shadow-emerald-500/10 hover:-translate-y-1 ${isDark ? 'bg-gradient-to-b from-[#13161C] to-[#0A0C10] border border-white/5' : 'bg-white border border-slate-100 shadow-slate-200/50'}`
 
   if (error) return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] gap-5">
@@ -141,25 +141,25 @@ export default function MarketerDetail() {
           </div>
 
           {/* Revenue Block */}
-          <div className={`flex-shrink-0 text-left md:text-right p-6 rounded-[20px] w-full md:w-auto ${isDark ? 'bg-white/5 border border-white/5' : 'bg-slate-50 border border-slate-100'}`}>
-            <p className={`text-xs font-bold uppercase tracking-wider ${isDark ? 'text-white/30' : 'text-slate-400'}`}>Lifetime Revenue</p>
-            <p className={`text-4xl font-extrabold mt-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>{revenue}</p>
-            <p className="text-xl font-extrabold text-[#005645] mt-2 bg-emerald-50 border border-emerald-100 px-3 py-1 rounded-xl inline-block">
+          <div className={`flex-shrink-0 text-left md:text-right p-8 rounded-[24px] w-full md:w-auto transition-all duration-300 hover:-translate-y-1 ${isDark ? 'bg-gradient-to-br from-emerald-900/20 to-emerald-900/5 border border-emerald-500/10 shadow-lg shadow-emerald-900/10' : 'bg-gradient-to-br from-emerald-50 to-white border border-emerald-100 shadow-xl shadow-emerald-100/50'}`}>
+            <p className={`text-[11px] font-bold uppercase tracking-widest ${isDark ? 'text-emerald-400/80' : 'text-emerald-700/70'}`}>Lifetime Revenue</p>
+            <p className={`text-5xl font-black mt-2 tracking-tighter ${isDark ? 'bg-gradient-to-br from-white to-white/70 bg-clip-text text-transparent' : 'text-[#005645]'}`}>{revenue}</p>
+            <p className="text-xl font-black text-[#005645] mt-3 bg-gradient-to-r from-[#C3F53C] to-[#9EE86F] px-4 py-1.5 rounded-xl inline-block shadow-sm">
               +{aff.monthlyReturn}% / mo
             </p>
           </div>
         </div>
 
         {/* Stats Row */}
-        <div className={`grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x mt-8 rounded-[18px] ${isDark ? 'bg-white/5 border border-white/5 divide-white/5' : 'bg-slate-50 border border-slate-100 divide-slate-100'}`}>
+        <div className={`grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x mt-8 rounded-[24px] overflow-hidden shadow-sm ${isDark ? 'bg-white/[0.02] border border-white/5 divide-white/5' : 'bg-slate-50 border border-slate-100 divide-slate-100'}`}>
           {[
             { label: 'Min Deposit', value: formatCurrency(aff.minDeposit) },
             { label: 'Monthly Profit', value: `+${aff.monthlyReturn}%`, highlight: true },
             { label: 'Est. Monthly Return', value: formatCurrency((aff.minDeposit * aff.monthlyReturn) / 100) },
           ].map(s => (
-            <div key={s.label} className="text-center p-4">
-              <p className={`text-base sm:text-sm font-extrabold ${s.highlight ? 'text-[#005645] dark:text-[#C3F53C]' : isDark ? 'text-white' : 'text-slate-900'}`}>{s.value}</p>
-              <p className={`text-[10px] font-bold uppercase tracking-wider mt-0.5 ${isDark ? 'text-white/30' : 'text-slate-400'}`}>{s.label}</p>
+            <div key={s.label} className={`text-center p-6 transition-colors ${isDark ? 'hover:bg-white/[0.02]' : 'hover:bg-white'}`}>
+              <p className={`text-xl font-black tracking-tight ${s.highlight ? 'text-[#C3F53C] drop-shadow-sm' : isDark ? 'text-white' : 'text-slate-900'}`}>{s.value}</p>
+              <p className={`text-[10px] font-bold uppercase tracking-widest mt-1 ${isDark ? 'text-white/40' : 'text-slate-500'}`}>{s.label}</p>
             </div>
           ))}
         </div>
