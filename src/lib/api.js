@@ -228,6 +228,27 @@ export const api = {
         if (res.ok) return await res.json()
       } catch (e) {}
       return { success: false, error: 'Network error' }
+    },
+    getMirrors: async () => {
+      try {
+        const res = await fetch('http://localhost:3001/api/admin/mirrors')
+        if (res.ok) return await res.json()
+      } catch (e) {}
+      return { success: true, mirrors: [] }
+    },
+    blockMirror: async (id) => {
+      try {
+        const res = await fetch(`http://localhost:3001/api/admin/mirrors/${id}/block`, { method: 'PATCH' })
+        if (res.ok) return await res.json()
+      } catch (e) {}
+      return { success: false }
+    },
+    deleteMirror: async (id, adminEmail) => {
+      try {
+        const res = await fetch(`http://localhost:3001/api/admin/mirrors/${id}?adminEmail=${encodeURIComponent(adminEmail)}`, { method: 'DELETE' })
+        if (res.ok) return await res.json()
+      } catch (e) {}
+      return { success: false }
     }
   },
 

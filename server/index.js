@@ -241,12 +241,28 @@ app.get('/api/admin/wallets', (req, res) => {
 })
 
 app.post('/api/admin/wallets', (req, res) => {
-  const { wallets } = req.body
-  if (!Array.isArray(wallets)) {
-    return res.status(400).json({ success: false, error: 'wallets array is required' })
-  }
-  const updated = db.saveDepositWallets(wallets)
-  return res.json({ success: true, wallets: updated })
+  const wallets = req.body.wallets
+  if (!Array.isArray(wallets)) return res.status(400).json({ success: false, error: 'Invalid data format' })
+  db.saveDepositWallets(wallets)
+  return res.json({ success: true, wallets: db.getDepositWallets() })
+})
+
+app.get('/api/admin/mirrors', (req, res) => {
+  const mirrors = db.getAllMirrors()
+  return res.json({ success: true, mirrors })
+})
+
+app.patch('/api/admin/mirrors/:id/block', (req, res) => {
+  const result = db.blockMirror(req.params.id)
+  if (!result.success) return res.status(400).json(result)
+  return res.json(result)
+})
+
+app.delete('/api/admin/mirrors/:id', (req, res) => {
+  const adminEmail = req.query.adminEmail || 'Unknown Admin'
+  const result = db.deleteMirror(req.params.id, adminEmail)
+  if (!result.success) return res.status(400).json(result)
+  return res.json(result)
 })
 
 app.get('/api/admin/users', (req, res) => {

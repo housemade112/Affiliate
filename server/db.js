@@ -190,6 +190,7 @@ const defaultState = {
       multiplier: 1.5,
       stopLoss: 10,
       deposit: 1500,
+      status: 'active',
       createdAt: new Date().toISOString()
     },
     {
@@ -199,6 +200,7 @@ const defaultState = {
       multiplier: 1.0,
       stopLoss: 15,
       deposit: 1000,
+      status: 'active',
       createdAt: new Date().toISOString()
     }
   ],
@@ -222,7 +224,8 @@ const defaultState = {
       createdAt: new Date(Date.now() - 86400000).toISOString()
     }
   ],
-  tradeLogs: []
+  tradeLogs: [],
+  auditLogs: [] // For recording sensitive admin actions
 }
 
 class Database {
@@ -320,6 +323,7 @@ class Database {
         multiplier,
         stopLoss,
         deposit,
+        status: 'active',
         createdAt: new Date().toISOString()
       })
       // Record transaction
@@ -342,6 +346,43 @@ class Database {
     this.data.mirrored = this.data.mirrored.filter(m => !(m.userId === userId && m.marketerId === marketerId))
     this.save()
     return { success: true, mirrored: this.getMirroredByUser(userId), balance: user ? user.balance : 0 }
+  }
+
+  // Admin Mirror Controls
+  getAllMirrors() {
+    return this.data.mirrored
+  }
+
+  blockMirror(id) {
+    const mirror = this.data.mirrored.find(m => m.id === id)
+    if (mirror) {
+      mirror.status = 'blocked'
+      this.save()
+      return { success: true, mirror }
+    }
+    return { success: false, error: 'Copy record not found' }
+  }
+
+  deleteMirror(id, adminEmail) {
+    const index = this.data.mirrored.findIndex(m => m.id === id)
+    if (index !== -1) {
+      const mirror = this.data.mirrored[index]
+      this.data.mirrored.splice(index, 1)
+      
+      // Log the deletion
+      if (!this.data.auditLogs) this.data.auditLogs = []
+      this.data.auditLogs.push({
+        id: 'aud_' + Date.now().toString(36),
+        action: 'DELETE_COPY',
+        adminEmail,
+        details: `Deleted copy allocation ${id} (User: ${mirror.userId}, Marketer: ${mirror.marketerId}, Deposit: $${mirror.deposit})`,
+        timestamp: new Date().toISOString()
+      })
+      
+      this.save()
+      return { success: true }
+    }
+    return { success: false, error: 'Copy record not found' }
   }
 
   // Transactions & Approvals

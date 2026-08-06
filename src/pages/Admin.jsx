@@ -17,6 +17,7 @@ export default function Admin() {
   const [transactions, setTransactions] = useState([])
   const [wallets, setWallets] = useState([])
   const [users, setUsers] = useState([])
+  const [mirrors, setMirrors] = useState([])
   const [loading, setLoading] = useState(true)
 
   // Decline Modal State
@@ -31,14 +32,16 @@ export default function Admin() {
   const fetchData = async () => {
     setLoading(true)
     try {
-      const [txRes, walletRes, userRes] = await Promise.all([
+      const [txRes, walletRes, userRes, mirrorRes] = await Promise.all([
         api.admin.getTransactions(),
         api.admin.getWallets(),
-        api.admin.getUsers()
+        api.admin.getUsers(),
+        api.admin.getMirrors()
       ])
       if (txRes.success) setTransactions(txRes.transactions || [])
       if (walletRes.success) setWallets(walletRes.wallets || [])
       if (userRes.success) setUsers(userRes.users || [])
+      if (mirrorRes.success) setMirrors(mirrorRes.mirrors || [])
     } catch (e) {
       console.error(e)
       addToast('Failed to load admin data', 'error')
@@ -60,6 +63,34 @@ export default function Admin() {
       fetchData()
     } else {
       addToast(res.error || 'Failed to approve', 'error')
+    }
+  }
+
+  const handleBlockMirror = async (mirrorId) => {
+    const res = await api.admin.blockMirror(mirrorId)
+    if (res.success) {
+      addToast('Copy allocation blocked successfully', 'success')
+      fetchData()
+    } else {
+      addToast(res.error || 'Failed to block copy', 'error')
+    }
+  }
+
+  const handleDeleteMirror = async (mirrorId) => {
+    if (!window.confirm('CRITICAL ACTION: Are you sure you want to completely DELETE this active copy record? This action will be audited.')) return
+    
+    let adminEmail = 'Unknown Admin'
+    try {
+      const session = JSON.parse(localStorage.getItem('scalely_admin_session'))
+      if (session && session.email) adminEmail = session.email
+    } catch (e) {}
+
+    const res = await api.admin.deleteMirror(mirrorId, adminEmail)
+    if (res.success) {
+      addToast('Copy allocation permanently deleted', 'info')
+      fetchData()
+    } else {
+      addToast(res.error || 'Failed to delete copy', 'error')
     }
   }
 
@@ -190,6 +221,7 @@ export default function Admin() {
       <div className={`flex flex-wrap items-center gap-2 p-1.5 rounded-2xl w-fit ${isDark ? 'bg-white/5' : 'bg-slate-100 border border-slate-200'}`}>
         {[
           { id: 'pending', label: `Pending Queue (${pendingTxs.length})` },
+          { id: 'copies',  label: 'Active Copies Control' },
           { id: 'wallets', label: 'Deposit Wallets Configurator' },
           { id: 'users',   label: 'User Control & Balances' },
           { id: 'all_txs', label: 'All Transactions Log' },
@@ -280,6 +312,82 @@ export default function Admin() {
                           <button onClick={() => { setDeclineTxId(t.id); setDeclineReason('') }}
                             className="px-3.5 py-1.5 rounded-lg bg-rose-500/20 text-rose-400 border border-rose-500/30 font-bold hover:bg-rose-500/30 transition-colors">
                             Decline
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ── TAB 1.5: ACTIVE COPIES CONTROL ── */}
+      {activeTab === 'copies' && (
+        <div className={cardStyle}>
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h3 className={`text-lg font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>Active Copies Control</h3>
+              <p className={`text-xs mt-0.5 ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Monitor, block, or forcefully delete user active mirror trading copies.</p>
+            </div>
+          </div>
+
+          {mirrors.length === 0 ? (
+            <div className="py-16 text-center">
+              <CheckCircle2 className="w-12 h-12 text-emerald-500/40 mx-auto mb-3" />
+              <p className={`text-base font-bold ${isDark ? 'text-white' : 'text-slate-800'}`}>No Active Copies!</p>
+              <p className={`text-xs mt-1 ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Users have not mirrored any traders yet.</p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-xs whitespace-nowrap">
+                <thead className={`border-b font-bold uppercase tracking-wider ${isDark ? 'bg-white/5 border-white/5 text-white/40' : 'bg-slate-50 border-slate-200 text-slate-400'}`}>
+                  <tr>
+                    <th className="px-6 py-4 text-left">Status</th>
+                    <th className="px-6 py-4 text-left">User ID</th>
+                    <th className="px-6 py-4 text-left">Trader ID</th>
+                    <th className="px-6 py-4 text-left">Allocated Deposit</th>
+                    <th className="px-6 py-4 text-left">Settings</th>
+                    <th className="px-6 py-4 text-left">Started At</th>
+                    <th className="px-6 py-4 text-right">Admin Actions</th>
+                  </tr>
+                </thead>
+                <tbody className={`divide-y ${isDark ? 'divide-white/5' : 'divide-slate-100'}`}>
+                  {mirrors.map(m => (
+                    <tr key={m.id} className={isDark ? 'hover:bg-white/5' : 'hover:bg-slate-50'}>
+                      <td className="px-6 py-4">
+                        <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg font-black uppercase text-[10px] ${
+                          m.status === 'blocked' ? 'bg-rose-500/20 text-rose-400 border border-rose-500/30' : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
+                        }`}>
+                          {m.status === 'blocked' ? 'Blocked' : 'Active'}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 font-bold text-blue-400">
+                        {m.userId}
+                      </td>
+                      <td className="px-6 py-4 font-bold text-purple-400">
+                        {m.marketerId}
+                      </td>
+                      <td className="px-6 py-4 font-black text-sm text-emerald-400">
+                        {formatCurrency(m.deposit)}
+                      </td>
+                      <td className="px-6 py-4 font-mono text-[11px] text-slate-400">
+                        Mult: {m.multiplier}x | SL: {m.stopLoss}%
+                      </td>
+                      <td className="px-6 py-4 text-slate-400 font-medium">
+                        {new Date(m.createdAt).toLocaleString()}
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        <div className="flex items-center justify-end gap-2">
+                          <button onClick={() => handleBlockMirror(m.id)} disabled={m.status === 'blocked'}
+                            className="px-3.5 py-1.5 rounded-lg bg-amber-500/20 text-amber-400 border border-amber-500/30 font-bold hover:bg-amber-500/30 transition-colors disabled:opacity-50">
+                            {m.status === 'blocked' ? 'Blocked' : 'Block'}
+                          </button>
+                          <button onClick={() => handleDeleteMirror(m.id)}
+                            className="px-3.5 py-1.5 rounded-lg bg-rose-500/20 text-rose-400 border border-rose-500/30 font-bold hover:bg-rose-500/30 transition-colors">
+                            Delete
                           </button>
                         </div>
                       </td>
