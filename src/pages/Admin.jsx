@@ -42,7 +42,7 @@ export default function Admin() {
     } catch (e) {
       console.error(e)
       addToast('Failed to load admin data', 'error')
-    } fontally {
+    } finally {
       setLoading(false)
     }
   }
