@@ -5,6 +5,7 @@ import { ThemeProvider } from './context/ThemeContext.jsx'
 import { NotifProvider } from './context/NotifContext.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 import Layout from './components/Layout.jsx'
+import AdminLayout from './components/AdminLayout.jsx'
 import Landing from './pages/Landing.jsx'
 import Login from './pages/Login.jsx'
 import Signup from './pages/Signup.jsx'
@@ -14,6 +15,7 @@ import MarketerDetail from './pages/MarketerDetail.jsx'
 import Leaderboard from './pages/Leaderboard.jsx'
 import Wallet from './pages/Wallet.jsx'
 import Admin from './pages/Admin.jsx'
+import AdminLogin from './pages/AdminLogin.jsx'
 import Profile from './pages/Profile.jsx'
 import Portfolio from './pages/Portfolio.jsx'
 
@@ -23,16 +25,24 @@ function AppRoutes() {
       <Route path="/" element={<Landing />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
+      
+      {/* Admin Standalone Routes */}
+      <Route path="/admin/login" element={<AdminLogin />} />
+      <Route element={<AdminLayout />}>
+        <Route path="/admin" element={<Admin />} />
+      </Route>
+
+      {/* User Protected Routes */}
       <Route element={<ProtectedRoute><Layout /></ProtectedRoute>}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/marketers" element={<Marketers />} />
         <Route path="/marketer/:id" element={<MarketerDetail />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/wallet" element={<Wallet />} />
-        <Route path="/admin" element={<Admin />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/portfolio" element={<Portfolio />} />
       </Route>
+      
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )

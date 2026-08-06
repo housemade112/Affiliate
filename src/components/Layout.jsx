@@ -17,7 +17,6 @@ const NAV_ITEMS = [
   { path: '/leaderboard', label: 'Leaderboard', icon: Trophy },
   { path: '/wallet',      label: 'Wallet',      icon: Wallet },
   { path: '/profile',     label: 'Profile',     icon: User },
-  { path: '/admin',       label: 'Admin Portal',icon: ShieldCheck },
 ]
 
 function NotifIcon({ type }) {
