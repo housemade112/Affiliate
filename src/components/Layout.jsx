@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react'
 import {
   LayoutDashboard, Users, Trophy, Wallet, User, LogOut, Menu, X,
   Bell, Sun, Moon, Search, ArrowDownToLine, ArrowUpFromLine,
-  CheckCircle2, Info, AlertCircle, PieChart
+  CheckCircle2, Info, AlertCircle, PieChart, ShieldCheck
 } from 'lucide-react'
 import { useAuth } from '../context/AuthContext.jsx'
 import { useTheme } from '../context/ThemeContext.jsx'
@@ -17,6 +17,7 @@ const NAV_ITEMS = [
   { path: '/leaderboard', label: 'Leaderboard', icon: Trophy },
   { path: '/wallet',      label: 'Wallet',      icon: Wallet },
   { path: '/profile',     label: 'Profile',     icon: User },
+  { path: '/admin',       label: 'Admin Portal',icon: ShieldCheck },
 ]
 
 function NotifIcon({ type }) {

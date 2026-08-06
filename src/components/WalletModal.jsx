@@ -57,6 +57,8 @@ export default function WalletModal({ isOpen, onClose, onSuccess, defaultType = 
   const [method, setMethod]     = useState(null)
   const [amount, setAmount]     = useState('')
   const [address, setAddress]   = useState('') // Cashtag/Email/Wallet
+  const [txHash, setTxHash]     = useState('') // Transaction hash / proof for deposit
+  const [adminWallets, setAdminWallets] = useState([])
   const [cryptoCoin, setCryptoCoin] = useState('BTC') // For generic crypto withdraw
   const [submitting, setSubmitting] = useState(false)
 
@@ -67,7 +69,15 @@ export default function WalletModal({ isOpen, onClose, onSuccess, defaultType = 
       setMethod(null)
       setAmount('')
       setAddress('')
+      setTxHash('')
       setCryptoCoin('BTC')
+
+      // Fetch dynamic admin deposit wallets
+      api.wallet.depositWallets()
+        .then(d => {
+          if (d.success && d.wallets) setAdminWallets(d.wallets)
+        })
+        .catch(console.error)
     }
   }, [isOpen, defaultType])
 
@@ -96,13 +106,25 @@ export default function WalletModal({ isOpen, onClose, onSuccess, defaultType = 
       ? `Withdrawal (${cryptoCoin})`
       : method.label
 
-    const tx = await addTransaction(type, val, 'pending', txLabel)
+    const res = await api.wallet.transact(
+      user?.id,
+      type,
+      val,
+      txLabel,
+      method.asset || cryptoCoin,
+      txHash,
+      address
+    )
     setSubmitting(false)
 
-    if (tx) {
-      addToast(`${type === 'deposit' ? 'Deposit' : 'Withdrawal'} of ${formatCurrency(val)} initiated!`, 'success')
-      setAmount(''); setAddress(''); setStep(1); setMethod(null)
-      if (onSuccess) onSuccess(tx)
+    if (res && res.success) {
+      if (type === 'deposit') {
+        addToast(`Deposit of ${formatCurrency(val)} submitted! Pending Admin Verification.`, 'info')
+      } else {
+        addToast(`Withdrawal of ${formatCurrency(val)} submitted! Pending Admin Approval.`, 'info')
+      }
+      setAmount(''); setAddress(''); setTxHash(''); setStep(1); setMethod(null)
+      if (onSuccess) onSuccess(res.transaction)
       onClose()
     } else {
       addToast('Transaction failed. Try again.', 'error')
@@ -200,19 +222,35 @@ export default function WalletModal({ isOpen, onClose, onSuccess, defaultType = 
               </div>
 
               {/* Deposit wallet address to send to */}
-              {type === 'deposit' && method.address && (
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Send to this address</label>
-                  <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl">
-                    <p className="font-mono text-xs text-slate-600 break-all">{method.address}</p>
-                    <button type="button" onClick={() => { navigator.clipboard.writeText(method.address); addToast('Address copied!', 'success') }}
-                      className="mt-2 text-xs font-bold text-[#005645] hover:underline">
-                      Copy Address
-                    </button>
+              {type === 'deposit' && (
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Send to this Admin Address</label>
+                    <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl">
+                      <p className="font-mono text-xs text-slate-900 font-bold break-all">
+                        {adminWallets.find(w => w.asset === method.asset)?.address || method.address}
+                      </p>
+                      <button type="button" onClick={() => { 
+                        const addr = adminWallets.find(w => w.asset === method.asset)?.address || method.address
+                        navigator.clipboard.writeText(addr); 
+                        addToast('Address copied!', 'success') 
+                      }}
+                        className="mt-2 text-xs font-bold text-[#005645] hover:underline">
+                        Copy Deposit Address
+                      </button>
+                    </div>
+                    <p className="text-[11px] text-amber-700 font-semibold bg-amber-50 border border-amber-200/60 rounded-xl p-3">
+                      ⚠️ Send only {method.label} to this address. After sending, paste your Transaction Hash below for Admin verification.
+                    </p>
                   </div>
-                  <p className="text-xs text-amber-600 font-semibold bg-amber-50 border border-amber-100 rounded-xl p-3">
-                    ⚠️ Only send {method.label} on the correct network. Wrong network = lost funds.
-                  </p>
+
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Transaction Hash / Proof (TxHash)</label>
+                    <input type="text" value={txHash} onChange={e => setTxHash(e.target.value)}
+                      placeholder="Paste your 0x... or transaction hash here"
+                      className="w-full px-4 py-4 bg-slate-50 border-2 border-slate-200 rounded-2xl text-slate-900 text-sm font-mono placeholder-slate-400 focus:outline-none focus:border-[#005645] transition-all"
+                      required />
+                  </div>
                 </div>
               )}
 

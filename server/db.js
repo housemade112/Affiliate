@@ -344,34 +344,129 @@ class Database {
     return { success: true, mirrored: this.getMirroredByUser(userId), balance: user ? user.balance : 0 }
   }
 
-  // Transactions
+  // Transactions & Approvals
   getTransactionsByUser(userId) {
-    return this.data.transactions.filter(t => t.userId === userId).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    return (this.data.transactions || []).filter(t => t.userId === userId).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
   }
 
-  createTransaction(userId, type, amount, status = 'approved', method = 'System Auto') {
+  getAllTransactions() {
+    return (this.data.transactions || []).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+  }
+
+  createTransaction(userId, type, amount, status = 'pending', method = 'Standard Transfer', details = {}) {
     const tx = {
       id: 'tx_' + Date.now().toString(36),
       userId,
       type,
       amount: parseFloat(amount.toFixed(2)),
-      status,
+      status, // 'pending', 'approved', 'declined'
       method,
+      asset: details.asset || 'USDT',
+      txHash: details.txHash || '',
+      walletAddress: details.walletAddress || '',
       createdAt: new Date().toISOString()
+    }
+    
+    if (!Array.isArray(this.data.transactions)) {
+      this.data.transactions = []
     }
     this.data.transactions.push(tx)
 
-    if (status === 'approved') {
-      const user = this.getUserById(userId)
-      if (user) {
-        if (type === 'deposit') user.balance += amount
-        if (type === 'withdrawal') user.balance = Math.max(0, user.balance - amount)
-        user.balance = parseFloat(user.balance.toFixed(2))
-      }
+    // For instant approved system txs or withdrawals (where we hold the funds immediately)
+    const user = this.getUserById(userId)
+    if (user && type === 'withdrawal' && status === 'pending') {
+      user.balance = Math.max(0, user.balance - amount)
+      user.balance = parseFloat(user.balance.toFixed(2))
+    }
+
+    if (user && status === 'approved' && type === 'deposit') {
+      user.balance += amount
+      user.balance = parseFloat(user.balance.toFixed(2))
     }
 
     this.save()
     return tx
+  }
+
+  approveTransaction(txId) {
+    const tx = (this.data.transactions || []).find(t => t.id === txId)
+    if (!tx || tx.status !== 'pending') {
+      return { success: false, error: 'Transaction not found or already processed' }
+    }
+
+    tx.status = 'approved'
+    const user = this.getUserById(tx.userId)
+    if (user && tx.type === 'deposit') {
+      user.balance += tx.amount
+      user.balance = parseFloat(user.balance.toFixed(2))
+    }
+
+    this.save()
+    return { success: true, transaction: tx, user }
+  }
+
+  declineTransaction(txId, reason = 'Verification failed') {
+    const tx = (this.data.transactions || []).find(t => t.id === txId)
+    if (!tx || tx.status !== 'pending') {
+      return { success: false, error: 'Transaction not found or already processed' }
+    }
+
+    tx.status = 'declined'
+    tx.declineReason = reason
+
+    // Refund withdrawal if declined
+    const user = this.getUserById(tx.userId)
+    if (user && tx.type === 'withdrawal') {
+      user.balance += tx.amount
+      user.balance = parseFloat(user.balance.toFixed(2))
+    }
+
+    this.save()
+    return { success: true, transaction: tx, user }
+  }
+
+  // Admin Deposit Wallets Configurator
+  getDepositWallets() {
+    if (!Array.isArray(this.data.depositWallets) || this.data.depositWallets.length === 0) {
+      this.data.depositWallets = [
+        { id: 'w1', name: 'USDT (TRC20)', asset: 'USDT-TRC20', address: 'T9xQeK...3Xm8qV', network: 'TRON (TRC20)', active: true },
+        { id: 'w2', name: 'Bitcoin (BTC)', asset: 'BTC', address: 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh', network: 'Bitcoin', active: true },
+        { id: 'w3', name: 'Ethereum (ETH)', asset: 'ETH', address: '0x71C7656EC7ab88b098defB751B7401B5f6d8976F', network: 'ERC20', active: true }
+      ]
+      this.save()
+    }
+    return this.data.depositWallets
+  }
+
+  saveDepositWallets(wallets) {
+    this.data.depositWallets = wallets
+    this.save()
+    return this.data.depositWallets
+  }
+
+  // Full Admin User Control
+  getAllUsers() {
+    return (this.data.users || []).map(u => ({
+      id: u.id,
+      name: u.name,
+      email: u.email,
+      balance: u.balance,
+      status: u.status || 'active',
+      createdAt: u.createdAt || new Date().toISOString()
+    }))
+  }
+
+  updateUserBalance(userId, newBalance, reason = 'Admin Adjustment') {
+    const user = this.getUserById(userId)
+    if (!user) return { success: false, error: 'User not found' }
+    
+    const diff = newBalance - user.balance
+    user.balance = parseFloat(parseFloat(newBalance).toFixed(2))
+    
+    // Log transaction
+    this.createTransaction(userId, diff >= 0 ? 'deposit' : 'withdrawal', Math.abs(diff), 'approved', `Admin Override: ${reason}`)
+    this.save()
+    return { success: true, user }
   }
 
   // Trade Logs

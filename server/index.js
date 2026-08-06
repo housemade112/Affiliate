@@ -157,13 +157,27 @@ app.get('/api/wallet/transactions/:userId', (req, res) => {
   return res.json({ success: true, transactions })
 })
 
+app.get('/api/wallet/deposit-wallets', (req, res) => {
+  const wallets = db.getDepositWallets().filter(w => w.active !== false)
+  return res.json({ success: true, wallets })
+})
+
 app.post('/api/wallet/transaction', (req, res) => {
-  const { userId, type, amount, method } = req.body
+  const { userId, type, amount, method, asset, txHash, walletAddress } = req.body
   if (!userId || !type || !amount) {
     return res.status(400).json({ success: false, error: 'userId, type, and amount are required' })
   }
 
-  const tx = db.createTransaction(userId, type, parseFloat(amount), 'approved', method || 'Standard Transfer')
+  // System auto-approves mirror transactions, but user deposit/withdrawal goes to pending approval
+  const isPending = (type === 'deposit' || type === 'withdrawal')
+  const status = isPending ? 'pending' : 'approved'
+
+  const tx = db.createTransaction(userId, type, parseFloat(amount), status, method || 'Crypto Transfer', {
+    asset,
+    txHash,
+    walletAddress
+  })
+  
   const user = db.getUserById(userId)
 
   return res.json({
@@ -171,6 +185,60 @@ app.post('/api/wallet/transaction', (req, res) => {
     transaction: tx,
     balance: user?.balance || 0
   })
+})
+
+// ── Admin Endpoints (Full Control) ──
+app.get('/api/admin/transactions', (req, res) => {
+  const transactions = db.getAllTransactions()
+  return res.json({ success: true, transactions })
+})
+
+app.post('/api/admin/transactions/:id/approve', (req, res) => {
+  const result = db.approveTransaction(req.params.id)
+  if (!result.success) {
+    return res.status(400).json({ success: false, error: result.error })
+  }
+  return res.json({ success: true, transaction: result.transaction, user: result.user })
+})
+
+app.post('/api/admin/transactions/:id/decline', (req, res) => {
+  const { reason } = req.body
+  const result = db.declineTransaction(req.params.id, reason || 'Transaction declined by Admin')
+  if (!result.success) {
+    return res.status(400).json({ success: false, error: result.error })
+  }
+  return res.json({ success: true, transaction: result.transaction, user: result.user })
+})
+
+app.get('/api/admin/wallets', (req, res) => {
+  const wallets = db.getDepositWallets()
+  return res.json({ success: true, wallets })
+})
+
+app.post('/api/admin/wallets', (req, res) => {
+  const { wallets } = req.body
+  if (!Array.isArray(wallets)) {
+    return res.status(400).json({ success: false, error: 'wallets array is required' })
+  }
+  const updated = db.saveDepositWallets(wallets)
+  return res.json({ success: true, wallets: updated })
+})
+
+app.get('/api/admin/users', (req, res) => {
+  const users = db.getAllUsers()
+  return res.json({ success: true, users })
+})
+
+app.post('/api/admin/users/:id/balance', (req, res) => {
+  const { balance, reason } = req.body
+  if (balance === undefined || isNaN(balance)) {
+    return res.status(400).json({ success: false, error: 'valid balance number is required' })
+  }
+  const result = db.updateUserBalance(req.params.id, balance, reason)
+  if (!result.success) {
+    return res.status(400).json({ success: false, error: result.error })
+  }
+  return res.json({ success: true, user: result.user })
 })
 
 // ── Live Copy Trade Signal Simulator Engine ──

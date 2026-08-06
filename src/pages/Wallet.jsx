@@ -171,10 +171,10 @@ export default function Wallet() {
                         </td>
                         <td className="px-6 py-5">
                           <p className={`font-semibold ${isDark ? 'text-white/80' : 'text-slate-700'}`}>
-                            {new Date(tx.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+                            {new Date(tx.createdAt || tx.date || Date.now()).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
                           </p>
                           <p className={`text-xs font-semibold mt-0.5 ${isDark ? 'text-white/40' : 'text-slate-400'}`}>
-                            {new Date(tx.date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
+                            {new Date(tx.createdAt || tx.date || Date.now()).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
                           </p>
                         </td>
                         <td className="px-6 py-5">

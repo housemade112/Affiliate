@@ -80,27 +80,134 @@ export const api = {
 
   wallet: {
     transactions: async (userId) => {
+      try {
+        const res = await fetch(`http://localhost:3001/api/wallet/transactions/${userId}`)
+        if (res.ok) return await res.json()
+      } catch (e) {}
       const txns = getStoredTransactions(userId)
       return { success: true, transactions: txns }
     },
-    transact: async (userId, type, amount, method) => {
+    depositWallets: async () => {
+      try {
+        const res = await fetch('http://localhost:3001/api/wallet/deposit-wallets')
+        if (res.ok) return await res.json()
+      } catch (e) {}
+      return {
+        success: true,
+        wallets: [
+          { id: 'w1', name: 'USDT (TRC20)', asset: 'USDT-TRC20', address: 'T9xQeK3Xm8qV7n2b1a0c9d8e7f6g5h4i3j2k1l', network: 'TRON (TRC20)', active: true },
+          { id: 'w2', name: 'Bitcoin (BTC)', asset: 'BTC', address: 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh', network: 'Bitcoin', active: true },
+          { id: 'w3', name: 'Ethereum (ETH)', asset: 'ETH', address: '0x71C7656EC7ab88b098defB751B7401B5f6d8976F', network: 'ERC20', active: true }
+        ]
+      }
+    },
+    transact: async (userId, type, amount, method, asset, txHash, walletAddress) => {
+      try {
+        const res = await fetch('http://localhost:3001/api/wallet/transaction', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId, type, amount, method, asset, txHash, walletAddress })
+        })
+        if (res.ok) return await res.json()
+      } catch (e) {}
+
+      // Fallback local simulation
       const currentBal = getStoredBalance(userId)
-      const newBal = type === 'deposit' ? currentBal + amount : currentBal - amount
-      saveBalance(userId, newBal)
+      const isPending = (type === 'deposit' || type === 'withdrawal')
+      const status = isPending ? 'pending' : 'approved'
+      let newBal = currentBal
+      
+      if (status === 'approved') {
+        newBal = type === 'deposit' ? currentBal + amount : currentBal - amount
+        saveBalance(userId, newBal)
+      } else if (type === 'withdrawal') {
+        newBal = Math.max(0, currentBal - amount)
+        saveBalance(userId, newBal)
+      }
+
       const tx = {
         id: `tx_${Date.now()}`,
         userId,
         type,
         amount,
-        method: method || 'Transfer',
-        status: 'approved',
-        date: new Date().toISOString(),
+        method: method || 'Crypto Transfer',
+        asset: asset || 'USDT',
+        txHash: txHash || '',
+        walletAddress: walletAddress || '',
+        status,
+        createdAt: new Date().toISOString(),
       }
       const txns = getStoredTransactions(userId)
       txns.unshift(tx)
       saveTransactions(userId, txns)
       return { success: true, transaction: tx, balance: newBal }
     },
+  },
+
+  admin: {
+    getTransactions: async () => {
+      try {
+        const res = await fetch('http://localhost:3001/api/admin/transactions')
+        if (res.ok) return await res.json()
+      } catch (e) {}
+      return { success: true, transactions: [] }
+    },
+    approveTransaction: async (txId) => {
+      try {
+        const res = await fetch(`http://localhost:3001/api/admin/transactions/${txId}/approve`, {
+          method: 'POST'
+        })
+        if (res.ok) return await res.json()
+      } catch (e) {}
+      return { success: false, error: 'Network error' }
+    },
+    declineTransaction: async (txId, reason) => {
+      try {
+        const res = await fetch(`http://localhost:3001/api/admin/transactions/${txId}/decline`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ reason })
+        })
+        if (res.ok) return await res.json()
+      } catch (e) {}
+      return { success: false, error: 'Network error' }
+    },
+    getWallets: async () => {
+      try {
+        const res = await fetch('http://localhost:3001/api/admin/wallets')
+        if (res.ok) return await res.json()
+      } catch (e) {}
+      return { success: true, wallets: [] }
+    },
+    saveWallets: async (wallets) => {
+      try {
+        const res = await fetch('http://localhost:3001/api/admin/wallets', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ wallets })
+        })
+        if (res.ok) return await res.json()
+      } catch (e) {}
+      return { success: false, error: 'Network error' }
+    },
+    getUsers: async () => {
+      try {
+        const res = await fetch('http://localhost:3001/api/admin/users')
+        if (res.ok) return await res.json()
+      } catch (e) {}
+      return { success: true, users: [] }
+    },
+    updateUserBalance: async (userId, balance, reason) => {
+      try {
+        const res = await fetch(`http://localhost:3001/api/admin/users/${userId}/balance`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ balance, reason })
+        })
+        if (res.ok) return await res.json()
+      } catch (e) {}
+      return { success: false, error: 'Network error' }
+    }
   },
 
   feed: {

@@ -1,213 +1,386 @@
 import { useState, useEffect } from 'react'
-import { useAuth } from '../context/AuthContext.jsx'
+import { api } from '../lib/api.js'
 import { useToast } from '../context/ToastContext.jsx'
-import { getAllAffiliates, updateAffiliate } from '../data/affiliates.js'
-import { formatCurrency, formatNumber } from '../lib/utils.js'
-import { 
-  ShieldAlert, Users, CheckCircle, XCircle, Edit3, 
-  DollarSign, Sliders, RefreshCw, Lock, Unlock, Search, TrendingUp, AlertTriangle, ChevronRight
+import { useTheme } from '../context/ThemeContext.jsx'
+import { formatCurrency } from '../lib/utils.js'
+import {
+  ShieldCheck, CheckCircle2, XCircle, Wallet, Users, Clock,
+  ArrowDownToLine, ArrowUpFromLine, RefreshCw, Edit3, Save, Plus, AlertCircle
 } from 'lucide-react'
 
 export default function Admin() {
-  const { user } = useAuth()
   const { addToast } = useToast()
+  const { theme } = useTheme()
+  const isDark = theme === 'dark'
 
-  const [activeTab, setActiveTab] = useState('users') // 'users', 'requests', 'affiliates'
-  const [affiliates, setAffiliates] = useState([])
-  const [search, setSearch] = useState('')
-  const [editingAff, setEditingAff] = useState(null)
+  const [activeTab, setActiveTab] = useState('pending') // 'pending', 'wallets', 'users', 'all_txs'
+  const [transactions, setTransactions] = useState([])
+  const [wallets, setWallets] = useState([])
+  const [users, setUsers] = useState([])
+  const [loading, setLoading] = useState(true)
 
-  // Local state for mock users & requests
-  const [users, setUsers] = useState([
-    { id: 'usr-1', name: 'Alex Morgan', email: 'alex.morgan@scalely.ai', balance: 12500, status: 'active', role: 'User' },
-    { id: 'usr-2', name: 'Admin Account', email: 'admin@copy.com', balance: 50000, status: 'active', role: 'Admin' },
-    { id: 'usr-3', name: 'Jordan Smith', email: 'jordan.smith@gmail.com', balance: 3400, status: 'active', role: 'User' },
-    { id: 'usr-4', name: 'Elena Vance', email: 'elena.vance@tech.co', balance: 8900, status: 'suspended', role: 'User' },
-  ])
+  // Decline Modal State
+  const [declineTxId, setDeclineTxId] = useState(null)
+  const [declineReason, setDeclineReason] = useState('')
 
-  const [requests, setRequests] = useState([
-    { id: 'req-1', userId: 'usr-1', userName: 'Alex Morgan', type: 'deposit', amount: 2500, status: 'pending', date: '2025-08-04' },
-    { id: 'req-2', userId: 'usr-3', userName: 'Jordan Smith', type: 'withdrawal', amount: 1000, status: 'pending', date: '2025-08-04' },
-    { id: 'req-3', userId: 'usr-1', userName: 'Alex Morgan', type: 'deposit', amount: 5000, status: 'approved', date: '2025-08-02' },
-  ])
+  // User Balance Adjust Modal State
+  const [adjustUser, setAdjustUser] = useState(null)
+  const [newBalance, setNewBalance] = useState('')
+  const [adjustReason, setAdjustReason] = useState('Admin Manual Adjustment')
+
+  const fetchData = async () => {
+    setLoading(true)
+    try {
+      const [txRes, walletRes, userRes] = await Promise.all([
+        api.admin.getTransactions(),
+        api.admin.getWallets(),
+        api.admin.getUsers()
+      ])
+      if (txRes.success) setTransactions(txRes.transactions || [])
+      if (walletRes.success) setWallets(walletRes.wallets || [])
+      if (userRes.success) setUsers(userRes.users || [])
+    } catch (e) {
+      console.error(e)
+      addToast('Failed to load admin data', 'error')
+    } fontally {
+      setLoading(false)
+    }
+  }
 
   useEffect(() => {
-    setAffiliates(getAllAffiliates())
+    fetchData()
   }, [])
 
-  // User Actions
-  const toggleUserStatus = (userId) => {
-    setUsers(prev => prev.map(u => {
-      if (u.id === userId) {
-        const nextStatus = u.status === 'active' ? 'suspended' : 'active'
-        addToast(`User account ${nextStatus}`, 'info')
-        return { ...u, status: nextStatus }
-      }
-      return u
-    }))
+  const pendingTxs = transactions.filter(t => t.status === 'pending')
+
+  const handleApprove = async (txId) => {
+    const res = await api.admin.approveTransaction(txId)
+    if (res.success) {
+      addToast('Transaction APPROVED successfully!', 'success')
+      fetchData()
+    } else {
+      addToast(res.error || 'Failed to approve', 'error')
+    }
   }
 
-  const adjustUserBalance = (userId, delta) => {
-    setUsers(prev => prev.map(u => {
-      if (u.id === userId) {
-        const newBalance = Math.max(0, u.balance + delta)
-        addToast(`Balance updated to ${formatCurrency(newBalance)}`, 'success')
-        return { ...u, balance: newBalance }
-      }
-      return u
-    }))
-  }
-
-  // Request Actions
-  const handleApproveRequest = (reqId) => {
-    setRequests(prev => prev.map(r => {
-      if (r.id === reqId) {
-        addToast(`Request #${reqId} Approved`, 'success')
-        return { ...r, status: 'approved' }
-      }
-      return r
-    }))
-  }
-
-  const handleDeclineRequest = (reqId) => {
-    setRequests(prev => prev.map(r => {
-      if (r.id === reqId) {
-        addToast(`Request #${reqId} Declined`, 'error')
-        return { ...r, status: 'declined' }
-      }
-      return r
-    }))
-  }
-
-  // Affiliate Profile Edit Save
-  const handleSaveAffiliate = (e) => {
+  const handleDeclineSubmit = async (e) => {
     e.preventDefault()
-    if (!editingAff) return
-    updateAffiliate(editingAff.id, {
-      revenue: Number(editingAff.revenue),
-      rating: Number(editingAff.rating),
-      minDeposit: Number(editingAff.minDeposit),
-      niche: editingAff.niche,
-    })
-    setAffiliates(getAllAffiliates())
-    addToast(`Partner profile updated`, 'success')
-    setEditingAff(null)
+    if (!declineTxId) return
+    const res = await api.admin.declineTransaction(declineTxId, declineReason)
+    if (res.success) {
+      addToast('Transaction DECLINED and updated', 'info')
+      setDeclineTxId(null)
+      setDeclineReason('')
+      fetchData()
+    } else {
+      addToast(res.error || 'Failed to decline', 'error')
+    }
   }
 
-  const filteredAffiliates = affiliates.filter(a => 
-    a.name.toLowerCase().includes(search.toLowerCase()) || 
-    a.niche.toLowerCase().includes(search.toLowerCase())
-  )
+  const handleSaveWallets = async (updatedWallets) => {
+    const res = await api.admin.saveWallets(updatedWallets)
+    if (res.success) {
+      addToast('Deposit Wallets updated successfully!', 'success')
+      setWallets(res.wallets)
+    } else {
+      addToast('Failed to update deposit wallets', 'error')
+    }
+  }
 
-  const pendingRequests = requests.filter(r => r.status === 'pending')
+  const handleWalletChange = (index, field, value) => {
+    const next = [...wallets]
+    next[index][field] = value
+    setWallets(next)
+  }
+
+  const handleAddWallet = () => {
+    const newW = {
+      id: 'w_' + Date.now(),
+      name: 'New Crypto Asset',
+      asset: 'SOL',
+      address: 'Paste Address Here...',
+      network: 'Solana',
+      active: true
+    }
+    setWallets([...wallets, newW])
+  }
+
+  const handleBalanceSubmit = async (e) => {
+    e.preventDefault()
+    if (!adjustUser) return
+    const val = parseFloat(newBalance)
+    if (isNaN(val) || val < 0) {
+      addToast('Please enter a valid balance', 'error')
+      return
+    }
+    const res = await api.admin.updateUserBalance(adjustUser.id, val, adjustReason)
+    if (res.success) {
+      addToast(`Updated balance for ${adjustUser.name} to ${formatCurrency(val)}`, 'success')
+      setAdjustUser(null)
+      setNewBalance('')
+      fetchData()
+    } else {
+      addToast(res.error || 'Failed to update balance', 'error')
+    }
+  }
+
+  const cardStyle = `rounded-[24px] border p-6 ${isDark ? 'bg-[#1A1D21] border-white/5' : 'bg-white border-slate-200/80 shadow-sm'}`
 
   return (
-    <div className="space-y-8 animate-fade-in text-white font-sans pb-20">
-
-      {/* Admin Header Banner */}
-      <div className="bg-[#005645] text-white p-6 sm:p-8 rounded-3xl shadow-lg border border-emerald-800/50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+    <div className="animate-fade-in pb-24 space-y-6 max-w-[1400px] mx-auto">
+      
+      {/* ── HEADER STRIP ── */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-5">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#C3F53C]/15 border border-[#C3F53C]/30 text-[#C3F53C] text-xs font-bold font-mono mb-3">
-            <ShieldAlert className="w-3.5 h-3.5 text-[#C3F53C]" /> SYSTEM CONTROLLER
+          <div className="flex items-center gap-2 text-emerald-500 font-extrabold text-xs uppercase tracking-wider mb-1">
+            <ShieldCheck className="w-4 h-4" /> Platform Control Center
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">Administrative Management Console</h1>
-          <p className="text-xs sm:text-sm text-emerald-100/90 mt-1 font-mono">Control center for user accounts, transaction approvals, and partner metadata</p>
+          <h1 className={`text-3xl font-extrabold tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>
+            Admin Management Portal
+          </h1>
+        </div>
+        <button onClick={fetchData}
+          className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 transition-colors w-fit">
+          <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} /> Refresh Data
+        </button>
+      </div>
+
+      {/* ── OVERVIEW METRICS STRIP ── */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className={cardStyle}>
+          <div className="flex items-center justify-between">
+            <span className={`text-xs font-bold ${isDark ? 'text-white/40' : 'text-slate-400'}`}>Pending Requests</span>
+            <div className="w-8 h-8 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center font-extrabold text-xs">
+              {pendingTxs.length}
+            </div>
+          </div>
+          <p className={`text-3xl font-black mt-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>{pendingTxs.length}</p>
+          <span className="text-[11px] font-semibold text-amber-500 mt-1 inline-block">Requires Action</span>
         </div>
 
-        <div className="flex items-center gap-2 bg-neutral-950/60 border border-neutral-800 px-4 py-2 rounded-2xl font-mono text-xs">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span>Admin Access Active</span>
+        <div className={cardStyle}>
+          <div className="flex items-center justify-between">
+            <span className={`text-xs font-bold ${isDark ? 'text-white/40' : 'text-slate-400'}`}>Deposit Wallets</span>
+            <Wallet className="w-5 h-5 text-emerald-500" />
+          </div>
+          <p className={`text-3xl font-black mt-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>{wallets.length}</p>
+          <span className="text-[11px] font-semibold text-emerald-500 mt-1 inline-block">Configured Assets</span>
+        </div>
+
+        <div className={cardStyle}>
+          <div className="flex items-center justify-between">
+            <span className={`text-xs font-bold ${isDark ? 'text-white/40' : 'text-slate-400'}`}>Total Registered Users</span>
+            <Users className="w-5 h-5 text-blue-500" />
+          </div>
+          <p className={`text-3xl font-black mt-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>{users.length}</p>
+          <span className="text-[11px] font-semibold text-blue-500 mt-1 inline-block">Active Platform Accounts</span>
+        </div>
+
+        <div className={cardStyle}>
+          <div className="flex items-center justify-between">
+            <span className={`text-xs font-bold ${isDark ? 'text-white/40' : 'text-slate-400'}`}>Total System Transactions</span>
+            <Clock className="w-5 h-5 text-purple-500" />
+          </div>
+          <p className={`text-3xl font-black mt-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>{transactions.length}</p>
+          <span className="text-[11px] font-semibold text-purple-500 mt-1 inline-block">Audit Logs</span>
         </div>
       </div>
 
-      {/* Navigation Tabs */}
-      <div className="flex flex-wrap items-center gap-2 border-b border-neutral-800 pb-4 font-mono text-xs">
-        <button
-          onClick={() => setActiveTab('users')}
-          className={`px-5 py-2.5 rounded-full font-bold transition-all ${
-            activeTab === 'users' ? 'bg-[#C3F53C] text-[#005645] shadow-md' : 'bg-neutral-900 text-slate-400 hover:text-white border border-neutral-800'
-          }`}
-        >
-          User Accounts ({users.length})
-        </button>
+      {/* ── TAB NAVIGATION ── */}
+      <div className={`flex flex-wrap items-center gap-2 p-1.5 rounded-2xl w-fit ${isDark ? 'bg-white/5' : 'bg-slate-100 border border-slate-200'}`}>
+        {[
+          { id: 'pending', label: `Pending Queue (${pendingTxs.length})` },
+          { id: 'wallets', label: 'Deposit Wallets Configurator' },
+          { id: 'users',   label: 'User Control & Balances' },
+          { id: 'all_txs', label: 'All Transactions Log' },
+        ].map(tab => (
+          <button key={tab.id} onClick={() => setActiveTab(tab.id)}
+            className={`px-5 py-2.5 rounded-xl text-xs font-extrabold transition-all ${
+              activeTab === tab.id
+                ? isDark
+                  ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
+                  : 'bg-emerald-600 text-white shadow-sm'
+                : isDark
+                  ? 'text-white/40 hover:text-white'
+                  : 'text-slate-500 hover:text-slate-900'
+            }`}>
+            {tab.label}
+          </button>
+        ))}
+      </div>
 
-        <button
-          onClick={() => setActiveTab('requests')}
-          className={`px-5 py-2.5 rounded-full font-bold transition-all relative ${
-            activeTab === 'requests' ? 'bg-[#C3F53C] text-[#005645] shadow-md' : 'bg-neutral-900 text-slate-400 hover:text-white border border-neutral-800'
-          }`}
-        >
-          Approval Queue
-          {pendingRequests.length > 0 && (
-            <span className="ml-2 px-2 py-0.5 rounded-full bg-amber-500 text-black text-[10px] font-black">
-              {pendingRequests.length} PENDING
-            </span>
+      {/* ── TAB 1: PENDING REQUESTS QUEUE ── */}
+      {activeTab === 'pending' && (
+        <div className={cardStyle}>
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h3 className={`text-lg font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>Pending Deposit & Withdrawal Queue</h3>
+              <p className={`text-xs mt-0.5 ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Review and approve or decline user financial requests</p>
+            </div>
+          </div>
+
+          {pendingTxs.length === 0 ? (
+            <div className="py-16 text-center">
+              <CheckCircle2 className="w-12 h-12 text-emerald-500/40 mx-auto mb-3" />
+              <p className={`text-base font-bold ${isDark ? 'text-white' : 'text-slate-800'}`}>No Pending Requests!</p>
+              <p className={`text-xs mt-1 ${isDark ? 'text-white/40' : 'text-slate-500'}`}>All user deposits and withdrawals have been processed.</p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-xs whitespace-nowrap">
+                <thead className={`border-b font-bold uppercase tracking-wider ${isDark ? 'bg-white/5 border-white/5 text-white/40' : 'bg-slate-50 border-slate-200 text-slate-400'}`}>
+                  <tr>
+                    <th className="px-6 py-4 text-left">Type</th>
+                    <th className="px-6 py-4 text-left">User</th>
+                    <th className="px-6 py-4 text-left">Amount</th>
+                    <th className="px-6 py-4 text-left">Asset & Network</th>
+                    <th className="px-6 py-4 text-left">TxHash / Address</th>
+                    <th className="px-6 py-4 text-left">Date</th>
+                    <th className="px-6 py-4 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className={`divide-y ${isDark ? 'divide-white/5' : 'divide-slate-100'}`}>
+                  {pendingTxs.map(t => (
+                    <tr key={t.id} className={isDark ? 'hover:bg-white/5' : 'hover:bg-slate-50'}>
+                      <td className="px-6 py-4">
+                        <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg font-black uppercase text-[10px] ${
+                          t.type === 'deposit' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
+                        }`}>
+                          {t.type === 'deposit' ? <ArrowDownToLine className="w-3 h-3" /> : <ArrowUpFromLine className="w-3 h-3" />}
+                          {t.type}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <p className={`font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>User #{t.userId}</p>
+                      </td>
+                      <td className="px-6 py-4 font-black text-sm text-emerald-400">
+                        {formatCurrency(t.amount)}
+                      </td>
+                      <td className="px-6 py-4 font-semibold text-slate-400">
+                        {t.asset || 'Crypto'} ({t.method})
+                      </td>
+                      <td className="px-6 py-4 font-mono text-[11px]">
+                        {t.txHash ? (
+                          <span className="text-blue-400 break-all">Tx: {t.txHash}</span>
+                        ) : t.walletAddress ? (
+                          <span className="text-purple-400 break-all">To: {t.walletAddress}</span>
+                        ) : (
+                          <span className="text-slate-500">Standard</span>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 text-slate-400 font-medium">
+                        {new Date(t.createdAt).toLocaleString()}
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        <div className="flex items-center justify-end gap-2">
+                          <button onClick={() => handleApprove(t.id)}
+                            className="px-3.5 py-1.5 rounded-lg bg-emerald-500 text-slate-950 font-black hover:bg-emerald-400 transition-colors shadow-sm">
+                            Approve
+                          </button>
+                          <button onClick={() => { setDeclineTxId(t.id); setDeclineReason('') }}
+                            className="px-3.5 py-1.5 rounded-lg bg-rose-500/20 text-rose-400 border border-rose-500/30 font-bold hover:bg-rose-500/30 transition-colors">
+                            Decline
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
-        </button>
+        </div>
+      )}
 
-        <button
-          onClick={() => setActiveTab('affiliates')}
-          className={`px-5 py-2.5 rounded-full font-bold transition-all ${
-            activeTab === 'affiliates' ? 'bg-[#C3F53C] text-[#005645] shadow-md' : 'bg-neutral-900 text-slate-400 hover:text-white border border-neutral-800'
-          }`}
-        >
-          Partner Metadata ({affiliates.length})
-        </button>
-      </div>
+      {/* ── TAB 2: DEPOSIT WALLETS CONFIGURATOR ── */}
+      {activeTab === 'wallets' && (
+        <div className={cardStyle}>
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h3 className={`text-lg font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>Admin Deposit Wallets Configurator</h3>
+              <p className={`text-xs mt-0.5 ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Configure the exact crypto deposit addresses presented to users</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <button onClick={handleAddWallet}
+                className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-extrabold bg-blue-500/10 text-blue-400 border border-blue-500/20 hover:bg-blue-500/20 transition-colors">
+                <Plus className="w-3.5 h-3.5" /> Add Asset Wallet
+              </button>
+              <button onClick={() => handleSaveWallets(wallets)}
+                className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-extrabold bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-colors shadow-sm">
+                <Save className="w-3.5 h-3.5" /> Save All Wallets
+              </button>
+            </div>
+          </div>
 
-      {/* ── TAB 1: USERS LEDGER ── */}
+          <div className="space-y-4">
+            {wallets.map((w, index) => (
+              <div key={w.id} className={`p-5 rounded-2xl border ${isDark ? 'bg-white/5 border-white/10' : 'bg-slate-50 border-slate-200'} space-y-3`}>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-400 uppercase">Wallet Label</label>
+                    <input type="text" value={w.name} onChange={e => handleWalletChange(index, 'name', e.target.value)}
+                      className={`w-full px-3 py-2 rounded-xl text-xs font-bold border mt-1 ${isDark ? 'bg-black/30 border-white/10 text-white' : 'bg-white border-slate-200 text-slate-900'}`} />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-400 uppercase">Asset Code</label>
+                    <input type="text" value={w.asset} onChange={e => handleWalletChange(index, 'asset', e.target.value)}
+                      className={`w-full px-3 py-2 rounded-xl text-xs font-bold border mt-1 ${isDark ? 'bg-black/30 border-white/10 text-white' : 'bg-white border-slate-200 text-slate-900'}`} />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-400 uppercase">Network</label>
+                    <input type="text" value={w.network} onChange={e => handleWalletChange(index, 'network', e.target.value)}
+                      className={`w-full px-3 py-2 rounded-xl text-xs font-bold border mt-1 ${isDark ? 'bg-black/30 border-white/10 text-white' : 'bg-white border-slate-200 text-slate-900'}`} />
+                  </div>
+                </div>
+                <div>
+                  <label className="text-[10px] font-bold text-slate-400 uppercase">Crypto Deposit Address (Displayed to Users)</label>
+                  <input type="text" value={w.address} onChange={e => handleWalletChange(index, 'address', e.target.value)}
+                    className={`w-full px-3 py-2 rounded-xl text-xs font-mono font-bold border mt-1 ${isDark ? 'bg-black/30 border-white/10 text-emerald-400' : 'bg-white border-slate-200 text-emerald-600'}`} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* ── TAB 3: USER CONTROL & BALANCES ── */}
       {activeTab === 'users' && (
-        <div className="bg-neutral-900 border border-neutral-800 rounded-3xl overflow-hidden shadow-sm">
-          <div className="p-6 border-b border-neutral-800 flex items-center justify-between">
-            <h3 className="text-lg font-bold text-white">Registered Account Directory</h3>
-            <span className="text-xs font-mono text-slate-400">{users.length} total registered accounts</span>
+        <div className={cardStyle}>
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h3 className={`text-lg font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>Registered Users & Balance Control</h3>
+              <p className={`text-xs mt-0.5 ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Override user balances or manage platform accounts</p>
+            </div>
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-left font-mono text-xs">
-              <thead>
-                <tr className="bg-neutral-950/60 text-slate-400 border-b border-neutral-800">
-                  <th className="p-4">User</th>
-                  <th className="p-4">Email</th>
-                  <th className="p-4">Role</th>
-                  <th className="p-4">Capital Balance</th>
-                  <th className="p-4">Status</th>
-                  <th className="p-4 text-right">Actions</th>
+            <table className="w-full text-xs whitespace-nowrap">
+              <thead className={`border-b font-bold uppercase tracking-wider ${isDark ? 'bg-white/5 border-white/5 text-white/40' : 'bg-slate-50 border-slate-200 text-slate-400'}`}>
+                <tr>
+                  <th className="px-6 py-4 text-left">User ID</th>
+                  <th className="px-6 py-4 text-left">Name</th>
+                  <th className="px-6 py-4 text-left">Email</th>
+                  <th className="px-6 py-4 text-left">Current Balance</th>
+                  <th className="px-6 py-4 text-left">Status</th>
+                  <th className="px-6 py-4 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-neutral-800">
+              <tbody className={`divide-y ${isDark ? 'divide-white/5' : 'divide-slate-100'}`}>
                 {users.map(u => (
-                  <tr key={u.id} className="hover:bg-neutral-950/40 transition-colors">
-                    <td className="p-4 font-bold text-white">{u.name}</td>
-                    <td className="p-4 text-slate-300">{u.email}</td>
-                    <td className="p-4">
-                      <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold ${u.role === 'Admin' ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' : 'bg-neutral-800 text-slate-300'}`}>
-                        {u.role}
-                      </span>
-                    </td>
-                    <td className="p-4 font-bold text-[#C3F53C]">{formatCurrency(u.balance)}</td>
-                    <td className="p-4">
-                      <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase ${u.status === 'active' ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' : 'bg-rose-950 text-rose-400 border border-rose-800'}`}>
+                  <tr key={u.id} className={isDark ? 'hover:bg-white/5' : 'hover:bg-slate-50'}>
+                    <td className="px-6 py-4 font-mono font-bold text-slate-400">#{u.id}</td>
+                    <td className={`px-6 py-4 font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>{u.name}</td>
+                    <td className="px-6 py-4 text-slate-400">{u.email}</td>
+                    <td className="px-6 py-4 font-black text-sm text-emerald-400">{formatCurrency(u.balance)}</td>
+                    <td className="px-6 py-4">
+                      <span className="px-2.5 py-1 rounded-md text-[10px] font-black uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
                         {u.status}
                       </span>
                     </td>
-                    <td className="p-4 text-right space-x-2">
-                      <button
-                        onClick={() => adjustUserBalance(u.id, 1000)}
-                        className="px-2.5 py-1 bg-neutral-950 hover:bg-neutral-800 border border-neutral-700 rounded-lg text-emerald-400 text-[11px] font-bold"
-                        title="Add $1,000 Balance"
-                      >
-                        +$1k
-                      </button>
-                      <button
-                        onClick={() => toggleUserStatus(u.id)}
-                        className={`px-3 py-1 rounded-lg text-[11px] font-bold transition-all ${
-                          u.status === 'active' 
-                            ? 'bg-rose-950/60 hover:bg-rose-900 border border-rose-800 text-rose-300'
-                            : 'bg-emerald-950/60 hover:bg-emerald-900 border border-emerald-800 text-emerald-300'
-                        }`}
-                      >
-                        {u.status === 'active' ? 'Suspend' : 'Reactivate'}
+                    <td className="px-6 py-4 text-right">
+                      <button onClick={() => { setAdjustUser(u); setNewBalance(String(u.balance)); setAdjustReason('Admin Adjustment') }}
+                        className="px-3.5 py-1.5 rounded-lg bg-blue-500/20 text-blue-400 border border-blue-500/30 font-bold hover:bg-blue-500/30 transition-colors">
+                        Override Balance
                       </button>
                     </td>
                   </tr>
@@ -218,148 +391,101 @@ export default function Admin() {
         </div>
       )}
 
-      {/* ── TAB 2: REQUEST APPROVAL QUEUE ── */}
-      {activeTab === 'requests' && (
-        <div className="bg-neutral-900 border border-neutral-800 rounded-3xl overflow-hidden shadow-sm space-y-6 p-6">
-          <div className="flex items-center justify-between border-b border-neutral-800 pb-4">
+      {/* ── TAB 4: ALL TRANSACTIONS LOG ── */}
+      {activeTab === 'all_txs' && (
+        <div className={cardStyle}>
+          <div className="flex items-center justify-between mb-6">
             <div>
-              <h3 className="text-lg font-bold text-white">Deposit & Withdrawal Queue</h3>
-              <p className="text-xs text-slate-400">All capital transfers require manual administrative approval</p>
+              <h3 className={`text-lg font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>Full Transaction Audit Log</h3>
+              <p className={`text-xs mt-0.5 ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Complete history of approved, pending, and declined requests</p>
             </div>
-            <span className="text-xs font-mono text-amber-400 bg-amber-950/50 border border-amber-800/40 px-3 py-1 rounded-full">
-              {pendingRequests.length} PENDING APPROVAL
-            </span>
           </div>
 
-          <div className="space-y-3 font-mono text-xs">
-            {requests.map(req => (
-              <div key={req.id} className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 bg-neutral-950/60 border border-neutral-800 rounded-2xl">
-                <div className="space-y-1 text-left">
-                  <div className="flex items-center gap-2">
-                    <span className="font-bold text-white text-sm">{req.userName}</span>
-                    <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${req.type === 'deposit' ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' : 'bg-indigo-950 text-indigo-400 border border-indigo-800'}`}>
-                      {req.type}
-                    </span>
-                  </div>
-                  <p className="text-slate-400 text-xs">Request ID: {req.id} · Date: {req.date}</p>
-                </div>
-
-                <div className="flex items-center gap-6">
-                  <span className="text-base font-black text-white">{formatCurrency(req.amount)}</span>
-                  
-                  {req.status === 'pending' ? (
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => handleApproveRequest(req.id)}
-                        className="px-3 py-1.5 bg-emerald-950 hover:bg-emerald-900 border border-emerald-800 text-emerald-400 font-bold rounded-lg transition-colors flex items-center gap-1"
-                      >
-                        <CheckCircle className="w-3.5 h-3.5" /> Approve
-                      </button>
-                      <button
-                        onClick={() => handleDeclineRequest(req.id)}
-                        className="px-3 py-1.5 bg-rose-950 hover:bg-rose-900 border border-rose-800 text-rose-400 font-bold rounded-lg transition-colors flex items-center gap-1"
-                      >
-                        <XCircle className="w-3.5 h-3.5" /> Decline
-                      </button>
-                    </div>
-                  ) : (
-                    <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase ${req.status === 'approved' ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' : 'bg-rose-950 text-rose-400 border border-rose-800'}`}>
-                      {req.status}
-                    </span>
-                  )}
-                </div>
-              </div>
-            ))}
+          <div className="overflow-x-auto">
+            <table className="w-full text-xs whitespace-nowrap">
+              <thead className={`border-b font-bold uppercase tracking-wider ${isDark ? 'bg-white/5 border-white/5 text-white/40' : 'bg-slate-50 border-slate-200 text-slate-400'}`}>
+                <tr>
+                  <th className="px-6 py-4 text-left">Tx ID</th>
+                  <th className="px-6 py-4 text-left">Type</th>
+                  <th className="px-6 py-4 text-left">User</th>
+                  <th className="px-6 py-4 text-left">Amount</th>
+                  <th className="px-6 py-4 text-left">Status</th>
+                  <th className="px-6 py-4 text-left">Date</th>
+                </tr>
+              </thead>
+              <tbody className={`divide-y ${isDark ? 'divide-white/5' : 'divide-slate-100'}`}>
+                {transactions.map(t => (
+                  <tr key={t.id} className={isDark ? 'hover:bg-white/5' : 'hover:bg-slate-50'}>
+                    <td className="px-6 py-4 font-mono text-slate-500">{t.id}</td>
+                    <td className="px-6 py-4 font-bold capitalize">{t.type}</td>
+                    <td className="px-6 py-4">User #{t.userId}</td>
+                    <td className="px-6 py-4 font-black text-emerald-400">{formatCurrency(t.amount)}</td>
+                    <td className="px-6 py-4">
+                      <span className={`px-2.5 py-1 rounded-md text-[10px] font-black uppercase ${
+                        t.status === 'approved' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' :
+                        t.status === 'declined' ? 'bg-rose-500/20 text-rose-400 border border-rose-500/30' :
+                        'bg-amber-500/20 text-amber-400 border border-amber-500/30'
+                      }`}>
+                        {t.status}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-slate-400">{new Date(t.createdAt).toLocaleString()}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       )}
 
-      {/* ── TAB 3: AFFILIATE METADATA MANAGER ── */}
-      {activeTab === 'affiliates' && (
-        <div className="bg-neutral-900 border border-neutral-800 rounded-3xl p-6 space-y-6 shadow-sm">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-neutral-800 pb-4">
-            <div>
-              <h3 className="text-lg font-bold text-white">Partner Profile Metadata</h3>
-              <p className="text-xs text-slate-400">Edit verified revenues, ratings, min deposit tiers, and niches</p>
+      {/* ── DECLINE REASON MODAL ── */}
+      {declineTxId && (
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+          <form onSubmit={handleDeclineSubmit} className={`w-full max-w-md p-6 rounded-[24px] border shadow-2xl space-y-4 ${isDark ? 'bg-[#1A1D21] border-white/10' : 'bg-white border-slate-200'}`}>
+            <h3 className={`text-lg font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>Decline Transaction</h3>
+            <p className={`text-xs ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Specify reason for declining this request (will be logged):</p>
+            <textarea value={declineReason} onChange={e => setDeclineReason(e.target.value)}
+              placeholder="e.g. Invalid TxHash / Incorrect network / Unverified funds"
+              className={`w-full p-3 rounded-xl text-xs border ${isDark ? 'bg-black/30 border-white/10 text-white' : 'bg-slate-50 border-slate-200 text-slate-900'} focus:outline-none`}
+              rows={3} required />
+            <div className="flex gap-2 justify-end pt-2">
+              <button type="button" onClick={() => setDeclineTxId(null)}
+                className="px-4 py-2 rounded-xl text-xs font-bold text-slate-400 hover:text-white">Cancel</button>
+              <button type="submit"
+                className="px-4 py-2 rounded-xl text-xs font-extrabold bg-rose-500 text-white hover:bg-rose-600">Confirm Decline</button>
             </div>
+          </form>
+        </div>
+      )}
+
+      {/* ── USER BALANCE ADJUST MODAL ── */}
+      {adjustUser && (
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+          <form onSubmit={handleBalanceSubmit} className={`w-full max-w-md p-6 rounded-[24px] border shadow-2xl space-y-4 ${isDark ? 'bg-[#1A1D21] border-white/10' : 'bg-white border-slate-200'}`}>
+            <h3 className={`text-lg font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>Override User Balance</h3>
+            <p className={`text-xs ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Adjusting balance for <span className="font-bold text-emerald-400">{adjustUser.name}</span></p>
             
-            <div className="relative w-full sm:w-64">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-              <input
-                type="text"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search partner..."
-                className="w-full pl-9 pr-4 py-2 bg-neutral-950 border border-neutral-800 rounded-xl text-xs text-white placeholder-slate-500 font-mono focus:outline-none focus:border-[#C3F53C]"
-              />
+            <div>
+              <label className="text-[10px] font-bold text-slate-400 uppercase">New Total Balance ($)</label>
+              <input type="number" step="0.01" value={newBalance} onChange={e => setNewBalance(e.target.value)}
+                className={`w-full p-3 rounded-xl text-sm font-extrabold border mt-1 ${isDark ? 'bg-black/30 border-white/10 text-white' : 'bg-slate-50 border-slate-200 text-slate-900'} focus:outline-none`}
+                required />
             </div>
-          </div>
 
-          {/* Edit Modal Overlay */}
-          {editingAff && (
-            <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-              <form onSubmit={handleSaveAffiliate} className="bg-neutral-900 border border-neutral-800 p-6 rounded-3xl w-full max-w-md space-y-4 text-left font-mono">
-                <div className="flex items-center justify-between border-b border-neutral-800 pb-3">
-                  <h4 className="text-base font-bold text-white">Edit Partner Metadata</h4>
-                  <button type="button" onClick={() => setEditingAff(null)} className="text-slate-400 hover:text-white">✕</button>
-                </div>
-
-                <div>
-                  <label className="text-xs text-slate-400 block mb-1">Partner Name</label>
-                  <input type="text" disabled value={editingAff.name} className="w-full p-2.5 bg-neutral-950 border border-neutral-800 rounded-xl text-slate-400 text-xs" />
-                </div>
-
-                <div>
-                  <label className="text-xs text-slate-400 block mb-1">Niche Category</label>
-                  <input type="text" value={editingAff.niche} onChange={e => setEditingAff({...editingAff, niche: e.target.value})} className="w-full p-2.5 bg-neutral-950 border border-neutral-800 rounded-xl text-white text-xs" />
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="text-xs text-slate-400 block mb-1">Revenue ($)</label>
-                    <input type="number" value={editingAff.revenue} onChange={e => setEditingAff({...editingAff, revenue: e.target.value})} className="w-full p-2.5 bg-neutral-950 border border-neutral-800 rounded-xl text-white text-xs" />
-                  </div>
-                  <div>
-                    <label className="text-xs text-slate-400 block mb-1">Star Rating (1-5)</label>
-                    <input type="number" step="0.1" max="5" value={editingAff.rating} onChange={e => setEditingAff({...editingAff, rating: e.target.value})} className="w-full p-2.5 bg-neutral-950 border border-neutral-800 rounded-xl text-white text-xs" />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="text-xs text-slate-400 block mb-1">Minimum Deposit ($)</label>
-                  <input type="number" value={editingAff.minDeposit} onChange={e => setEditingAff({...editingAff, minDeposit: e.target.value})} className="w-full p-2.5 bg-neutral-950 border border-neutral-800 rounded-xl text-white text-xs" />
-                </div>
-
-                <div className="pt-3 flex gap-3">
-                  <button type="button" onClick={() => setEditingAff(null)} className="btn-outline-light flex-1 py-2.5 text-xs">Cancel</button>
-                  <button type="submit" className="btn-lime flex-1 py-2.5 text-xs">Save Changes</button>
-                </div>
-              </form>
+            <div>
+              <label className="text-[10px] font-bold text-slate-400 uppercase">Adjustment Reason</label>
+              <input type="text" value={adjustReason} onChange={e => setAdjustReason(e.target.value)}
+                className={`w-full p-3 rounded-xl text-xs border mt-1 ${isDark ? 'bg-black/30 border-white/10 text-white' : 'bg-slate-50 border-slate-200 text-slate-900'} focus:outline-none`}
+                required />
             </div>
-          )}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 font-mono text-xs">
-            {filteredAffiliates.slice(0, 18).map(a => (
-              <div key={a.id} className="p-4 bg-neutral-950/60 border border-neutral-800 rounded-2xl flex items-center justify-between gap-3">
-                <div className="flex items-center gap-3 min-w-0">
-                  <img src={a.avatar} alt={a.name} className="w-10 h-10 rounded-xl object-cover border border-neutral-800 flex-shrink-0" />
-                  <div className="min-w-0 text-left">
-                    <p className="font-bold text-white truncate">{a.name}</p>
-                    <p className="text-[10px] text-slate-400 truncate">{a.niche}</p>
-                    <p className="text-[11px] font-bold text-[#C3F53C] mt-0.5">${(a.revenue / 1000).toFixed(0)}k rev · Min ${a.minDeposit}</p>
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => setEditingAff(a)}
-                  className="p-2 text-slate-400 hover:text-white bg-neutral-900 border border-neutral-800 rounded-lg hover:border-emerald-800 transition-colors"
-                  title="Edit Metadata"
-                >
-                  <Edit3 className="w-4 h-4" />
-                </button>
-              </div>
-            ))}
-          </div>
+            <div className="flex gap-2 justify-end pt-2">
+              <button type="button" onClick={() => setAdjustUser(null)}
+                className="px-4 py-2 rounded-xl text-xs font-bold text-[#A3A3A3] hover:text-white">Cancel</button>
+              <button type="submit"
+                className="px-4 py-2 rounded-xl text-xs font-extrabold bg-emerald-500 text-slate-950 hover:bg-emerald-400">Save Balance</button>
+            </div>
+          </form>
         </div>
       )}
 
