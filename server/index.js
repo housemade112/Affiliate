@@ -187,7 +187,32 @@ app.post('/api/wallet/transaction', (req, res) => {
   })
 })
 
-// ── Admin Endpoints (Full Control) ──
+// ── Admin Endpoints (Full Control & Auth) ──
+app.post('/api/admin/login', (req, res) => {
+  const { email, password } = req.body
+  const expectedEmail = process.env.ADMIN_EMAIL || 'admin@scalely.ai'
+  const expectedPassword = process.env.ADMIN_PASSWORD || 'admin123'
+
+  if (!email || !password) {
+    return res.status(400).json({ success: false, error: 'Email and password are required' })
+  }
+
+  if (email.toLowerCase() !== expectedEmail.toLowerCase() || password !== expectedPassword) {
+    return res.status(401).json({ success: false, error: 'Invalid admin credentials' })
+  }
+
+  const adminSession = {
+    id: 'admin_master',
+    name: 'Master Administrator',
+    email: expectedEmail,
+    role: 'admin',
+    token: 'adm_tok_' + Date.now().toString(36),
+    loggedInAt: new Date().toISOString()
+  }
+
+  return res.json({ success: true, user: adminSession })
+})
+
 app.get('/api/admin/transactions', (req, res) => {
   const transactions = db.getAllTransactions()
   return res.json({ success: true, transactions })

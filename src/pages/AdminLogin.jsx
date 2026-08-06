@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { ShieldCheck, Lock, ArrowRight, ShieldAlert } from 'lucide-react'
+import { api } from '../lib/api.js'
 
 export default function AdminLogin() {
   const navigate = useNavigate()
@@ -9,26 +10,19 @@ export default function AdminLogin() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault()
     setError('')
     setLoading(true)
 
-    // Master Admin Authentication
-    if (password === 'admin123' || password === 'admin' || password.length >= 6) {
-      const adminSession = {
-        id: 'admin_1',
-        name: 'Master Admin',
-        email: email,
-        role: 'admin',
-        loggedInAt: new Date().toISOString()
-      }
-      localStorage.setItem('scalely_admin_session', JSON.stringify(adminSession))
-      setLoading(false)
+    const res = await api.admin.login(email, password)
+    setLoading(false)
+
+    if (res && res.success) {
+      localStorage.setItem('scalely_admin_session', JSON.stringify(res.user))
       navigate('/admin')
     } else {
-      setLoading(false)
-      setError('Invalid admin credentials. (Hint: Use password "admin123")')
+      setError(res?.error || 'Invalid admin credentials.')
     }
   }
 
