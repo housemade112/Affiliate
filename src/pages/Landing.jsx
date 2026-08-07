@@ -281,9 +281,9 @@ export default function Landing() {
 
           {/* Left Column: Mission Story */}
           <div className="lg:col-span-7 space-y-8 text-left relative z-10">
-            <h2 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight leading-[1.15]">
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tighter leading-[1.05]">
               We built this because<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C3F53C] to-[#9EE86F]">affiliates deserved better.</span>
+              <span className="text-[#C3F53C]">affiliates deserved better.</span>
             </h2>
 
             <div className="space-y-5 text-[15px] sm:text-lg text-emerald-50/60 leading-relaxed font-medium">
@@ -302,30 +302,37 @@ export default function Landing() {
             </div>
           </div>
 
-          {/* Right Column: Premium Glassmorphic Cards */}
-          <div className="lg:col-span-5 grid grid-cols-2 gap-4 sm:gap-6 relative z-10">
-            <div className="bg-white/[0.03] backdrop-blur-xl border border-white/10 p-6 sm:p-8 rounded-[24px] sm:rounded-[32px] space-y-3 text-left shadow-2xl hover:bg-white/[0.05] hover:border-white/20 transition-all duration-300 group">
-              <span className="text-[10px] font-bold text-emerald-400/50 uppercase tracking-[0.2em] block">FOUNDED</span>
-              <p className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight group-hover:text-[#C3F53C] transition-colors">2022</p>
-              <p className="text-xs font-medium text-emerald-100/40">Born from frustration</p>
-            </div>
-
-            <div className="bg-white/[0.03] backdrop-blur-xl border border-white/10 p-6 sm:p-8 rounded-[24px] sm:rounded-[32px] space-y-3 text-left shadow-2xl hover:bg-white/[0.05] hover:border-white/20 transition-all duration-300 group mt-0 sm:mt-12">
-              <span className="text-[10px] font-bold text-emerald-400/50 uppercase tracking-[0.2em] block">AFFILIATES</span>
-              <p className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight group-hover:text-[#C3F53C] transition-colors">14K+</p>
-              <p className="text-xs font-medium text-emerald-100/40">Verified active earners</p>
-            </div>
-
-            <div className="bg-white/[0.03] backdrop-blur-xl border border-white/10 p-6 sm:p-8 rounded-[24px] sm:rounded-[32px] space-y-3 text-left shadow-2xl hover:bg-white/[0.05] hover:border-white/20 transition-all duration-300 group sm:-mt-12">
-              <span className="text-[10px] font-bold text-emerald-400/50 uppercase tracking-[0.2em] block leading-tight">AVG MONTHLY RETURN</span>
-              <p className="text-3xl sm:text-4xl font-extrabold text-[#C3F53C] tracking-tight">22.4%</p>
-              <p className="text-xs font-medium text-emerald-100/40">Audited partner Profit</p>
-            </div>
-
-            <div className="bg-white/[0.03] backdrop-blur-xl border border-white/10 p-6 sm:p-8 rounded-[24px] sm:rounded-[32px] space-y-3 text-left shadow-2xl hover:bg-white/[0.05] hover:border-white/20 transition-all duration-300 group">
-              <span className="text-[10px] font-bold text-emerald-400/50 uppercase tracking-[0.2em] block">TOTAL PAID OUT</span>
-              <p className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight group-hover:text-[#C3F53C] transition-colors">$214M+</p>
-              <p className="text-xs font-medium text-emerald-100/40">100% On-time payouts</p>
+          {/* Right Column: Unified Bento Box */}
+          <div className="lg:col-span-5 relative z-10">
+            <div className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[32px] overflow-hidden shadow-2xl relative">
+              {/* Inner Glow */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
+              
+              <div className="grid grid-cols-2 divide-x divide-y divide-white/10 relative z-10">
+                <div className="p-6 sm:p-8 space-y-2 sm:space-y-3 hover:bg-white/[0.02] transition-colors group">
+                  <span className="text-[10px] font-bold text-emerald-400/50 uppercase tracking-[0.2em] block">FOUNDED</span>
+                  <p className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight group-hover:text-[#C3F53C] transition-colors">2022</p>
+                  <p className="text-xs font-medium text-emerald-100/40">Born from frustration</p>
+                </div>
+                
+                <div className="p-6 sm:p-8 space-y-2 sm:space-y-3 hover:bg-white/[0.02] transition-colors group">
+                  <span className="text-[10px] font-bold text-emerald-400/50 uppercase tracking-[0.2em] block">AFFILIATES</span>
+                  <p className="text-3xl sm:text-4xl font-extrabold text-[#C3F53C] tracking-tight">14K+</p>
+                  <p className="text-xs font-medium text-emerald-100/40">Verified active earners</p>
+                </div>
+                
+                <div className="p-6 sm:p-8 space-y-2 sm:space-y-3 hover:bg-white/[0.02] transition-colors group">
+                  <span className="text-[10px] font-bold text-emerald-400/50 uppercase tracking-[0.2em] block leading-tight">AVG RETURN</span>
+                  <p className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight group-hover:text-[#C3F53C] transition-colors">22.4%</p>
+                  <p className="text-xs font-medium text-emerald-100/40">Audited partner Profit</p>
+                </div>
+                
+                <div className="p-6 sm:p-8 space-y-2 sm:space-y-3 hover:bg-white/[0.02] transition-colors group">
+                  <span className="text-[10px] font-bold text-emerald-400/50 uppercase tracking-[0.2em] block">PAID OUT</span>
+                  <p className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight group-hover:text-[#C3F53C] transition-colors">$214M+</p>
+                  <p className="text-xs font-medium text-emerald-100/40">100% On-time payouts</p>
+                </div>
+              </div>
             </div>
           </div>
 
