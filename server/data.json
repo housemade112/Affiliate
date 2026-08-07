@@ -5,7 +5,7 @@
       "name": "Demo Operator",
       "email": "demo@mirrormarket.net",
       "password": "password123",
-      "balance": 12452.027488425756,
+      "balance": 12454.650746527388,
       "createdAt": "2026-08-07T07:21:57.031Z"
     }
   ],
@@ -1835,454 +1835,454 @@
   ],
   "tradeLogs": [
     {
-      "id": "trd_msj8kj2c",
-      "trader": "Mark Webster",
-      "copier": "Jessica W.",
-      "amount": "$4,100",
-      "returnVal": "+13.0%",
-      "niche": "Bot Affiliate Marketing",
-      "timestamp": "2026-08-07T17:46:07.620Z"
-    },
-    {
-      "id": "trd_msj8kf7a",
-      "trader": "Ryan Deiss",
-      "copier": "Alex P.",
-      "amount": "$1,500",
-      "returnVal": "+15.5%",
-      "niche": "Digital Marketing & Funnels",
-      "timestamp": "2026-08-07T17:46:02.614Z"
-    },
-    {
-      "id": "trd_msj8kbc7",
-      "trader": "Rand Fishkin",
-      "copier": "Sarah M.",
-      "amount": "$3,700",
-      "returnVal": "+14.9%",
-      "niche": "Audience Intelligence",
-      "timestamp": "2026-08-07T17:45:57.607Z"
-    },
-    {
-      "id": "trd_msj8k7h7",
-      "trader": "Rand Fishkin",
-      "copier": "Marcus K.",
-      "amount": "$2,200",
-      "returnVal": "+18.2%",
-      "niche": "Audience Intelligence",
-      "timestamp": "2026-08-07T17:45:52.603Z"
-    },
-    {
-      "id": "trd_msj8k3m8",
-      "trader": "Gael Breton",
-      "copier": "Jessica W.",
-      "amount": "$2,500",
-      "returnVal": "+12.9%",
-      "niche": "Authority Sites & Affiliate",
-      "timestamp": "2026-08-07T17:45:47.600Z"
-    },
-    {
-      "id": "trd_msj8jzr7",
-      "trader": "Ryan Deiss",
-      "copier": "Marcus K.",
-      "amount": "$4,400",
-      "returnVal": "+16.9%",
-      "niche": "Digital Marketing & Funnels",
-      "timestamp": "2026-08-07T17:45:42.595Z"
-    },
-    {
-      "id": "trd_msj8jvw7",
-      "trader": "John Chow",
-      "copier": "Marcus K.",
-      "amount": "$2,600",
-      "returnVal": "+18.5%",
-      "niche": "Blogging & Digital Marketing",
-      "timestamp": "2026-08-07T17:45:37.591Z"
-    },
-    {
-      "id": "trd_msj8js19",
-      "trader": "Matt Diggity",
-      "copier": "Marcus K.",
-      "amount": "$2,600",
-      "returnVal": "+14.9%",
-      "niche": "SEO & Bot Strategies",
-      "timestamp": "2026-08-07T17:45:32.589Z"
-    },
-    {
-      "id": "trd_msj8jo66",
-      "trader": "Miles Beckler",
-      "copier": "Elena R.",
-      "amount": "$3,700",
-      "returnVal": "+17.7%",
-      "niche": "Digital Marketing & Sales",
-      "timestamp": "2026-08-07T17:45:27.582Z"
-    },
-    {
-      "id": "trd_msj8jkb4",
-      "trader": "Justin Cooke",
-      "copier": "Jessica W.",
-      "amount": "$4,200",
-      "returnVal": "+14.1%",
-      "niche": "Digital Asset Brokering",
-      "timestamp": "2026-08-07T17:45:22.577Z"
-    },
-    {
-      "id": "trd_msj8jgft",
-      "trader": "Charles Ngo",
-      "copier": "Sarah M.",
-      "amount": "$2,900",
-      "returnVal": "+17.3%",
-      "niche": "Performance Affiliate Marketing",
-      "timestamp": "2026-08-07T17:45:17.561Z"
-    },
-    {
-      "id": "trd_msj8jcks",
-      "trader": "Justin Cooke",
-      "copier": "David T.",
-      "amount": "$4,500",
-      "returnVal": "+12.2%",
-      "niche": "Digital Asset Brokering",
-      "timestamp": "2026-08-07T17:45:12.556Z"
-    },
-    {
-      "id": "trd_msj8j8pq",
-      "trader": "Spencer Haws",
-      "copier": "Sarah M.",
-      "amount": "$500",
-      "returnVal": "+19.6%",
-      "niche": "Niche Sites & Affiliate",
-      "timestamp": "2026-08-07T17:45:07.550Z"
-    },
-    {
-      "id": "trd_msj8j4un",
-      "trader": "Charles Ngo",
-      "copier": "Marcus K.",
-      "amount": "$1,200",
-      "returnVal": "+19.7%",
-      "niche": "Performance Affiliate Marketing",
-      "timestamp": "2026-08-07T17:45:02.543Z"
-    },
-    {
-      "id": "trd_msj8j0zh",
-      "trader": "Neil Patel",
-      "copier": "Sarah M.",
-      "amount": "$3,500",
-      "returnVal": "+17.2%",
-      "niche": "Digital Marketing & SEO",
-      "timestamp": "2026-08-07T17:44:57.533Z"
-    },
-    {
-      "id": "trd_msj8ix4h",
-      "trader": "Charles Ngo",
-      "copier": "Alex P.",
-      "amount": "$2,600",
-      "returnVal": "+18.1%",
-      "niche": "Performance Affiliate Marketing",
-      "timestamp": "2026-08-07T17:44:52.529Z"
-    },
-    {
-      "id": "trd_msj8it9g",
-      "trader": "Ann Handley",
-      "copier": "Sarah M.",
-      "amount": "$1,700",
-      "returnVal": "+13.9%",
-      "niche": "Content & Affiliate Marketing",
-      "timestamp": "2026-08-07T17:44:47.524Z"
-    },
-    {
-      "id": "trd_msj8ipe5",
-      "trader": "Pat Flynn",
-      "copier": "Elena R.",
-      "amount": "$1,500",
-      "returnVal": "+17.9%",
-      "niche": "Passive Income & Affiliate",
-      "timestamp": "2026-08-07T17:44:42.509Z"
-    },
-    {
-      "id": "trd_msj8ilj2",
-      "trader": "Rand Fishkin",
-      "copier": "Jessica W.",
-      "amount": "$1,400",
-      "returnVal": "+12.9%",
-      "niche": "Audience Intelligence",
-      "timestamp": "2026-08-07T17:44:37.502Z"
-    },
-    {
-      "id": "trd_msj8ihnu",
-      "trader": "Charles Ngo",
-      "copier": "Jessica W.",
-      "amount": "$2,900",
-      "returnVal": "+18.0%",
-      "niche": "Performance Affiliate Marketing",
-      "timestamp": "2026-08-07T17:44:32.490Z"
-    },
-    {
-      "id": "trd_msj8idsj",
-      "trader": "Gael Breton",
-      "copier": "Sarah M.",
-      "amount": "$4,800",
-      "returnVal": "+13.7%",
-      "niche": "Authority Sites & Affiliate",
-      "timestamp": "2026-08-07T17:44:27.475Z"
-    },
-    {
-      "id": "trd_msj8i9xi",
-      "trader": "Jon Dykstra",
-      "copier": "Marcus K.",
-      "amount": "$2,500",
-      "returnVal": "+16.2%",
-      "niche": "Display Ads & Affiliate",
-      "timestamp": "2026-08-07T17:44:22.471Z"
-    },
-    {
-      "id": "trd_msj8i62i",
-      "trader": "Matt Diggity",
-      "copier": "Alex P.",
-      "amount": "$4,100",
-      "returnVal": "+16.1%",
-      "niche": "SEO & Bot Strategies",
-      "timestamp": "2026-08-07T17:44:17.466Z"
-    },
-    {
-      "id": "trd_msj8i27c",
-      "trader": "Rae Hoffman",
-      "copier": "Sarah M.",
-      "amount": "$3,500",
-      "returnVal": "+17.2%",
-      "niche": "SEO Affiliate Marketing",
-      "timestamp": "2026-08-07T17:44:12.456Z"
-    },
-    {
-      "id": "trd_msj8hycf",
-      "trader": "Doug Cunnington",
-      "copier": "David T.",
-      "amount": "$2,200",
-      "returnVal": "+17.0%",
-      "niche": "Amazon Affiliate Marketing",
-      "timestamp": "2026-08-07T17:44:07.455Z"
-    },
-    {
-      "id": "trd_msj8huhf",
-      "trader": "Doug Cunnington",
-      "copier": "Elena R.",
-      "amount": "$3,300",
-      "returnVal": "+13.6%",
-      "niche": "Amazon Affiliate Marketing",
-      "timestamp": "2026-08-07T17:44:02.451Z"
-    },
-    {
-      "id": "trd_msj8hqme",
-      "trader": "Ann Handley",
-      "copier": "Sarah M.",
-      "amount": "$3,300",
-      "returnVal": "+14.2%",
-      "niche": "Content & Affiliate Marketing",
-      "timestamp": "2026-08-07T17:43:57.446Z"
-    },
-    {
-      "id": "trd_msj8hmr9",
-      "trader": "Rae Hoffman",
-      "copier": "Marcus K.",
-      "amount": "$1,600",
-      "returnVal": "+14.7%",
-      "niche": "SEO Affiliate Marketing",
-      "timestamp": "2026-08-07T17:43:52.437Z"
-    },
-    {
-      "id": "trd_msj8hivx",
-      "trader": "Ryan Deiss",
-      "copier": "Elena R.",
-      "amount": "$3,700",
-      "returnVal": "+15.2%",
-      "niche": "Digital Marketing & Funnels",
-      "timestamp": "2026-08-07T17:43:47.421Z"
-    },
-    {
-      "id": "trd_msj8hf0u",
-      "trader": "Gael Breton",
-      "copier": "Elena R.",
-      "amount": "$3,700",
-      "returnVal": "+16.8%",
-      "niche": "Authority Sites & Affiliate",
-      "timestamp": "2026-08-07T17:43:42.414Z"
-    },
-    {
-      "id": "trd_msj8hb5w",
-      "trader": "Shawn Collins",
-      "copier": "Sarah M.",
-      "amount": "$2,000",
-      "returnVal": "+12.7%",
-      "niche": "Bot Traffic & Affiliate",
-      "timestamp": "2026-08-07T17:43:37.412Z"
-    },
-    {
-      "id": "trd_msj8h7ax",
-      "trader": "Neil Patel",
-      "copier": "Marcus K.",
-      "amount": "$600",
-      "returnVal": "+19.7%",
-      "niche": "Digital Marketing & SEO",
-      "timestamp": "2026-08-07T17:43:32.409Z"
-    },
-    {
-      "id": "trd_msj8h3g1",
+      "id": "trd_msjezccf",
       "trader": "Missy Ward",
-      "copier": "Alex P.",
-      "amount": "$2,400",
-      "returnVal": "+16.9%",
+      "copier": "David T.",
+      "amount": "$1,200",
+      "returnVal": "+12.1%",
       "niche": "Affiliate Marketing Events",
-      "timestamp": "2026-08-07T17:43:27.409Z"
+      "timestamp": "2026-08-07T20:45:36.447Z"
     },
     {
-      "id": "trd_msj8gzl3",
-      "trader": "Spencer Haws",
+      "id": "trd_msjez8hg",
+      "trader": "Craig Campbell",
+      "copier": "Alex P.",
+      "amount": "$4,200",
+      "returnVal": "+18.5%",
+      "niche": "Blackhat SEO & Bot Traffic",
+      "timestamp": "2026-08-07T20:45:31.444Z"
+    },
+    {
+      "id": "trd_msjez4m8",
+      "trader": "Missy Ward",
+      "copier": "Marcus K.",
+      "amount": "$3,000",
+      "returnVal": "+15.7%",
+      "niche": "Affiliate Marketing Events",
+      "timestamp": "2026-08-07T20:45:26.432Z"
+    },
+    {
+      "id": "trd_msjez0qz",
+      "trader": "Jon Dykstra",
       "copier": "Elena R.",
-      "amount": "$1,000",
-      "returnVal": "+15.3%",
-      "niche": "Niche Sites & Affiliate",
-      "timestamp": "2026-08-07T17:43:22.407Z"
+      "amount": "$900",
+      "returnVal": "+14.7%",
+      "niche": "Display Ads & Affiliate",
+      "timestamp": "2026-08-07T20:45:21.419Z"
     },
     {
-      "id": "trd_msj8gvpt",
-      "trader": "John Chow",
-      "copier": "Jessica W.",
-      "amount": "$3,700",
-      "returnVal": "+17.0%",
-      "niche": "Blogging & Digital Marketing",
-      "timestamp": "2026-08-07T17:43:17.393Z"
-    },
-    {
-      "id": "trd_msj8gruv",
-      "trader": "Ann Handley",
+      "id": "trd_msjeyww3",
+      "trader": "Jon Dykstra",
       "copier": "Elena R.",
       "amount": "$3,800",
-      "returnVal": "+14.8%",
-      "niche": "Content & Affiliate Marketing",
-      "timestamp": "2026-08-07T17:43:12.391Z"
-    },
-    {
-      "id": "trd_msj8gnzv",
-      "trader": "Gael Breton",
-      "copier": "Elena R.",
-      "amount": "$4,200",
-      "returnVal": "+16.3%",
-      "niche": "Authority Sites & Affiliate",
-      "timestamp": "2026-08-07T17:43:07.387Z"
-    },
-    {
-      "id": "trd_msj8gk4w",
-      "trader": "Rae Hoffman",
-      "copier": "David T.",
-      "amount": "$1,100",
-      "returnVal": "+12.7%",
-      "niche": "SEO Affiliate Marketing",
-      "timestamp": "2026-08-07T17:43:02.384Z"
-    },
-    {
-      "id": "trd_msj8gg9u",
-      "trader": "Jon Dykstra",
-      "copier": "David T.",
-      "amount": "$3,100",
-      "returnVal": "+13.1%",
+      "returnVal": "+12.9%",
       "niche": "Display Ads & Affiliate",
-      "timestamp": "2026-08-07T17:42:57.378Z"
+      "timestamp": "2026-08-07T20:45:16.419Z"
     },
     {
-      "id": "trd_msj8gceu",
-      "trader": "Ann Handley",
+      "id": "trd_msjeyt14",
+      "trader": "Neil Patel",
+      "copier": "Elena R.",
+      "amount": "$3,000",
+      "returnVal": "+18.7%",
+      "niche": "Digital Marketing & SEO",
+      "timestamp": "2026-08-07T20:45:11.416Z"
+    },
+    {
+      "id": "trd_msjeyp62",
+      "trader": "Mark Webster",
+      "copier": "Alex P.",
+      "amount": "$4,500",
+      "returnVal": "+12.3%",
+      "niche": "Bot Affiliate Marketing",
+      "timestamp": "2026-08-07T20:45:06.410Z"
+    },
+    {
+      "id": "trd_msjeylb1",
+      "trader": "Craig Campbell",
       "copier": "Marcus K.",
       "amount": "$3,400",
-      "returnVal": "+15.2%",
-      "niche": "Content & Affiliate Marketing",
-      "timestamp": "2026-08-07T17:42:52.374Z"
+      "returnVal": "+19.0%",
+      "niche": "Blackhat SEO & Bot Traffic",
+      "timestamp": "2026-08-07T20:45:01.405Z"
     },
     {
-      "id": "trd_msj8g8jq",
-      "trader": "Neil Patel",
-      "copier": "David T.",
-      "amount": "$700",
-      "returnVal": "+17.5%",
-      "niche": "Digital Marketing & SEO",
-      "timestamp": "2026-08-07T17:42:47.366Z"
-    },
-    {
-      "id": "trd_msj8g4oi",
-      "trader": "Pat Flynn",
-      "copier": "Jessica W.",
-      "amount": "$1,200",
-      "returnVal": "+17.9%",
-      "niche": "Passive Income & Affiliate",
-      "timestamp": "2026-08-07T17:42:42.354Z"
-    },
-    {
-      "id": "trd_msj8g0tf",
-      "trader": "Doug Cunnington",
-      "copier": "David T.",
-      "amount": "$1,800",
-      "returnVal": "+15.6%",
-      "niche": "Amazon Affiliate Marketing",
-      "timestamp": "2026-08-07T17:42:37.347Z"
-    },
-    {
-      "id": "trd_msj8fwyf",
-      "trader": "Matt Diggity",
-      "copier": "David T.",
-      "amount": "$2,800",
-      "returnVal": "+17.2%",
-      "niche": "SEO & Bot Strategies",
-      "timestamp": "2026-08-07T17:42:32.344Z"
-    },
-    {
-      "id": "trd_msj8ft3g",
-      "trader": "Justin Cooke",
-      "copier": "Alex P.",
-      "amount": "$2,000",
-      "returnVal": "+16.9%",
-      "niche": "Digital Asset Brokering",
-      "timestamp": "2026-08-07T17:42:27.340Z"
-    },
-    {
-      "id": "trd_msj8fp8d",
-      "trader": "Charles Ngo",
-      "copier": "Marcus K.",
-      "amount": "$2,100",
-      "returnVal": "+16.6%",
-      "niche": "Performance Affiliate Marketing",
-      "timestamp": "2026-08-07T17:42:22.333Z"
-    },
-    {
-      "id": "trd_msj8fldf",
+      "id": "trd_msjeyhg1",
       "trader": "Spencer Haws",
-      "copier": "David T.",
-      "amount": "$1,600",
-      "returnVal": "+15.8%",
+      "copier": "Alex P.",
+      "amount": "$2,400",
+      "returnVal": "+14.2%",
       "niche": "Niche Sites & Affiliate",
-      "timestamp": "2026-08-07T17:42:17.331Z"
+      "timestamp": "2026-08-07T20:44:56.401Z"
     },
     {
-      "id": "trd_msj8fhig",
+      "id": "trd_msjeydl1",
       "trader": "Mark Webster",
       "copier": "Jessica W.",
-      "amount": "$3,500",
-      "returnVal": "+18.6%",
+      "amount": "$2,000",
+      "returnVal": "+19.0%",
       "niche": "Bot Affiliate Marketing",
-      "timestamp": "2026-08-07T17:42:12.328Z"
+      "timestamp": "2026-08-07T20:44:51.397Z"
     },
     {
-      "id": "trd_msj8fdnd",
-      "trader": "Justin Cooke",
-      "copier": "Alex P.",
-      "amount": "$1,500",
-      "returnVal": "+18.2%",
-      "niche": "Digital Asset Brokering",
-      "timestamp": "2026-08-07T17:42:07.321Z"
+      "id": "trd_msjey9q2",
+      "trader": "Neil Patel",
+      "copier": "Elena R.",
+      "amount": "$2,600",
+      "returnVal": "+18.9%",
+      "niche": "Digital Marketing & SEO",
+      "timestamp": "2026-08-07T20:44:46.394Z"
     },
     {
-      "id": "trd_msj8f9sf",
+      "id": "trd_msjey5v2",
+      "trader": "Spencer Haws",
+      "copier": "Elena R.",
+      "amount": "$4,100",
+      "returnVal": "+14.8%",
+      "niche": "Niche Sites & Affiliate",
+      "timestamp": "2026-08-07T20:44:41.390Z"
+    },
+    {
+      "id": "trd_msjey1zu",
+      "trader": "John Chow",
+      "copier": "Sarah M.",
+      "amount": "$4,700",
+      "returnVal": "+17.9%",
+      "niche": "Blogging & Digital Marketing",
+      "timestamp": "2026-08-07T20:44:36.378Z"
+    },
+    {
+      "id": "trd_msjexy4o",
       "trader": "Jon Dykstra",
       "copier": "Sarah M.",
-      "amount": "$1,100",
-      "returnVal": "+13.4%",
+      "amount": "$3,400",
+      "returnVal": "+17.9%",
       "niche": "Display Ads & Affiliate",
-      "timestamp": "2026-08-07T17:42:02.319Z"
+      "timestamp": "2026-08-07T20:44:31.368Z"
+    },
+    {
+      "id": "trd_msjexu9i",
+      "trader": "Miles Beckler",
+      "copier": "Marcus K.",
+      "amount": "$3,500",
+      "returnVal": "+17.4%",
+      "niche": "Digital Marketing & Sales",
+      "timestamp": "2026-08-07T20:44:26.358Z"
+    },
+    {
+      "id": "trd_msjexqej",
+      "trader": "Gael Breton",
+      "copier": "Elena R.",
+      "amount": "$3,000",
+      "returnVal": "+18.9%",
+      "niche": "Authority Sites & Affiliate",
+      "timestamp": "2026-08-07T20:44:21.355Z"
+    },
+    {
+      "id": "trd_msjexmjc",
+      "trader": "Matt Diggity",
+      "copier": "Elena R.",
+      "amount": "$1,700",
+      "returnVal": "+16.3%",
+      "niche": "SEO & Bot Strategies",
+      "timestamp": "2026-08-07T20:44:16.344Z"
+    },
+    {
+      "id": "trd_msjexioa",
+      "trader": "Neil Patel",
+      "copier": "Alex P.",
+      "amount": "$3,400",
+      "returnVal": "+19.8%",
+      "niche": "Digital Marketing & SEO",
+      "timestamp": "2026-08-07T20:44:11.338Z"
+    },
+    {
+      "id": "trd_msjexet8",
+      "trader": "John Chow",
+      "copier": "David T.",
+      "amount": "$2,400",
+      "returnVal": "+15.9%",
+      "niche": "Blogging & Digital Marketing",
+      "timestamp": "2026-08-07T20:44:06.332Z"
+    },
+    {
+      "id": "trd_msjexayb",
+      "trader": "Jon Dykstra",
+      "copier": "Alex P.",
+      "amount": "$3,600",
+      "returnVal": "+13.6%",
+      "niche": "Display Ads & Affiliate",
+      "timestamp": "2026-08-07T20:44:01.331Z"
+    },
+    {
+      "id": "trd_msjex731",
+      "trader": "Justin Cooke",
+      "copier": "David T.",
+      "amount": "$900",
+      "returnVal": "+18.4%",
+      "niche": "Digital Asset Brokering",
+      "timestamp": "2026-08-07T20:43:56.317Z"
+    },
+    {
+      "id": "trd_msjex384",
+      "trader": "Miles Beckler",
+      "copier": "Sarah M.",
+      "amount": "$2,900",
+      "returnVal": "+19.2%",
+      "niche": "Digital Marketing & Sales",
+      "timestamp": "2026-08-07T20:43:51.316Z"
+    },
+    {
+      "id": "trd_msjewzcx",
+      "trader": "Gael Breton",
+      "copier": "Jessica W.",
+      "amount": "$1,900",
+      "returnVal": "+17.0%",
+      "niche": "Authority Sites & Affiliate",
+      "timestamp": "2026-08-07T20:43:46.305Z"
+    },
+    {
+      "id": "trd_msjewvhp",
+      "trader": "Rae Hoffman",
+      "copier": "Sarah M.",
+      "amount": "$3,200",
+      "returnVal": "+15.0%",
+      "niche": "SEO Affiliate Marketing",
+      "timestamp": "2026-08-07T20:43:41.293Z"
+    },
+    {
+      "id": "trd_msjewrmr",
+      "trader": "Mark Webster",
+      "copier": "Elena R.",
+      "amount": "$4,400",
+      "returnVal": "+13.9%",
+      "niche": "Bot Affiliate Marketing",
+      "timestamp": "2026-08-07T20:43:36.291Z"
+    },
+    {
+      "id": "trd_msjewnrk",
+      "trader": "Ryan Deiss",
+      "copier": "Alex P.",
+      "amount": "$4,600",
+      "returnVal": "+20.0%",
+      "niche": "Digital Marketing & Funnels",
+      "timestamp": "2026-08-07T20:43:31.280Z"
+    },
+    {
+      "id": "trd_msjewjwc",
+      "trader": "Jon Dykstra",
+      "copier": "Alex P.",
+      "amount": "$1,500",
+      "returnVal": "+14.9%",
+      "niche": "Display Ads & Affiliate",
+      "timestamp": "2026-08-07T20:43:26.268Z"
+    },
+    {
+      "id": "trd_msjewg18",
+      "trader": "Spencer Haws",
+      "copier": "Sarah M.",
+      "amount": "$4,700",
+      "returnVal": "+15.6%",
+      "niche": "Niche Sites & Affiliate",
+      "timestamp": "2026-08-07T20:43:21.260Z"
+    },
+    {
+      "id": "trd_msjewc63",
+      "trader": "Justin Cooke",
+      "copier": "Jessica W.",
+      "amount": "$4,400",
+      "returnVal": "+14.6%",
+      "niche": "Digital Asset Brokering",
+      "timestamp": "2026-08-07T20:43:16.251Z"
+    },
+    {
+      "id": "trd_msjew8au",
+      "trader": "Ann Handley",
+      "copier": "David T.",
+      "amount": "$1,300",
+      "returnVal": "+17.2%",
+      "niche": "Content & Affiliate Marketing",
+      "timestamp": "2026-08-07T20:43:11.238Z"
+    },
+    {
+      "id": "trd_msjew4fj",
+      "trader": "Rand Fishkin",
+      "copier": "David T.",
+      "amount": "$600",
+      "returnVal": "+17.9%",
+      "niche": "Audience Intelligence",
+      "timestamp": "2026-08-07T20:43:06.223Z"
+    },
+    {
+      "id": "trd_msjew0kj",
+      "trader": "Neil Patel",
+      "copier": "Jessica W.",
+      "amount": "$4,500",
+      "returnVal": "+15.8%",
+      "niche": "Digital Marketing & SEO",
+      "timestamp": "2026-08-07T20:43:01.219Z"
+    },
+    {
+      "id": "trd_msjevwpm",
+      "trader": "Neil Patel",
+      "copier": "Elena R.",
+      "amount": "$4,200",
+      "returnVal": "+17.0%",
+      "niche": "Digital Marketing & SEO",
+      "timestamp": "2026-08-07T20:42:56.218Z"
+    },
+    {
+      "id": "trd_msjevsug",
+      "trader": "Ann Handley",
+      "copier": "Jessica W.",
+      "amount": "$800",
+      "returnVal": "+15.4%",
+      "niche": "Content & Affiliate Marketing",
+      "timestamp": "2026-08-07T20:42:51.208Z"
+    },
+    {
+      "id": "trd_msjevoz5",
+      "trader": "Neil Patel",
+      "copier": "Alex P.",
+      "amount": "$3,600",
+      "returnVal": "+16.7%",
+      "niche": "Digital Marketing & SEO",
+      "timestamp": "2026-08-07T20:42:46.193Z"
+    },
+    {
+      "id": "trd_msjevl44",
+      "trader": "Joe Valley",
+      "copier": "Jessica W.",
+      "amount": "$1,800",
+      "returnVal": "+18.3%",
+      "niche": "Digital Asset Valuation",
+      "timestamp": "2026-08-07T20:42:41.188Z"
+    },
+    {
+      "id": "trd_msjevh98",
+      "trader": "Charles Ngo",
+      "copier": "Jessica W.",
+      "amount": "$2,400",
+      "returnVal": "+19.8%",
+      "niche": "Performance Affiliate Marketing",
+      "timestamp": "2026-08-07T20:42:36.188Z"
+    },
+    {
+      "id": "trd_msjevde4",
+      "trader": "Gael Breton",
+      "copier": "Elena R.",
+      "amount": "$900",
+      "returnVal": "+14.5%",
+      "niche": "Authority Sites & Affiliate",
+      "timestamp": "2026-08-07T20:42:31.180Z"
+    },
+    {
+      "id": "trd_msjev9ix",
+      "trader": "Jon Dykstra",
+      "copier": "Jessica W.",
+      "amount": "$3,500",
+      "returnVal": "+13.2%",
+      "niche": "Display Ads & Affiliate",
+      "timestamp": "2026-08-07T20:42:26.169Z"
+    },
+    {
+      "id": "trd_msjev5nt",
+      "trader": "John Chow",
+      "copier": "Jessica W.",
+      "amount": "$2,900",
+      "returnVal": "+20.0%",
+      "niche": "Blogging & Digital Marketing",
+      "timestamp": "2026-08-07T20:42:21.161Z"
+    },
+    {
+      "id": "trd_msjev1sk",
+      "trader": "Miles Beckler",
+      "copier": "Jessica W.",
+      "amount": "$2,300",
+      "returnVal": "+15.0%",
+      "niche": "Digital Marketing & Sales",
+      "timestamp": "2026-08-07T20:42:16.148Z"
+    },
+    {
+      "id": "trd_msjeuxx9",
+      "trader": "Neil Patel",
+      "copier": "David T.",
+      "amount": "$3,500",
+      "returnVal": "+18.4%",
+      "niche": "Digital Marketing & SEO",
+      "timestamp": "2026-08-07T20:42:11.133Z"
+    },
+    {
+      "id": "trd_msjeuu27",
+      "trader": "Ryan Deiss",
+      "copier": "Elena R.",
+      "amount": "$3,400",
+      "returnVal": "+19.0%",
+      "niche": "Digital Marketing & Funnels",
+      "timestamp": "2026-08-07T20:42:06.127Z"
+    },
+    {
+      "id": "trd_msjeuq79",
+      "trader": "Rand Fishkin",
+      "copier": "Marcus K.",
+      "amount": "$2,700",
+      "returnVal": "+12.6%",
+      "niche": "Audience Intelligence",
+      "timestamp": "2026-08-07T20:42:01.125Z"
+    },
+    {
+      "id": "trd_msjeumc9",
+      "trader": "John Chow",
+      "copier": "Jessica W.",
+      "amount": "$4,600",
+      "returnVal": "+18.0%",
+      "niche": "Blogging & Digital Marketing",
+      "timestamp": "2026-08-07T20:41:56.121Z"
+    },
+    {
+      "id": "trd_msjeuiha",
+      "trader": "John Chow",
+      "copier": "Marcus K.",
+      "amount": "$1,400",
+      "returnVal": "+13.3%",
+      "niche": "Blogging & Digital Marketing",
+      "timestamp": "2026-08-07T20:41:51.118Z"
+    },
+    {
+      "id": "trd_msjeuelz",
+      "trader": "Gael Breton",
+      "copier": "Jessica W.",
+      "amount": "$1,700",
+      "returnVal": "+16.8%",
+      "niche": "Authority Sites & Affiliate",
+      "timestamp": "2026-08-07T20:41:46.103Z"
+    },
+    {
+      "id": "trd_msjeuaqy",
+      "trader": "Craig Campbell",
+      "copier": "Alex P.",
+      "amount": "$3,600",
+      "returnVal": "+14.9%",
+      "niche": "Blackhat SEO & Bot Traffic",
+      "timestamp": "2026-08-07T20:41:41.098Z"
+    },
+    {
+      "id": "trd_msjeu6vq",
+      "trader": "Rand Fishkin",
+      "copier": "Alex P.",
+      "amount": "$3,200",
+      "returnVal": "+18.0%",
+      "niche": "Audience Intelligence",
+      "timestamp": "2026-08-07T20:41:36.086Z"
+    },
+    {
+      "id": "trd_msjeu30u",
+      "trader": "Justin Cooke",
+      "copier": "Marcus K.",
+      "amount": "$800",
+      "returnVal": "+15.3%",
+      "niche": "Digital Asset Brokering",
+      "timestamp": "2026-08-07T20:41:31.086Z"
     }
   ],
   "auditLogs": []
