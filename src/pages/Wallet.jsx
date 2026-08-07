@@ -67,17 +67,15 @@ export default function Wallet() {
 
       {/* Stat Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className={`rounded-xl p-6 shadow-2xl flex flex-col justify-between gap-4 hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300 relative overflow-hidden border ${isDark ? 'bg-gradient-to-br from-[#0F172A] via-[#13161C] to-[#064E3B] border-emerald-500/10' : 'bg-gradient-to-br from-slate-900 to-[#005645] border-emerald-500/20'}`}>
-          <div className="absolute -right-10 -top-6 w-40 h-40 bg-[#C3F53C]/10 rounded-full blur-[50px] pointer-events-none" />
-          
-          <div className="relative z-10 w-12 h-12 rounded-lg bg-[#005645] text-[#C3F53C] flex items-center justify-center shadow-lg shadow-[#005645]/30">
+        <div className={`rounded-xl p-6 shadow-xl flex flex-col justify-between gap-4 hover:-translate-y-1 transition-all duration-300 border ${isDark ? 'bg-gradient-to-b from-[#13161C] to-[#0A0C10] border-white/5' : 'bg-white dark:bg-[#1A1D21] border-slate-100 dark:border-white/5'}`}>
+          <div className={`w-12 h-12 rounded-lg flex items-center justify-center shadow-sm ${isDark ? 'bg-emerald-500/10 text-emerald-400' : 'bg-emerald-100 text-emerald-600'}`}>
             <WalletIcon className="w-6 h-6" />
           </div>
           <div className="relative z-10">
-            <h2 className="text-[15px] font-semibold uppercase tracking-wider text-emerald-100/70">Available Balance</h2>
-            <p className="text-3xl font-bold mt-1 text-white">{formatCurrency(user?.balance || 0)}</p>
+            <h2 className={`text-[13px] font-semibold uppercase tracking-wider ${isDark ? 'text-white/40' : 'text-slate-500 dark:text-white/50'}`}>Available Balance</h2>
+            <p className={`text-3xl font-bold mt-1 ${isDark ? 'text-white' : 'text-slate-700 dark:text-white'}`}>{formatCurrency(user?.balance || 0)}</p>
           </div>
-          <div className="relative z-10 flex items-center gap-2 text-xs font-bold text-[#C3F53C]">
+          <div className="relative z-10 flex items-center gap-2 text-xs font-bold text-[#005645] dark:text-[#C3F53C]">
             <ShieldCheck className="w-4 h-4" /> Verified & Secured
           </div>
         </div>

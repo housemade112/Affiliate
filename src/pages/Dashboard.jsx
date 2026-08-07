@@ -171,7 +171,7 @@ export default function Dashboard() {
               <div className="mt-2 mb-2 relative z-10">
                 <h2 className="text-[15px] font-semibold uppercase tracking-wider text-[#004235]/70">Current balance</h2>
                 <div>
-                  <span className="text-2xl font-bold text-slate-700 dark:text-white">
+                  <span className="text-2xl font-bold text-[#004235]">
                     {formatCurrency(totalCapital)}
                   </span>
                 </div>

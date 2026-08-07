@@ -22,9 +22,9 @@ export default function Leaderboard() {
   const rest  = marketers.slice(3, 20)
 
   const podiumStyles = [
-    { rank: 1, border: 'border-amber-300',   bg: 'bg-amber-50',   badge: 'bg-amber-400',   text: 'text-amber-600',   icon: '🥇' },
+    { rank: 1, border: 'border-amber-300',   bg: 'bg-amber-50 dark:bg-amber-500/10',   badge: 'bg-amber-400',   text: 'text-amber-600',   icon: '🥇' },
     { rank: 2, border: 'border-slate-300',   bg: 'bg-slate-50 dark:bg-white/5',   badge: 'bg-slate-400',   text: 'text-slate-500 dark:text-white/50',   icon: '🥈' },
-    { rank: 3, border: 'border-orange-300',  bg: 'bg-orange-50',  badge: 'bg-orange-400',  text: 'text-orange-600',  icon: '🥉' },
+    { rank: 3, border: 'border-orange-300',  bg: 'bg-orange-50 dark:bg-orange-500/10',  badge: 'bg-orange-400',  text: 'text-orange-600',  icon: '🥉' },
   ]
 
   return (
