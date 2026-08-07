@@ -333,13 +333,13 @@ export default function Landing() {
       </section>
 
       {/* ── FAQ SECTION ── */}
-      <section className="py-24 bg-[#0B0F19] mt-20">
+      <section className="py-24 mt-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-left mb-12">
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight mb-4">
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight mb-4">
               Questions About Scalely.ai?<br />We have Answers!
             </h2>
-            <p className="text-slate-400 text-sm sm:text-base">
+            <p className="text-slate-500 text-sm sm:text-base max-w-2xl">
               Please feel free to reach out to us. We are always happy to assist you and provide any additional information.
             </p>
           </div>
@@ -350,21 +350,23 @@ export default function Landing() {
               return (
                 <div 
                   key={idx} 
-                  className="bg-[#1A1F2E] rounded-2xl overflow-hidden transition-all duration-300 border border-white/5"
+                  className={`bg-white rounded-2xl overflow-hidden transition-all duration-300 border shadow-sm ${
+                    isOpen ? 'border-[#005645]/30 shadow-md' : 'border-slate-200/80 hover:border-[#005645]/20 hover:shadow-md'
+                  }`}
                 >
                   <button
                     onClick={() => setOpenFaq(isOpen ? null : idx)}
                     className="w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none"
                   >
-                    <span className="text-sm sm:text-base font-bold text-white pr-8">{faq.q}</span>
+                    <span className="text-sm sm:text-base font-bold text-slate-900 pr-8">{faq.q}</span>
                     {isOpen ? (
-                      <X className="w-5 h-5 text-white flex-shrink-0" />
+                      <X className="w-5 h-5 text-[#005645] flex-shrink-0" />
                     ) : (
-                      <Plus className="w-5 h-5 text-white flex-shrink-0" />
+                      <Plus className="w-5 h-5 text-[#005645] flex-shrink-0" />
                     )}
                   </button>
                   {isOpen && (
-                    <div className="px-6 pb-6 text-slate-400 text-sm sm:text-base leading-relaxed">
+                    <div className="px-6 pb-6 text-slate-600 text-sm sm:text-base leading-relaxed">
                       {faq.a}
                     </div>
                   )}
