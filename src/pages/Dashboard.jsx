@@ -177,16 +177,15 @@ export default function Dashboard() {
                 </div>
               </div>
               <div className="flex items-end justify-between relative z-10 mt-auto">
-                <div className="mb-2">
-                  <div className="flex items-center gap-2 mb-1">
+                <div className="mb-0">
+                  <div className="flex items-center gap-2">
                     <span className="text-xl font-black text-[#005645]">14.2%</span>
                   </div>
-                  <span className="text-sm font-bold text-[#004235]/60">Avg target: {formatCurrency(totalCapital + 5824)}</span>
                 </div>
               </div>
 
               {/* Real Interactive Gauge Chart Library */}
-              <div className="absolute right-0 bottom-4 w-[200px] h-[100px] sm:w-[240px] sm:h-[120px] pointer-events-none translate-x-4 sm:translate-x-0">
+              <div className="absolute -right-4 bottom-2 w-[180px] h-[90px] sm:w-[240px] sm:h-[120px] pointer-events-none sm:right-0 sm:bottom-4">
                 <GaugeComponent
                   value={gaugePercent}
                   type="semicircle"
