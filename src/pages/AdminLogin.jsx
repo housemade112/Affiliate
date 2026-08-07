@@ -10,6 +10,20 @@ export default function AdminLogin() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
+  const handleDemo = async () => {
+    setError('')
+    setLoading(true)
+    const res = await api.admin.login('admin@scalely.ai', 'admin123')
+    setLoading(false)
+
+    if (res && res.success) {
+      localStorage.setItem('scalely_admin_session', JSON.stringify(res.user))
+      navigate('/admin')
+    } else {
+      setError(res?.error || 'Demo admin login failed.')
+    }
+  }
+
   const handleLogin = async (e) => {
     e.preventDefault()
     setError('')
@@ -66,6 +80,11 @@ export default function AdminLogin() {
           <button type="submit" disabled={loading}
             className="w-full py-4 rounded-xl bg-emerald-500 text-slate-950 font-black text-sm hover:bg-emerald-400 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 disabled:opacity-50">
             {loading ? 'Authenticating...' : 'Access Admin Console'} <ArrowRight className="w-4 h-4" />
+          </button>
+          
+          <button type="button" disabled={loading} onClick={handleDemo}
+            className="w-full py-3.5 rounded-xl bg-transparent border border-white/20 text-white font-bold text-sm hover:bg-white/5 active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-50 mt-3">
+            Try Admin Demo
           </button>
         </form>
 
