@@ -106,8 +106,24 @@ export default function Landing() {
   return (
     <div className="min-h-screen bg-[#EFF2F0] text-slate-900 font-sans">
 
+      {/* ── TOP NAV ── */}
+      <nav className="absolute top-0 left-0 right-0 z-50 py-6 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-2 text-white">
+            <div className="w-8 h-8 rounded-full bg-[#C3F53C] text-[#005645] flex items-center justify-center font-black text-sm">S</div>
+            <span className="font-extrabold text-xl tracking-tight font-mono">scalely.ai</span>
+          </div>
+          <div className="hidden md:flex items-center gap-8 text-sm font-bold text-emerald-100/80">
+            <Link to="/" className="text-white hover:text-white transition-colors">Home</Link>
+            <Link to="/about" className="hover:text-white transition-colors">About</Link>
+            <Link to="/login" className="hover:text-white transition-colors">Platform</Link>
+          </div>
+          <Link to="/login" className="text-sm font-bold text-[#C3F53C] hover:text-white transition-colors">Sign In</Link>
+        </div>
+      </nav>
+
       {/* ── HERO: DARK EMERALD ARCH ── */}
-      <section className="realize-hero bg-[#005645] pt-28 pb-20 md:pt-36 md:pb-28">
+      <section className="realize-hero bg-[#005645] pt-32 pb-20 md:pt-40 md:pb-28">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-7">
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
@@ -416,10 +432,10 @@ export default function Landing() {
               </div>
 
               <div className="flex flex-wrap items-center justify-center gap-6 font-medium text-emerald-100/80">
+                <Link to="/about" className="hover:text-white transition-colors font-bold text-white">About Us</Link>
                 <a href="#privacy" className="hover:text-white transition-colors">Privacy Policy</a>
                 <a href="#cookie"  className="hover:text-white transition-colors">Cookie Policy</a>
                 <a href="#terms"   className="hover:text-white transition-colors">Terms of Use</a>
-                <a href="#optout"  className="hover:text-white transition-colors">Opt Out</a>
               </div>
 
               <span className="text-emerald-300/60 font-mono text-xs">© 2025 Scalely.ai · All rights reserved</span>

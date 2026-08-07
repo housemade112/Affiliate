@@ -178,7 +178,7 @@ export default function Wallet() {
                           </p>
                         </td>
                         <td className="px-6 py-5">
-                          <span className={`font-extrabold text-lg ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                          <span className={`font-extrabold text-base ${isDark ? 'text-white' : 'text-slate-900'}`}>
                             {isDeposit ? '+' : '-'}{formatCurrency(tx.amount)}
                           </span>
                         </td>
@@ -214,7 +214,7 @@ export default function Wallet() {
                             <p className="text-xs text-slate-400 dark:text-white/40 font-semibold mt-0.5">{tx.method || 'Platform Transfer'}</p>
                           </div>
                         </div>
-                        <span className={`font-extrabold text-lg ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                        <span className={`font-extrabold text-base ${isDark ? 'text-white' : 'text-slate-900'}`}>
                           {isDeposit ? '+' : '-'}{formatCurrency(tx.amount)}
                         </span>
                       </div>
