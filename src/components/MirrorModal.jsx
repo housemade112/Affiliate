@@ -48,7 +48,7 @@ export default function MirrorModal({ marketer, isOpen, onClose, onSuccess }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
-      <div className={`max-w-md w-full p-6 sm:p-8 rounded-[28px] shadow-2xl relative overflow-hidden space-y-6 ${isDark ? 'bg-[#1A1D21] border border-white/5' : 'bg-white border border-slate-200/80'}`}>
+      <div className={`max-w-md w-full p-6 sm:p-6 rounded-xl shadow-2xl relative overflow-hidden space-y-6 ${isDark ? 'bg-[#1A1D21] border border-white/5' : 'bg-white border border-slate-200/80'}`}>
         
         {/* Close Button */}
         <button 
@@ -61,7 +61,7 @@ export default function MirrorModal({ marketer, isOpen, onClose, onSuccess }) {
         {/* Modal Header */}
         <div className="flex items-center gap-4 pb-4 border-b border-slate-100/10">
           <div className="relative">
-            <img src={marketer.avatar} alt={marketer.name} className="w-14 h-14 rounded-2xl object-cover border border-slate-200/50" />
+            <img src={marketer.avatar} alt={marketer.name} className="w-14 h-14 rounded-lg object-cover border border-slate-200/50" />
             <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 rounded-full border-2 border-white flex items-center justify-center">
               <CheckCircle2 className="w-3 h-3 text-white" />
             </div>
@@ -118,13 +118,13 @@ export default function MirrorModal({ marketer, isOpen, onClose, onSuccess }) {
             </span>
 
             <div className="grid grid-cols-2 gap-3">
-              <div className={`p-4 rounded-2xl text-center border ${isDark ? 'bg-white/5 border-white/10' : 'bg-slate-50 border-slate-100'}`}>
+              <div className={`p-4 rounded-lg text-center border ${isDark ? 'bg-white/5 border-white/10' : 'bg-slate-50 border-slate-100'}`}>
                 <span className={`text-[10px] uppercase font-bold tracking-wider ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Est. Monthly</span>
-                <span className={`text-xl font-black mt-1 block ${isDark ? 'text-white' : 'text-slate-900'}`}>+${parseFloat(estimatedMonthlyReturn).toLocaleString()}</span>
+                <span className={`text-xl font-bold mt-1 block ${isDark ? 'text-white' : 'text-slate-800'}`}>+${parseFloat(estimatedMonthlyReturn).toLocaleString()}</span>
               </div>
-              <div className={`p-4 rounded-2xl text-center border ${isDark ? 'bg-white/5 border-emerald-900/30' : 'bg-emerald-50 border-emerald-100'}`}>
+              <div className={`p-4 rounded-lg text-center border ${isDark ? 'bg-white/5 border-emerald-900/30' : 'bg-emerald-50 border-emerald-100'}`}>
                 <span className="text-[10px] uppercase font-bold tracking-wider text-[#005645]">Est. 90-Day</span>
-                <span className="text-xl font-black mt-1 block text-[#005645]">+${parseFloat(projectedQuarterlyReturn).toLocaleString()}</span>
+                <span className="text-xl font-bold mt-1 block text-[#005645]">+${parseFloat(projectedQuarterlyReturn).toLocaleString()}</span>
               </div>
             </div>
           </div>

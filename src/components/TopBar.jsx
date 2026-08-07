@@ -40,9 +40,9 @@ export default function TopBar() {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-2.5 flex-shrink-0">
-            <div className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-2xl bg-white border border-slate-200/80 shadow-sm">
+            <div className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-lg bg-white border border-slate-200/80 shadow-sm">
               <span className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider">Balance</span>
-              <span className="text-sm font-black font-mono text-[#005645]">{formatCurrency(user.balance || 0)}</span>
+              <span className="text-sm font-bold font-mono text-[#005645]">{formatCurrency(user.balance || 0)}</span>
             </div>
 
             <button

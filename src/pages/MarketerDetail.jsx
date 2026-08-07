@@ -6,7 +6,7 @@ import { api } from '../lib/api.js'
 import { formatCurrency } from '../lib/utils.js'
 import {
   ArrowLeft, Star, CheckCircle2, TrendingUp,
-  Users, Shield, Zap, Check, AlertCircle, Package, ArrowUpRight
+  Users, Shield, Zap, Check, AlertCircle, Package, ArrowUpRight, BadgeCheck
 } from 'lucide-react'
 import MirrorModal from '../components/MirrorModal.jsx'
 import { useState, useEffect } from 'react'
@@ -52,11 +52,11 @@ export default function MarketerDetail() {
     addToast('Stopped copying strategy', 'info')
   }
 
-  const card = `rounded-[32px] shadow-2xl transition-all duration-300 hover:shadow-emerald-500/10 hover:-translate-y-1 ${isDark ? 'bg-gradient-to-b from-[#13161C] to-[#0A0C10] border border-white/5' : 'bg-white border border-slate-100 shadow-slate-200/50'}`
+  const card = `rounded-xl shadow-lg transition-all duration-300 ${isDark ? 'bg-gradient-to-b from-[#13161C] to-[#0A0C10] border border-white/5' : 'bg-white border border-slate-100 shadow-slate-200/50'}`
 
   if (error) return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] gap-5">
-      <div className={`w-20 h-20 rounded-3xl flex items-center justify-center ${isDark ? 'bg-white/5' : 'bg-slate-100'}`}>
+      <div className={`w-20 h-20 rounded-xl flex items-center justify-center ${isDark ? 'bg-white/5' : 'bg-slate-100'}`}>
         <AlertCircle className="w-10 h-10 text-rose-400" />
       </div>
       <div className="text-center">
@@ -73,9 +73,9 @@ export default function MarketerDetail() {
   if (loading) return (
     <div className="space-y-6 animate-pulse pb-24">
       <div className={`h-8 w-48 rounded-xl ${isDark ? 'bg-white/5' : 'bg-slate-100'}`} />
-      <div className={`h-64 rounded-[24px] ${isDark ? 'bg-white/5' : 'bg-slate-100'}`} />
+      <div className={`h-64 rounded-xl ${isDark ? 'bg-white/5' : 'bg-slate-100'}`} />
       <div className="grid lg:grid-cols-3 gap-6">
-        {[1,2,3].map(i => <div key={i} className={`h-40 rounded-[24px] ${isDark ? 'bg-white/5' : 'bg-slate-100'}`} />)}
+        {[1,2,3].map(i => <div key={i} className={`h-40 rounded-xl ${isDark ? 'bg-white/5' : 'bg-slate-100'}`} />)}
       </div>
     </div>
   )
@@ -98,14 +98,14 @@ export default function MarketerDetail() {
       </div>
 
       {/* ── PROFILE HERO ── */}
-      <div className={`${card} p-8`}>
-        <div className="flex flex-col md:flex-row gap-8 items-start justify-between">
+      <div className={`${card} p-6`}>
+        <div className="flex flex-col md:flex-row gap-6 items-start justify-between">
           
           <div className="flex flex-col sm:flex-row gap-6 items-start flex-1">
             {/* Avatar */}
             <div className="relative flex-shrink-0">
               <img src={aff.avatar} alt={aff.name}
-                className="w-24 h-24 rounded-[20px] object-cover border-2 border-slate-200 shadow-md"
+                className="w-24 h-24 rounded-lg object-cover border-2 border-slate-200 dark:border-white/10 shadow-md"
                 onError={e => { e.target.style.display = 'none' }} />
               <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-emerald-500 rounded-full border-2 border-white flex items-center justify-center shadow-md">
                 <CheckCircle2 className="w-4 h-4 text-white" />
@@ -116,6 +116,7 @@ export default function MarketerDetail() {
               <div>
                 <div className="flex flex-wrap items-center gap-2 mb-1">
                   <h1 className={`text-3xl font-extrabold tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>{aff.name}</h1>
+                  {aff.verified && <BadgeCheck className="w-6 h-6 text-blue-500" />}
                   <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold ${isDark ? 'bg-emerald-900/40 text-emerald-400 border border-emerald-800/40' : 'bg-emerald-50 text-emerald-700 border border-emerald-200'}`}>
                     <Shield className="w-3 h-3" /> Verified Partner
                   </span>
@@ -141,9 +142,9 @@ export default function MarketerDetail() {
           </div>
 
           {/* Revenue Block */}
-          <div className={`flex-shrink-0 text-left md:text-right p-8 rounded-[24px] w-full md:w-auto transition-all duration-300 hover:-translate-y-1 ${isDark ? 'bg-gradient-to-br from-emerald-900/20 to-emerald-900/5 border border-emerald-500/10 shadow-lg shadow-emerald-900/10' : 'bg-gradient-to-br from-emerald-50 to-white border border-emerald-100 shadow-xl shadow-emerald-100/50'}`}>
+          <div className={`flex-shrink-0 text-left md:text-right p-6 rounded-xl w-full md:w-auto transition-all duration-300 hover:-translate-y-1 ${isDark ? 'bg-gradient-to-br from-emerald-900/20 to-emerald-900/5 border border-emerald-500/10 shadow-lg shadow-emerald-900/10' : 'bg-gradient-to-br from-emerald-50 to-white border border-emerald-100 shadow-xl shadow-emerald-100/50'}`}>
             <p className={`text-[11px] font-bold uppercase tracking-widest ${isDark ? 'text-emerald-400/80' : 'text-emerald-700/70'}`}>Lifetime Revenue</p>
-            <p className={`text-5xl font-black mt-2 tracking-tighter ${isDark ? 'bg-gradient-to-br from-white to-white/70 bg-clip-text text-transparent' : 'text-[#005645]'}`}>{revenue}</p>
+            <p className={`text-4xl font-bold mt-2 ${isDark ? 'text-white' : 'text-slate-800'}`}>{revenue}</p>
             <p className="text-xl font-black text-[#005645] mt-3 bg-gradient-to-r from-[#C3F53C] to-[#9EE86F] px-4 py-1.5 rounded-xl inline-block shadow-sm">
               +{aff.monthlyReturn}% / mo
             </p>
@@ -151,14 +152,14 @@ export default function MarketerDetail() {
         </div>
 
         {/* Stats Row */}
-        <div className={`grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x mt-8 rounded-[24px] overflow-hidden shadow-sm ${isDark ? 'bg-white/[0.02] border border-white/5 divide-white/5' : 'bg-slate-50 border border-slate-100 divide-slate-100'}`}>
+        <div className={`grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x mt-8 rounded-xl overflow-hidden shadow-sm ${isDark ? 'bg-white/[0.02] border border-white/5 divide-white/5' : 'bg-slate-50 border border-slate-100 divide-slate-100'}`}>
           {[
             { label: 'Min Deposit', value: formatCurrency(aff.minDeposit) },
             { label: 'Monthly Profit', value: `+${aff.monthlyReturn}%`, highlight: true },
             { label: 'Est. Monthly Return', value: formatCurrency((aff.minDeposit * aff.monthlyReturn) / 100) },
           ].map(s => (
             <div key={s.label} className={`text-center p-6 transition-colors ${isDark ? 'hover:bg-white/[0.02]' : 'hover:bg-white'}`}>
-              <p className={`text-xl font-black tracking-tight ${s.highlight ? 'text-[#C3F53C] drop-shadow-sm' : isDark ? 'text-white' : 'text-slate-900'}`}>{s.value}</p>
+              <p className={`text-xl font-bold ${s.highlight ? 'text-[#C3F53C] drop-shadow-sm' : isDark ? 'text-white' : 'text-slate-800'}`}>{s.value}</p>
               <p className={`text-[10px] font-bold uppercase tracking-widest mt-1 ${isDark ? 'text-white/40' : 'text-slate-500'}`}>{s.label}</p>
             </div>
           ))}
@@ -173,7 +174,7 @@ export default function MarketerDetail() {
           </div>
           {isCurrentlyMirrored ? (
             <button onClick={handleUnmirror} disabled={unmirroring}
-              className={`flex items-center gap-2 px-6 py-3 rounded-2xl font-extrabold text-sm transition-all ${
+              className={`flex items-center gap-2 px-6 py-3 rounded-lg font-extrabold text-sm transition-all ${
                 isDark ? 'bg-rose-500/10 border border-rose-500/20 text-rose-400 hover:bg-rose-500/20' : 'bg-rose-50 border border-rose-200 text-rose-600 hover:bg-rose-100'
               }`}>
               {unmirroring
@@ -182,8 +183,8 @@ export default function MarketerDetail() {
               }
             </button>
           ) : (
-            <button onClick={() => setModalOpen(true)} className={`flex items-center gap-2 px-8 py-3 rounded-2xl text-sm font-extrabold shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 transition-all ${
-              isDark ? 'bg-white text-slate-900 hover:bg-white/90' : 'bg-slate-900 text-white hover:bg-slate-800'
+            <button onClick={() => setModalOpen(true)} className={`flex items-center gap-2 px-8 py-3 rounded-lg text-sm font-bold shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 transition-all ${
+              isDark ? 'bg-[#C3F53C] text-[#141414] hover:bg-[#b0e22b]' : 'bg-slate-900 text-white hover:bg-slate-800'
             }`}>
               <Zap className="w-4 h-4" /> Start Copying This Partner
             </button>
@@ -193,7 +194,7 @@ export default function MarketerDetail() {
 
       {/* ── PERFORMANCE HISTORY ── */}
       {history.length > 0 && (
-        <div className={`${card} p-8`}>
+        <div className={`${card} p-6`}>
           <div className={`flex flex-col sm:flex-row sm:items-center justify-between border-b pb-5 mb-6 gap-4 ${isDark ? 'border-white/5' : 'border-slate-100'}`}>
             <div>
               <h3 className={`text-xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>12-Month Performance</h3>
@@ -235,7 +236,7 @@ export default function MarketerDetail() {
               { label: 'Avg Monthly', value: formatCurrency(history.reduce((s, h) => s + h.revenue, 0) / history.length) },
               { label: 'Total 12-Month', value: formatCurrency(history.reduce((s, h) => s + h.revenue, 0)) },
             ].map(s => (
-              <div key={s.label} className={`p-4 rounded-2xl text-center ${isDark ? 'bg-white/5 border border-white/5' : 'bg-slate-50 border border-slate-100'}`}>
+              <div key={s.label} className={`p-4 rounded-lg text-center ${isDark ? 'bg-white/5 border border-white/5' : 'bg-slate-50 dark:bg-white/5 border border-slate-100'}`}>
                 <p className={`text-lg font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>{s.value}</p>
                 <p className={`text-[10px] font-bold uppercase tracking-wider mt-0.5 ${isDark ? 'text-white/30' : 'text-slate-400'}`}>{s.label}</p>
               </div>
@@ -246,13 +247,13 @@ export default function MarketerDetail() {
 
       {/* ── PRODUCTS ── */}
       {aff.products && aff.products.length > 0 && (
-        <div className={`${card} p-8`}>
+        <div className={`${card} p-6`}>
           <h3 className={`text-xl font-extrabold mb-5 ${isDark ? 'text-white' : 'text-slate-900'}`}>Products & Offerings</h3>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {aff.products.map((prod, i) => {
               const p = typeof prod === 'object' ? prod : { name: prod, price: null, type: 'Product' }
               return (
-                <div key={i} className={`p-5 rounded-2xl border transition-all hover:-translate-y-0.5 ${isDark ? 'bg-white/5 border-white/5 hover:border-[#C3F53C]/30' : 'bg-slate-50 border-slate-100 hover:border-[#005645]/30'}`}>
+                <div key={i} className={`p-5 rounded-lg border transition-all hover:-translate-y-0.5 ${isDark ? 'bg-white/5 border-white/5 hover:border-[#C3F53C]/30' : 'bg-slate-50 dark:bg-white/5 border-slate-100 dark:border-white/5 hover:border-[#005645]/30'}`}>
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-xl bg-[#005645] text-[#C3F53C] flex items-center justify-center flex-shrink-0 shadow-sm">
                       <Package className="w-5 h-5" />

@@ -67,7 +67,7 @@ export default function AdminLayout() {
       </header>
 
       {/* ── ADMIN MAIN CONTENT AREA ── */}
-      <div className="flex-1 max-w-[1400px] w-full mx-auto p-6 sm:p-10">
+      <div className="flex-1 max-w-[1400px] w-full mx-auto p-6 sm:p-6">
         <Outlet />
       </div>
 

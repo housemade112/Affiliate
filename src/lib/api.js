@@ -1,254 +1,193 @@
-import { getAllAffiliates, getAffiliateById } from '../data/affiliates.js'
+// Removed affiliates.js import
 
-// ---------------------------------------------------------------------------
-// Pure client-side mock API - no backend needed
-// All data comes from affiliates.js (localStorage for wallet/transactions)
-// ---------------------------------------------------------------------------
-
-function getStoredTransactions(userId) {
-  try {
-    const raw = localStorage.getItem(`mm_txn_${userId}`)
-    return raw ? JSON.parse(raw) : []
-  } catch { return [] }
-}
-
-function saveTransactions(userId, txns) {
-  localStorage.setItem(`mm_txn_${userId}`, JSON.stringify(txns))
-}
-
-function getStoredBalance(userId) {
-  try {
-    const raw = localStorage.getItem(`mm_bal_${userId}`)
-    return raw !== null ? parseFloat(raw) : 12500
-  } catch { return 12500 }
-}
-
-function saveBalance(userId, bal) {
-  localStorage.setItem(`mm_bal_${userId}`, String(bal))
-}
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
 export const api = {
   auth: {
     login: async (email, password) => {
-      return { success: true, user: null } // handled by AuthContext
+      const res = await fetch(`${API_BASE}/api/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      })
+      return await res.json()
     },
     register: async (name, email, password) => {
-      return { success: true, user: null } // handled by AuthContext
+      const res = await fetch(`${API_BASE}/api/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password })
+      })
+      return await res.json()
     },
     me: async (userId) => {
-      return { success: false }
+      const res = await fetch(`${API_BASE}/api/auth/me/${userId}`)
+      return await res.json()
     },
   },
 
   marketers: {
     list: async () => {
-      const marketers = getAllAffiliates()
-      return { success: true, marketers }
+      const res = await fetch(`${API_BASE}/api/marketers`)
+      return await res.json()
     },
     get: async (id) => {
-      const marketer = getAffiliateById(id)
-      if (!marketer) throw new Error('Not found')
-      return { success: true, marketer }
+      const res = await fetch(`${API_BASE}/api/marketers/${id}`)
+      return await res.json()
     },
     history: async (id) => {
-      // Generate 12-month mock history
-      const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
-      const history = months.map((month, i) => ({
-        month,
-        revenue: Math.floor(Math.random() * 80000 + 20000),
-        return: parseFloat((Math.random() * 10 + 5).toFixed(1)),
-      }))
-      return { success: true, history }
+      try {
+        const detailRes = await fetch(`${API_BASE}/api/marketers/${id}`)
+        const detail = await detailRes.json()
+        const histRes = await fetch(`${API_BASE}/api/marketers/${id}/history`)
+        const hist = await histRes.json()
+
+        if (detail.success && hist.success && detail.marketer) {
+          const totalRevenue = detail.marketer.revenue
+          const growth = hist.history || []
+          const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+
+          // If growth is just an array of numbers (from data.json)
+          if (growth.length > 0 && typeof growth[0] === 'number') {
+            const sum = growth.reduce((s, v) => s + v, 0)
+            const history = growth.map((val, i) => ({
+              month: months[i % 12],
+              revenue: Math.round(val * (totalRevenue / (sum || 1)))
+            }))
+            return { success: true, history }
+          }
+
+          // If growth is an array of OHLC objects (from db.js fallback)
+          if (growth.length > 0 && typeof growth[0] === 'object') {
+            const sumClose = growth.reduce((s, v) => s + (v.close || 0), 0)
+            const history = growth.map((item, i) => ({
+              month: item.date || months[i % 12],
+              revenue: Math.round((item.close || 0) * (totalRevenue / (sumClose || 1)))
+            }))
+            return { success: true, history }
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching marketer history:', err)
+      }
+      return { success: false, history: [] }
     },
   },
 
   mirror: {
     list: async (userId) => {
-      try {
-        const raw = localStorage.getItem(`mm_currentUser`)
-        const user = raw ? JSON.parse(raw) : null
-        return { success: true, mirrors: user?.mirroredAffiliates || [] }
-      } catch { return { success: true, mirrors: [] } }
+      const res = await fetch(`${API_BASE}/api/mirror/${userId}`)
+      return await res.json()
     },
     add: async (userId, marketerId, multiplier, stopLoss, deposit) => {
-      return { success: true }
+      const res = await fetch(`${API_BASE}/api/mirror`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId, marketerId, multiplier, stopLoss, deposit })
+      })
+      return await res.json()
     },
     remove: async (userId, marketerId) => {
-      return { success: true }
+      const res = await fetch(`${API_BASE}/api/mirror/${userId}/${marketerId}`, {
+        method: 'DELETE'
+      })
+      return await res.json()
     },
   },
 
   wallet: {
     transactions: async (userId) => {
-      try {
-        const res = await fetch(`http://localhost:3001/api/wallet/transactions/${userId}`)
-        if (res.ok) return await res.json()
-      } catch (e) {}
-      const txns = getStoredTransactions(userId)
-      return { success: true, transactions: txns }
+      const res = await fetch(`${API_BASE}/api/wallet/transactions/${userId}`)
+      return await res.json()
     },
     depositWallets: async () => {
-      try {
-        const res = await fetch('http://localhost:3001/api/wallet/deposit-wallets')
-        if (res.ok) return await res.json()
-      } catch (e) {}
-      return {
-        success: true,
-        wallets: [
-          { id: 'w1', name: 'USDT (TRC20)', asset: 'USDT-TRC20', address: 'T9xQeK3Xm8qV7n2b1a0c9d8e7f6g5h4i3j2k1l', network: 'TRON (TRC20)', active: true },
-          { id: 'w2', name: 'Bitcoin (BTC)', asset: 'BTC', address: 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh', network: 'Bitcoin', active: true },
-          { id: 'w3', name: 'Ethereum (ETH)', asset: 'ETH', address: '0x71C7656EC7ab88b098defB751B7401B5f6d8976F', network: 'ERC20', active: true }
-        ]
-      }
+      const res = await fetch(`${API_BASE}/api/wallet/deposit-wallets`)
+      return await res.json()
     },
     transact: async (userId, type, amount, method, asset, txHash, walletAddress) => {
-      try {
-        const res = await fetch('http://localhost:3001/api/wallet/transaction', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userId, type, amount, method, asset, txHash, walletAddress })
-        })
-        if (res.ok) return await res.json()
-      } catch (e) {}
-
-      // Fallback local simulation
-      const currentBal = getStoredBalance(userId)
-      const isPending = (type === 'deposit' || type === 'withdrawal')
-      const status = isPending ? 'pending' : 'approved'
-      let newBal = currentBal
-      
-      if (status === 'approved') {
-        newBal = type === 'deposit' ? currentBal + amount : currentBal - amount
-        saveBalance(userId, newBal)
-      } else if (type === 'withdrawal') {
-        newBal = Math.max(0, currentBal - amount)
-        saveBalance(userId, newBal)
-      }
-
-      const tx = {
-        id: `tx_${Date.now()}`,
-        userId,
-        type,
-        amount,
-        method: method || 'Crypto Transfer',
-        asset: asset || 'USDT',
-        txHash: txHash || '',
-        walletAddress: walletAddress || '',
-        status,
-        createdAt: new Date().toISOString(),
-      }
-      const txns = getStoredTransactions(userId)
-      txns.unshift(tx)
-      saveTransactions(userId, txns)
-      return { success: true, transaction: tx, balance: newBal }
+      const res = await fetch(`${API_BASE}/api/wallet/transaction`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId, type, amount, method, asset, txHash, walletAddress })
+      })
+      return await res.json()
     },
   },
 
   admin: {
     login: async (email, password) => {
-      try {
-        const res = await fetch('http://localhost:3001/api/admin/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
-        })
-        if (res.ok) return await res.json()
+      const res = await fetch(`${API_BASE}/api/admin/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      })
+      if (!res.ok) {
         const err = await res.json()
         return { success: false, error: err.error || 'Authentication failed' }
-      } catch (e) {}
-      
-      // Fallback for standalone preview if backend is unattached
-      if (password === 'admin123' || password === 'admin') {
-        return {
-          success: true,
-          user: { id: 'admin_1', name: 'Master Admin', email, role: 'admin', loggedInAt: new Date().toISOString() }
-        }
       }
-      return { success: false, error: 'Invalid admin credentials' }
+      return await res.json()
     },
     getTransactions: async () => {
-      try {
-        const res = await fetch('http://localhost:3001/api/admin/transactions')
-        if (res.ok) return await res.json()
-      } catch (e) {}
-      return { success: true, transactions: [] }
+      const res = await fetch(`${API_BASE}/api/admin/transactions`)
+      return await res.json()
     },
     approveTransaction: async (txId) => {
-      try {
-        const res = await fetch(`http://localhost:3001/api/admin/transactions/${txId}/approve`, {
-          method: 'POST'
-        })
-        if (res.ok) return await res.json()
-      } catch (e) {}
-      return { success: false, error: 'Network error' }
+      const res = await fetch(`${API_BASE}/api/admin/transactions/${txId}/approve`, {
+        method: 'POST'
+      })
+      return await res.json()
     },
     declineTransaction: async (txId, reason) => {
-      try {
-        const res = await fetch(`http://localhost:3001/api/admin/transactions/${txId}/decline`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ reason })
-        })
-        if (res.ok) return await res.json()
-      } catch (e) {}
-      return { success: false, error: 'Network error' }
+      const res = await fetch(`${API_BASE}/api/admin/transactions/${txId}/decline`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reason })
+      })
+      return await res.json()
     },
     getWallets: async () => {
-      try {
-        const res = await fetch('http://localhost:3001/api/admin/wallets')
-        if (res.ok) return await res.json()
-      } catch (e) {}
-      return { success: true, wallets: [] }
+      const res = await fetch(`${API_BASE}/api/admin/wallets`)
+      return await res.json()
     },
     saveWallets: async (wallets) => {
-      try {
-        const res = await fetch('http://localhost:3001/api/admin/wallets', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ wallets })
-        })
-        if (res.ok) return await res.json()
-      } catch (e) {}
-      return { success: false, error: 'Network error' }
+      const res = await fetch(`${API_BASE}/api/admin/wallets`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ wallets })
+      })
+      return await res.json()
     },
     getUsers: async () => {
-      try {
-        const res = await fetch('http://localhost:3001/api/admin/users')
-        if (res.ok) return await res.json()
-      } catch (e) {}
-      return { success: true, users: [] }
+      const res = await fetch(`${API_BASE}/api/admin/users`)
+      return await res.json()
     },
     updateUserBalance: async (userId, balance, reason) => {
-      try {
-        const res = await fetch(`http://localhost:3001/api/admin/users/${userId}/balance`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ balance, reason })
-        })
-        if (res.ok) return await res.json()
-      } catch (e) {}
-      return { success: false, error: 'Network error' }
+      const res = await fetch(`${API_BASE}/api/admin/users/${userId}/balance`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ balance, reason })
+      })
+      return await res.json()
     },
     getMirrors: async () => {
-      try {
-        const res = await fetch('http://localhost:3001/api/admin/mirrors')
-        if (res.ok) return await res.json()
-      } catch (e) {}
-      return { success: true, mirrors: [] }
+      const res = await fetch(`${API_BASE}/api/admin/mirrors`)
+      return await res.json()
     },
     blockMirror: async (id) => {
-      try {
-        const res = await fetch(`http://localhost:3001/api/admin/mirrors/${id}/block`, { method: 'PATCH' })
-        if (res.ok) return await res.json()
-      } catch (e) {}
-      return { success: false }
+      const res = await fetch(`${API_BASE}/api/admin/mirrors/${id}/block`, { method: 'PATCH' })
+      return await res.json()
+    },
+    approveMirror: async (id) => {
+      const res = await fetch(`${API_BASE}/api/admin/mirrors/${id}/approve`, { method: 'POST' })
+      return await res.json()
+    },
+    declineMirror: async (id, adminEmail) => {
+      const res = await fetch(`${API_BASE}/api/admin/mirrors/${id}/decline?adminEmail=${encodeURIComponent(adminEmail)}`, { method: 'POST' })
+      return await res.json()
     },
     deleteMirror: async (id, adminEmail) => {
-      try {
-        const res = await fetch(`http://localhost:3001/api/admin/mirrors/${id}?adminEmail=${encodeURIComponent(adminEmail)}`, { method: 'DELETE' })
-        if (res.ok) return await res.json()
-      } catch (e) {}
-      return { success: false }
+      const res = await fetch(`${API_BASE}/api/admin/mirrors/${id}?adminEmail=${encodeURIComponent(adminEmail)}`, { method: 'DELETE' })
+      return await res.json()
     }
   },
 

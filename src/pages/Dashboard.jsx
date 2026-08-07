@@ -4,7 +4,7 @@ import { useTheme } from '../context/ThemeContext.jsx'
 import { getAllAffiliates } from '../data/affiliates.js'
 import { formatCurrency } from '../lib/utils.js'
 import { api } from '../lib/api.js'
-import { ArrowUpRight, TrendingUp, Wallet, ArrowDownToLine, Users, ChevronRight, Activity, Copy, Clock, Search, LayoutGrid } from 'lucide-react'
+import { ArrowUpRight, TrendingUp, Wallet, ArrowDownToLine, Users, ChevronRight, Activity, Copy, Clock, Search, LayoutGrid, BadgeCheck } from 'lucide-react'
 import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer } from 'recharts'
 import GaugeComponent from 'react-gauge-component'
 import { useState, useMemo, useEffect } from 'react'
@@ -27,7 +27,7 @@ export default function Dashboard() {
   const [activeTab, setActiveTab]     = useState('overview')
   const [mirroredList, setMirroredList] = useState(user?.mirroredAffiliates || [])
   const [transactions, setTransactions] = useState([])
-  const allAffiliates = getAllAffiliates()
+  const [allAffiliates, setAllAffiliates] = useState([])
 
   useEffect(() => {
     if (user) {
@@ -35,6 +35,11 @@ export default function Dashboard() {
         .then(d => setTransactions(d.transactions.slice(0, 5)))
         .catch(console.error)
     }
+    api.marketers.list()
+      .then(d => {
+        if (d.success) setAllAffiliates(d.marketers.sort((a,b) => b.revenue - a.revenue))
+      })
+      .catch(console.error)
   }, [user])
 
   const handleUnmirror = (affId) => {
@@ -55,7 +60,7 @@ export default function Dashboard() {
   // Profit % is real: estimatedReturn / totalCapital
   const ProfitPct = totalCapital > 0 ? ((estimatedReturn / totalCapital) * 100).toFixed(1) : '0.0'
 
-  const card = `rounded-[32px] shadow-2xl transition-all duration-300 hover:shadow-emerald-500/10 hover:-translate-y-1 ${isDark ? 'bg-gradient-to-b from-[#13161C] to-[#0A0C10] border border-white/5' : 'bg-white border border-slate-100 shadow-slate-200/50'}`
+  const card = `rounded-xl shadow-lg transition-all duration-300 ${isDark ? 'bg-gradient-to-b from-[#13161C] to-[#0A0C10] border border-white/5' : 'bg-white border border-slate-100 shadow-slate-200/50'}`
 
   // Prepare data for the real BarChart
   const barData = [
@@ -76,7 +81,7 @@ export default function Dashboard() {
     <div className="animate-fade-in pb-24 font-sans space-y-6">
 
       {/* ── TAB SWITCHER ── */}
-      <div className={`flex items-center gap-1 p-1.5 rounded-2xl w-fit ${isDark ? 'bg-white/5' : 'bg-white border border-slate-200/80 shadow-sm'}`}>
+      <div className={`flex items-center gap-1 p-1.5 rounded-lg w-fit ${isDark ? 'bg-white/5' : 'bg-white border border-slate-200/80 shadow-sm'}`}>
         {TABS.map(tab => (
           <button key={tab.id} onClick={() => setActiveTab(tab.id)}
             className={`px-5 py-2.5 rounded-xl text-sm font-extrabold transition-all ${
@@ -86,7 +91,7 @@ export default function Dashboard() {
                   : 'bg-[#005645] text-white shadow-sm'
                 : isDark
                   ? 'text-white/40 hover:text-white'
-                  : 'text-slate-500 hover:text-slate-900'
+                  : 'text-slate-700 hover:text-slate-900'
             }`}>
             {tab.label}
           </button>
@@ -104,10 +109,10 @@ export default function Dashboard() {
         <div className="space-y-6">
 
           {/* ROW 1 */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6">
 
             {/* Dark Stats Card */}
-            <div className={`lg:col-span-5 rounded-[32px] p-8 flex flex-col justify-between min-h-[300px] shadow-2xl relative overflow-hidden transition-all duration-500 hover:scale-[1.01] ${
+            <div className={`order-2 lg:order-1 lg:col-span-5 rounded-xl p-5 flex flex-col justify-between min-h-[220px] shadow-2xl relative overflow-hidden transition-all duration-500 hover:scale-[1.01] ${
               isDark ? 'bg-gradient-to-br from-[#0F172A] via-[#13161C] to-[#064E3B] border border-emerald-500/10' : 'bg-gradient-to-br from-slate-900 to-[#005645] border border-emerald-500/20'
             }`}>
               {/* Premium Glow Accents */}
@@ -133,13 +138,13 @@ export default function Dashboard() {
               ) : (
                 <div className="flex items-end justify-between mt-8 sm:mt-auto">
                   <div>
-                    <div className="flex items-center gap-2 text-sm text-emerald-100/70 font-semibold mb-2 tracking-wide uppercase">
+                    <div className="flex items-center gap-2 text-[15px] text-emerald-100/70 font-semibold mb-2 tracking-wide uppercase">
                       Total Profit
                       <span className="w-5 h-5 rounded-full bg-gradient-to-r from-[#C3F53C] to-[#9EE86F] shadow-lg shadow-[#C3F53C]/20 flex items-center justify-center">
                         <ArrowUpRight className="w-3 h-3 text-[#005645]" />
                       </span>
                     </div>
-                    <h3 className="text-4xl sm:text-6xl font-black bg-gradient-to-br from-white to-white/70 bg-clip-text text-transparent tracking-tighter">+{formatCurrency(estimatedReturn)}</h3>
+                    <h3 className="text-2xl font-bold text-white">+{formatCurrency(estimatedReturn)}</h3>
                   </div>
                   {/* Real Recharts BarChart */}
                   <div className="w-40 sm:w-48 h-28 pr-2 sm:mr-4">
@@ -160,43 +165,28 @@ export default function Dashboard() {
             </div>
 
             {/* Current Balance Card - Premium Design */}
-            <div className="lg:col-span-7 rounded-[32px] p-6 sm:p-10 flex flex-col justify-between min-h-[300px] shadow-2xl relative overflow-hidden bg-gradient-to-br from-[#9EE86F] via-[#85D651] to-[#6AB935] border border-white/20 transition-all duration-500 hover:scale-[1.01]">
+            <div className="order-1 lg:order-2 lg:col-span-7 rounded-xl p-5 flex flex-col justify-between min-h-[220px] shadow-2xl relative overflow-hidden bg-gradient-to-br from-[#9EE86F] via-[#85D651] to-[#6AB935] border border-white/20 transition-all duration-500 hover:scale-[1.01]">
               <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay pointer-events-none" />
               
-              <div className="flex justify-between items-start relative z-10">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-2xl bg-white/90 backdrop-blur-md flex items-center justify-center shadow-lg shadow-black/5">
-                    <TrendingUp className="w-6 h-6 text-[#005645]" />
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                   <button className="w-8 h-8 rounded-full bg-white/40 hover:bg-white/60 flex items-center justify-center transition-colors">
-                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5M5 12L12 19M5 12L12 5"/></svg>
-                   </button>
-                   <button className="w-8 h-8 rounded-full bg-white/40 hover:bg-white/60 flex items-center justify-center transition-colors">
-                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12H19M19 12L12 5M19 12L12 19"/></svg>
-                   </button>
+              <div className="mt-2 mb-2 relative z-10">
+                <h2 className="text-[15px] font-semibold uppercase tracking-wider text-[#004235]/70">Current balance</h2>
+                <div>
+                  <span className="text-2xl font-bold text-slate-700 dark:text-white">
+                    {formatCurrency(totalCapital)}
+                  </span>
                 </div>
               </div>
-
-              <div className="mt-8 mb-2 relative z-10">
-                <h2 className="text-xl font-bold text-[#004235]/70 uppercase tracking-wider text-sm">Current balance</h2>
-              </div>
-              
               <div className="flex items-end justify-between relative z-10 mt-auto">
                 <div className="mb-2">
                   <div className="flex items-center gap-2 mb-1">
                     <span className="text-xl font-black text-[#005645]">14.2%</span>
-                    <span className="w-5 h-5 rounded-full bg-white/90 shadow-sm flex items-center justify-center">
-                      <ArrowUpRight className="w-3 h-3 text-[#005645]" />
-                    </span>
                   </div>
                   <span className="text-sm font-bold text-[#004235]/60">Avg target: {formatCurrency(totalCapital + 5824)}</span>
                 </div>
               </div>
 
               {/* Real Interactive Gauge Chart Library */}
-              <div className="absolute right-0 bottom-4 w-[240px] h-[120px] sm:w-[280px] sm:h-[140px] pointer-events-none translate-x-4 sm:translate-x-0">
+              <div className="absolute right-0 bottom-4 w-[200px] h-[100px] sm:w-[240px] sm:h-[120px] pointer-events-none translate-x-4 sm:translate-x-0">
                 <GaugeComponent
                   value={gaugePercent}
                   type="semicircle"
@@ -214,13 +204,6 @@ export default function Dashboard() {
                     tickLabels: { hideMinMax: true }
                   }}
                 />
-                
-                {/* Center Value Text */}
-                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex flex-col items-center">
-                  <span className="text-[26px] font-extrabold text-slate-900 tracking-tight">
-                    {formatCurrency(totalCapital)}
-                  </span>
-                </div>
               </div>
 
             </div>
@@ -230,15 +213,15 @@ export default function Dashboard() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
             {/* Active Copies */}
-            <div className={`lg:col-span-8 ${card} overflow-hidden flex flex-col`}>
-              <div className={`px-8 py-6 border-b flex items-center justify-between ${isDark ? 'border-white/5 bg-white/[0.02]' : 'border-slate-100 bg-slate-50/50'}`}>
+            <div className={`lg:col-span-12 ${card} overflow-hidden flex flex-col`}>
+              <div className={`px-6 py-5 border-b flex items-center justify-between ${isDark ? 'border-white/5 bg-white/[0.02]' : 'border-slate-100 bg-slate-50/50'}`}>
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#005645] to-[#004235] text-white flex items-center justify-center shadow-lg shadow-[#005645]/20">
+                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[#005645] to-[#004235] text-white flex items-center justify-center shadow-lg shadow-[#005645]/20">
                     <LayoutGrid className="w-6 h-6" />
                   </div>
                   <div>
-                    <h3 className={`text-lg font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>Active Copies</h3>
-                    <p className={`text-xs font-medium ${isDark ? 'text-white/40' : 'text-slate-500'}`}>{mirroredAffiliates.length} partners generating Profit</p>
+                    <h3 className={`text-base font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Active Copies</h3>
+                    <p className={`text-xs font-medium ${isDark ? 'text-white/40' : 'text-slate-700'}`}>{mirroredAffiliates.length} partners generating Profit</p>
                   </div>
                 </div>
                 <button onClick={() => setActiveTab('directory')}
@@ -249,18 +232,18 @@ export default function Dashboard() {
               <div className="flex-1 overflow-x-auto">
                 {mirroredAffiliates.length === 0 ? (
                   <div className="p-16 text-center flex flex-col items-center gap-4">
-                    <div className={`w-20 h-20 rounded-[24px] flex items-center justify-center border ${isDark ? 'bg-white/5 border-white/10' : 'bg-slate-50 border-slate-200'}`}>
+                    <div className={`w-20 h-20 rounded-xl flex items-center justify-center border ${isDark ? 'bg-white/5 border-white/10' : 'bg-slate-50 border-slate-200'}`}>
                       <Users className={`w-8 h-8 ${isDark ? 'text-white/20' : 'text-slate-300'}`} />
                     </div>
                     <div>
                       <p className={`text-lg font-bold ${isDark ? 'text-white' : 'text-slate-800'}`}>No active copies yet</p>
-                      <p className={`text-sm mt-1 ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Browse the directory and copy a top-performing partner.</p>
+                      <p className={`text-sm mt-1 ${isDark ? 'text-white/40' : 'text-slate-700'}`}>Browse the directory and copy a top-performing partner.</p>
                     </div>
                     <button onClick={() => setActiveTab('directory')} className="btn-lime text-xs px-6 py-2.5 shadow-sm">Browse Partners</button>
                   </div>
                 ) : (
                   <table className="w-full text-sm whitespace-nowrap">
-                    <thead className={`border-b text-xs font-bold uppercase tracking-wider ${isDark ? 'bg-white/5 border-white/5 text-white/40' : 'bg-slate-50 border-slate-100 text-slate-400'}`}>
+                    <thead className={`border-b text-xs font-bold uppercase tracking-wider ${isDark ? 'bg-white/5 border-white/5 text-white/40' : 'bg-slate-50 border-slate-100 text-slate-600'}`}>
                       <tr>
                         <th className="px-8 py-4 text-left">Partner</th>
                         <th className="px-6 py-4 text-left">Deposited</th>
@@ -274,17 +257,20 @@ export default function Dashboard() {
                           <td className="px-8 py-5">
                             <div className="flex items-center gap-4">
                               <img src={a.avatar} alt={a.name}
-                                className="w-11 h-11 rounded-2xl object-cover border border-slate-200 shadow-sm"
+                                className="w-11 h-11 rounded-lg object-cover border border-slate-200 shadow-sm"
                                 onError={e => { e.target.style.display='none' }} />
                               <div>
-                                <p className={`font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>{a.name}</p>
-                                <p className={`text-xs font-medium ${isDark ? 'text-white/40' : 'text-slate-400'}`}>{a.niche}</p>
+                                <div className="flex items-center gap-1.5">
+                                  <p className={`font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{a.name}</p>
+                                  {a.verified && <BadgeCheck className="w-4 h-4 text-blue-500" />}
+                                </div>
+                                <p className={`text-xs font-medium ${isDark ? 'text-white/40' : 'text-slate-600'}`}>{a.niche}</p>
                               </div>
                             </div>
                           </td>
-                          <td className={`px-6 py-5 font-black text-lg ${isDark ? 'text-white' : 'text-slate-800'}`}>{formatCurrency(a.minDeposit)}</td>
+                          <td className={`px-6 py-5 font-bold text-base ${isDark ? 'text-white' : 'text-slate-700'}`}>{formatCurrency(a.minDeposit)}</td>
                           <td className="px-6 py-5">
-                            <span className="inline-flex items-center gap-1.5 text-[#005645] font-black bg-gradient-to-r from-[#C3F53C] to-[#9EE86F] px-3.5 py-1.5 rounded-xl shadow-sm text-sm">
+                            <span className="inline-flex items-center gap-1.5 text-[#005645] font-bold bg-gradient-to-r from-[#C3F53C] to-[#9EE86F] px-3.5 py-1.5 rounded-xl shadow-sm text-sm">
                               <ArrowUpRight className="w-4 h-4" />{a.monthlyReturn}%
                             </span>
                           </td>
@@ -302,60 +288,21 @@ export default function Dashboard() {
               </div>
             </div>
 
-            {/* Live Social Proof Feed */}
-            <div className={`lg:col-span-4 ${card} flex flex-col overflow-hidden`}>
-              <div className={`px-6 py-6 border-b flex items-center justify-between ${isDark ? 'border-white/5 bg-white/[0.02]' : 'border-slate-100 bg-slate-50/50'}`}>
-                <div className="flex items-center gap-4">
-                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg ${isDark ? 'bg-gradient-to-br from-[#C3F53C]/20 to-[#C3F53C]/5 text-[#C3F53C] shadow-[#C3F53C]/10' : 'bg-gradient-to-br from-emerald-100 to-emerald-50 text-[#005645] shadow-emerald-500/10'}`}>
-                    <Users className="w-6 h-6 animate-pulse" />
-                  </div>
-                  <div>
-                    <h3 className={`text-lg font-extrabold tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>Live Activity</h3>
-                    <p className={`text-[11px] font-bold uppercase tracking-wider ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Real-time action</p>
-                  </div>
-                </div>
-              </div>
-              <div className="p-4 flex-1 overflow-y-auto space-y-3">
-                {[
-                  { id: 1, user: 'Alex M.', action: 'allocated', amount: '$5,000', target: 'Frances Campbell', time: 'Just now' },
-                  { id: 2, user: 'Sarah J.', action: 'withdrew', amount: '$1,250', target: 'profits', time: '2m ago' },
-                  { id: 3, user: 'David K.', action: 'allocated', amount: '$10,000', target: 'Crypto Niche', time: '5m ago' },
-                  { id: 4, user: 'Emily R.', action: 'deposited', amount: '$2,500', target: 'wallet', time: '12m ago' },
-                  { id: 5, user: 'Michael B.', action: 'withdrew', amount: '$3,400', target: 'profits', time: '21m ago' },
-                ].map((feed) => (
-                  <div key={feed.id} className={`p-4 rounded-2xl flex items-start gap-3 transition-all duration-300 hover:-translate-y-0.5 ${isDark ? 'hover:bg-white/10 bg-white/[0.03]' : 'hover:bg-white hover:shadow-lg bg-slate-50/80 border border-slate-100'}`}>
-                    <div className={`w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold ${
-                      feed.action === 'withdrew' ? 'bg-amber-100 text-amber-700' : 
-                      feed.action === 'deposited' ? 'bg-blue-100 text-blue-700' : 'bg-emerald-100 text-emerald-700'
-                    }`}>
-                      {feed.user[0]}
-                    </div>
-                    <div>
-                      <p className={`text-sm ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-                        <span className={`font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{feed.user}</span> {feed.action} <span className={`font-extrabold px-1.5 py-0.5 rounded ${isDark ? 'text-[#C3F53C] bg-[#C3F53C]/20' : 'text-[#005645] bg-[#C3F53C]/40'}`}>{feed.amount}</span> to {feed.target}
-                      </p>
-                      <p className={`text-[10px] font-bold mt-1 uppercase ${isDark ? 'text-white/30' : 'text-slate-400'}`}>{feed.time}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
           </div>
 
           {/* ROW 3: Top Partners */}
-          <div className={`${card} p-6 sm:p-10 relative overflow-hidden`}>
+          <div className={`${card} p-6 relative overflow-hidden`}>
             {/* Soft background glow */}
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-emerald-500/5 to-transparent rounded-full blur-[100px] pointer-events-none" />
             
             <div className="flex items-center justify-between mb-8 relative z-10">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#C3F53C] to-[#9EE86F] shadow-lg shadow-[#C3F53C]/20 text-[#005645] flex items-center justify-center">
+                <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[#C3F53C] to-[#9EE86F] shadow-lg shadow-[#C3F53C]/20 text-[#005645] flex items-center justify-center">
                   <TrendingUp className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className={`text-xl font-extrabold tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>Top Earning Partners</h3>
-                  <p className={`text-xs font-bold uppercase tracking-wider mt-0.5 ${isDark ? 'text-white/40' : 'text-slate-400'}`}>Highest verified revenue this month</p>
+                  <h3 className={`text-lg font-bold tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>Top Earning Partners</h3>
+                  <p className={`text-xs font-bold uppercase tracking-wider mt-0.5 ${isDark ? 'text-white/40' : 'text-slate-600'}`}>Highest verified revenue this month</p>
                 </div>
               </div>
               <button onClick={() => setActiveTab('leaderboard')}
@@ -366,21 +313,24 @@ export default function Dashboard() {
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
               {allAffiliates.slice(0, 5).map((a, i) => (
                 <Link to={`/marketer/${a.id}`} key={a.id}
-                  className={`flex flex-col items-center gap-3 p-5 rounded-[24px] border transition-all duration-300 group text-center hover:-translate-y-1 ${
+                  className={`flex flex-col items-center gap-3 p-5 rounded-xl border transition-all duration-300 group text-center hover:-translate-y-1 ${
                     isDark ? 'border-white/10 hover:border-emerald-500/50 hover:bg-white/5 hover:shadow-2xl hover:shadow-emerald-500/10 bg-white/[0.02]' : 'border-slate-200 hover:border-[#005645]/30 hover:shadow-xl bg-white'
                   }`}>
                   <div className="relative">
                     <img src={a.avatar} alt={a.name}
-                      className="w-16 h-16 rounded-[20px] object-cover shadow-md border-2 border-transparent group-hover:border-[#C3F53C] transition-all duration-300"
+                      className="w-16 h-16 rounded-lg object-cover shadow-md border-2 border-transparent group-hover:border-[#C3F53C] transition-all duration-300"
                       onError={e => { e.target.style.display='none' }} />
                     <span className={`absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black shadow-lg
-                      ${i===0?'bg-amber-400 text-white':i===1?'bg-slate-300 text-slate-700':i===2?'bg-orange-400 text-white':'bg-slate-100 text-slate-500'}`}>
+                      ${i===0?'bg-amber-400 text-white':i===1?'bg-slate-300 text-slate-700':i===2?'bg-orange-400 text-white':'bg-slate-100 text-slate-700'}`}>
                       #{i+1}
                     </span>
                   </div>
                   <div>
-                    <p className={`font-extrabold text-sm leading-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>{a.name.split(' ')[0]}</p>
-                    <p className={`text-[11px] font-semibold mt-0.5 ${isDark ? 'text-white/40' : 'text-slate-400'}`}>{a.niche.split(' ')[0]}</p>
+                    <div className="flex items-center justify-center gap-1">
+                      <p className={`font-bold text-sm leading-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>{a.name.split(' ')[0]}</p>
+                      {a.verified && <BadgeCheck className="w-3.5 h-3.5 text-blue-500" />}
+                    </div>
+                    <p className={`text-[11px] font-semibold mt-0.5 ${isDark ? 'text-white/40' : 'text-slate-600'}`}>{a.niche.split(' ')[0]}</p>
                   </div>
                   <span className="text-xs font-extrabold text-[#005645] bg-emerald-50 border border-emerald-100 px-2 py-1 rounded-lg">
                     +{a.monthlyReturn}%

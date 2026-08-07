@@ -44,7 +44,7 @@ export default function BalanceGauge({ total, deployed, liquid, ProfitPct = 14.2
             </defs>
           </svg>
           <div className="absolute inset-x-0 bottom-0 text-center">
-            <p className="text-2xl font-black font-mono text-[#141414]">{formatCurrency(total)}</p>
+            <p className="text-2xl font-bold font-mono text-[#141414]">{formatCurrency(total)}</p>
             <p className="text-[10px] font-mono text-[#141414]/60 mt-0.5">{pct}% deployed</p>
           </div>
         </div>
@@ -52,11 +52,11 @@ export default function BalanceGauge({ total, deployed, liquid, ProfitPct = 14.2
         <div className="grid grid-cols-2 gap-3 w-full mt-4 pt-4 border-t border-[#141414]/10">
           <div>
             <p className="text-[9px] font-mono font-bold uppercase text-[#141414]/50">Liquid</p>
-            <p className="text-sm font-black font-mono">{formatCurrency(liquid)}</p>
+            <p className="text-sm font-bold font-mono">{formatCurrency(liquid)}</p>
           </div>
           <div className="text-right">
             <p className="text-[9px] font-mono font-bold uppercase text-[#141414]/50">Deployed</p>
-            <p className="text-sm font-black font-mono">{formatCurrency(deployed)}</p>
+            <p className="text-sm font-bold font-mono">{formatCurrency(deployed)}</p>
           </div>
         </div>
       </div>

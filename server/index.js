@@ -258,6 +258,19 @@ app.patch('/api/admin/mirrors/:id/block', (req, res) => {
   return res.json(result)
 })
 
+app.post('/api/admin/mirrors/:id/approve', (req, res) => {
+  const result = db.approveMirror(req.params.id)
+  if (!result.success) return res.status(400).json(result)
+  return res.json(result)
+})
+
+app.post('/api/admin/mirrors/:id/decline', (req, res) => {
+  const adminEmail = req.query.adminEmail || 'Unknown Admin'
+  const result = db.declineMirror(req.params.id, adminEmail)
+  if (!result.success) return res.status(400).json(result)
+  return res.json(result)
+})
+
 app.delete('/api/admin/mirrors/:id', (req, res) => {
   const adminEmail = req.query.adminEmail || 'Unknown Admin'
   const result = db.deleteMirror(req.params.id, adminEmail)
@@ -304,6 +317,11 @@ setInterval(() => {
 
   db.addTradeLog(log)
 }, 5000)
+
+// Simulate live micro-payout profits for active copy trade allocations every 10 seconds
+setInterval(() => {
+  db.simulatePayouts()
+}, 10000)
 
 app.get('/api/feed/trades', (req, res) => {
   const logs = db.getTradeLogs()

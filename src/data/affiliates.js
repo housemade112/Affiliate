@@ -55,8 +55,10 @@ for (let i = 1; i <= 120; i++) {
   } while (usedNames.has(fullName))
   usedNames.add(fullName)
   
-  // Use DiceBear for illustrated avatars
-  const avatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(fullName)}&backgroundColor=b6e3f4,c0aede,d1d4f9`
+  // Assign unique photo based on name to avoid duplicate images
+  const isWoman = /[aeiy]$/i.test(fullName.split(' ')[0])
+  const randomId = Math.floor(seedRandom() * 98) + 1
+  const avatarUrl = `https://randomuser.me/api/portraits/${isWoman ? 'women' : 'men'}/${randomId}.jpg`
 
   const niche = niches[Math.floor(seedRandom() * niches.length)]
   

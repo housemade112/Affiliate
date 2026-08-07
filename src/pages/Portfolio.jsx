@@ -16,25 +16,25 @@ export default function Portfolio() {
   const estimatedReturn = mirroredAffiliates.reduce((s, a) => s + (a.minDeposit * a.monthlyReturn / 100), 0)
   const totalCapital = (user?.balance || 0) + totalInvested
 
-  const card = `rounded-[28px] p-6 sm:p-8 shadow-sm border ${isDark ? 'bg-[#1A1D21] border-white/5' : 'bg-white border-slate-200/80'}`
+  const card = `rounded-xl p-6 shadow-sm border ${isDark ? 'bg-[#1A1D21] border-white/5' : 'bg-white border-slate-200/80'}`
 
   return (
     <div className="animate-fade-in pb-24 font-sans space-y-6">
       
       <div className="flex items-center gap-3 mb-8">
-        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm border ${isDark ? 'bg-white/5 border-white/10 text-white' : 'bg-white border-slate-200 text-slate-800'}`}>
+        <div className={`w-12 h-12 rounded-lg flex items-center justify-center shadow-sm border ${isDark ? 'bg-white/5 border-white/10 text-white' : 'bg-white border-slate-200 text-slate-800'}`}>
           <PieChart className="w-6 h-6" />
         </div>
         <div>
-          <h1 className={`text-3xl font-extrabold tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>My Portfolio</h1>
-          <p className={`text-sm font-semibold mt-1 ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Analytics and personal performance tracking</p>
+          <h1 className={`text-2xl font-extrabold tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>My Portfolio</h1>
+          <p className={`text-sm font-medium mt-1 ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Analytics and personal performance tracking</p>
         </div>
       </div>
 
       {mirroredAffiliates.length === 0 ? (
         <div className={`${card} flex flex-col items-center justify-center text-center p-16`}>
           <Activity className={`w-16 h-16 mb-4 ${isDark ? 'text-white/10' : 'text-slate-200'}`} />
-          <h3 className={`text-xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>No active investments</h3>
+          <h3 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>No active investments</h3>
           <p className={`text-sm font-medium mt-2 max-w-sm ${isDark ? 'text-white/40' : 'text-slate-500'}`}>
             You aren't copying anyone yet. Head to the Directory to allocate capital and start seeing analytics.
           </p>
@@ -43,19 +43,19 @@ export default function Portfolio() {
         <div className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className={card}>
-              <p className={`text-sm font-bold uppercase tracking-wider mb-2 ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Total Capital</p>
-              <h3 className={`text-4xl font-black ${isDark ? 'text-white' : 'text-slate-900'}`}>{formatCurrency(totalCapital)}</h3>
-              <p className={`text-xs font-semibold mt-2 ${isDark ? 'text-white/30' : 'text-slate-400'}`}>Includes {formatCurrency(user?.balance || 0)} available cash</p>
+              <p className={`text-[15px] font-semibold uppercase tracking-wider mb-2 ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Total Capital</p>
+              <h3 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-slate-700'}`}>{formatCurrency(totalCapital)}</h3>
+              <p className={`text-xs font-medium mt-2 ${isDark ? 'text-white/30' : 'text-slate-400'}`}>Includes {formatCurrency(user?.balance || 0)} available cash</p>
             </div>
             <div className={card}>
-              <p className={`text-sm font-bold uppercase tracking-wider mb-2 ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Active Allocations</p>
-              <h3 className={`text-4xl font-black ${isDark ? 'text-[#C3F53C]' : 'text-[#005645]'}`}>{formatCurrency(totalInvested)}</h3>
-              <p className={`text-xs font-semibold mt-2 ${isDark ? 'text-white/30' : 'text-slate-400'}`}>Across {mirroredAffiliates.length} partners</p>
+              <p className={`text-[15px] font-semibold uppercase tracking-wider mb-2 ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Active Allocations</p>
+              <h3 className={`text-2xl font-bold ${isDark ? 'text-[#C3F53C]' : 'text-[#005645]'}`}>{formatCurrency(totalInvested)}</h3>
+              <p className={`text-xs font-medium mt-2 ${isDark ? 'text-white/30' : 'text-slate-400'}`}>Across {mirroredAffiliates.length} partners</p>
             </div>
             <div className={`${card} relative overflow-hidden`}>
               <div className="absolute right-0 top-0 opacity-10"><TrendingUp className="w-48 h-48 -mr-10 -mt-10" /></div>
-              <p className={`text-sm font-bold uppercase tracking-wider mb-2 relative z-10 ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Est. 30-Day Growth</p>
-              <h3 className={`text-4xl font-black relative z-10 ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>+{formatCurrency(estimatedReturn)}</h3>
+              <p className={`text-[15px] font-semibold uppercase tracking-wider mb-2 relative z-10 ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Est. 30-Day Growth</p>
+              <h3 className={`text-2xl font-bold relative z-10 ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>+{formatCurrency(estimatedReturn)}</h3>
               <div className="mt-2 inline-flex items-center gap-1 bg-emerald-500/20 text-emerald-500 px-2.5 py-1 rounded-lg text-xs font-extrabold relative z-10">
                 <ArrowUpRight className="w-3 h-3" />
                 {((estimatedReturn / totalCapital) * 100).toFixed(1)}% ROI
@@ -65,8 +65,8 @@ export default function Portfolio() {
 
           <div className={`${card} overflow-hidden`}>
             <div className="flex items-center justify-between mb-8">
-              <h3 className={`text-xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>Allocation Breakdown</h3>
-              <div className={`px-3 py-1.5 rounded-lg text-xs font-extrabold flex items-center gap-2 ${isDark ? 'bg-white/5 text-white/50' : 'bg-slate-50 text-slate-500'}`}>
+              <h3 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Allocation Breakdown</h3>
+              <div className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-2 ${isDark ? 'bg-white/5 text-white/50' : 'bg-slate-50 text-slate-500'}`}>
                 <LineChart className="w-4 h-4" /> By Partner
               </div>
             </div>
@@ -80,8 +80,8 @@ export default function Portfolio() {
                       <div className="flex items-center gap-3">
                         <img src={a.avatar} alt={a.name} className="w-8 h-8 rounded-full object-cover" />
                         <div>
-                          <p className={`font-extrabold text-sm ${isDark ? 'text-white' : 'text-slate-900'}`}>{a.name}</p>
-                          <p className={`text-xs font-semibold ${isDark ? 'text-white/40' : 'text-slate-500'}`}>{a.niche}</p>
+                          <p className={`font-bold text-sm ${isDark ? 'text-white' : 'text-slate-900'}`}>{a.name}</p>
+                          <p className={`text-xs font-medium ${isDark ? 'text-white/40' : 'text-slate-500'}`}>{a.niche}</p>
                         </div>
                       </div>
                       <div className="text-right">

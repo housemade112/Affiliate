@@ -98,12 +98,12 @@ export default function Landing() {
     <div className="min-h-screen bg-[#EFF2F0] text-slate-900 font-sans">
 
       {/* ── HERO: DARK EMERALD ARCH ── */}
-      <section className="realize-hero pt-28 pb-20 md:pt-36 md:pb-28">
+      <section className="realize-hero bg-[#005645] pt-28 pb-20 md:pt-36 md:pb-28">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-7">
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
             Performance Advertising Built for<br className="hidden sm:block" />
-            <span className="text-[#C3F53C] mt-2 inline-block">Affiliates</span>
+            <span className="text-[#F846B0] mt-2 inline-block">Affiliates</span>
           </h1>
 
           <p className="mx-auto text-base sm:text-lg text-[#D1F0E6] max-w-2xl font-normal leading-relaxed">
@@ -263,7 +263,8 @@ export default function Landing() {
       <section className="py-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-[#005645] rounded-[48px] p-8 sm:p-14 border border-emerald-800/60 shadow-2xl relative overflow-hidden text-white grid lg:grid-cols-12 gap-10 items-center">
           
-          {/* Removed Glow Orb */}
+          {/* Glow Orb */}
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-[#C3F53C]/20 to-transparent rounded-full blur-[100px] pointer-events-none" />
 
           {/* Left Column: Mission Story */}
           <div className="lg:col-span-7 space-y-6 text-left relative z-10">

@@ -44,22 +44,22 @@ export default function Wallet() {
     <div className="animate-fade-in pb-24 font-sans space-y-6">
 
       {/* Hero Header */}
-      <div className="bg-[#005645] rounded-[28px] p-8 sm:p-10 relative overflow-hidden flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 shadow-xl">
+      <div className="bg-[#005645] rounded-xl p-6 relative overflow-hidden flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 shadow-xl">
 
         <div className="relative z-10">
           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/20 text-emerald-300 text-[10px] uppercase font-extrabold tracking-widest mb-3">
             <WalletIcon className="w-3 h-3" /> Capital Console
           </span>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">Wallet & Ledger</h1>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Wallet and Ledger</h1>
           <p className="text-emerald-100/80 font-medium mt-2">Manage crypto deposits, withdrawals, and transfers</p>
         </div>
         <div className="flex gap-3 relative z-10 w-full sm:w-auto">
           <button onClick={openDeposit}
-            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-[#C3F53C] text-[#005645] font-extrabold text-sm rounded-2xl shadow-lg hover:bg-[#b0e22b] active:scale-95 transition-all">
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-[#C3F53C] text-[#005645] font-extrabold text-sm rounded-lg shadow-lg hover:bg-[#b0e22b] active:scale-95 transition-all">
             <ArrowDownToLine className="w-4 h-4" /> Deposit
           </button>
           <button onClick={openWithdrawal}
-            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-white/10 border border-white/20 text-white font-extrabold text-sm rounded-2xl hover:bg-white/20 active:scale-95 transition-all">
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-white/10 border border-white/20 text-white font-extrabold text-sm rounded-lg hover:bg-white/20 active:scale-95 transition-all">
             <ArrowUpFromLine className="w-4 h-4" /> Withdraw
           </button>
         </div>
@@ -67,50 +67,50 @@ export default function Wallet() {
 
       {/* Stat Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className={`rounded-[32px] p-8 shadow-2xl flex flex-col justify-between gap-4 hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300 relative overflow-hidden border ${isDark ? 'bg-gradient-to-br from-[#0F172A] via-[#13161C] to-[#064E3B] border-emerald-500/10' : 'bg-gradient-to-br from-slate-900 to-[#005645] border-emerald-500/20'}`}>
-          <div className="absolute -right-10 -top-10 w-40 h-40 bg-[#C3F53C]/10 rounded-full blur-[50px] pointer-events-none" />
+        <div className={`rounded-xl p-6 shadow-2xl flex flex-col justify-between gap-4 hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300 relative overflow-hidden border ${isDark ? 'bg-gradient-to-br from-[#0F172A] via-[#13161C] to-[#064E3B] border-emerald-500/10' : 'bg-gradient-to-br from-slate-900 to-[#005645] border-emerald-500/20'}`}>
+          <div className="absolute -right-10 -top-6 w-40 h-40 bg-[#C3F53C]/10 rounded-full blur-[50px] pointer-events-none" />
           
-          <div className="relative z-10 w-12 h-12 rounded-2xl bg-[#005645] text-[#C3F53C] flex items-center justify-center shadow-lg shadow-[#005645]/30">
+          <div className="relative z-10 w-12 h-12 rounded-lg bg-[#005645] text-[#C3F53C] flex items-center justify-center shadow-lg shadow-[#005645]/30">
             <WalletIcon className="w-6 h-6" />
           </div>
           <div className="relative z-10">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-emerald-100/70">Available Balance</p>
-            <p className="text-4xl font-black mt-1 tracking-tighter bg-gradient-to-br from-white to-white/70 bg-clip-text text-transparent">{formatCurrency(user?.balance || 0)}</p>
+            <h2 className="text-[15px] font-semibold uppercase tracking-wider text-emerald-100/70">Available Balance</h2>
+            <p className="text-3xl font-bold mt-1 text-white">{formatCurrency(user?.balance || 0)}</p>
           </div>
           <div className="relative z-10 flex items-center gap-2 text-xs font-bold text-[#C3F53C]">
             <ShieldCheck className="w-4 h-4" /> Verified & Secured
           </div>
         </div>
 
-        <div className={`rounded-[32px] p-8 shadow-xl flex flex-col gap-3 hover:-translate-y-1 transition-all duration-300 border ${isDark ? 'bg-gradient-to-b from-[#13161C] to-[#0A0C10] border-white/5' : 'bg-white border-slate-100'}`}>
-          <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm ${isDark ? 'bg-emerald-500/10 text-emerald-400' : 'bg-emerald-100 text-emerald-600'}`}>
+        <div className={`rounded-xl p-6 shadow-xl flex flex-col gap-3 hover:-translate-y-1 transition-all duration-300 border ${isDark ? 'bg-gradient-to-b from-[#13161C] to-[#0A0C10] border-white/5' : 'bg-white dark:bg-[#1A1D21] border-slate-100 dark:border-white/5'}`}>
+          <div className={`w-12 h-12 rounded-lg flex items-center justify-center shadow-sm ${isDark ? 'bg-emerald-500/10 text-emerald-400' : 'bg-emerald-100 text-emerald-600'}`}>
             <ArrowDownLeft className="w-6 h-6" />
           </div>
           <div>
-            <p className={`text-[11px] font-bold uppercase tracking-wider ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Total Deposited</p>
-            <p className={`text-3xl font-black mt-1 tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>{formatCurrency(totalDeposited)}</p>
+            <p className={`text-[13px] font-semibold uppercase tracking-wider ${isDark ? 'text-white/40' : 'text-slate-500 dark:text-white/50'}`}>Total Deposited</p>
+            <p className={`text-2xl font-bold mt-1 ${isDark ? 'text-white' : 'text-slate-700 dark:text-white'}`}>{formatCurrency(totalDeposited)}</p>
           </div>
-          <p className={`text-xs font-bold ${isDark ? 'text-white/30' : 'text-slate-400'}`}>{transactions.filter(t => t.type === 'deposit').length} transactions</p>
+          <p className={`text-xs font-bold ${isDark ? 'text-white/30' : 'text-slate-400 dark:text-white/40'}`}>{transactions.filter(t => t.type === 'deposit').length} transactions</p>
         </div>
 
-        <div className={`rounded-[32px] p-8 shadow-xl flex flex-col gap-3 hover:-translate-y-1 transition-all duration-300 border ${isDark ? 'bg-gradient-to-b from-[#13161C] to-[#0A0C10] border-white/5' : 'bg-white border-slate-100'}`}>
-          <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm ${isDark ? 'bg-rose-500/10 text-rose-400' : 'bg-rose-100 text-rose-600'}`}>
+        <div className={`rounded-xl p-6 shadow-xl flex flex-col gap-3 hover:-translate-y-1 transition-all duration-300 border ${isDark ? 'bg-gradient-to-b from-[#13161C] to-[#0A0C10] border-white/5' : 'bg-white dark:bg-[#1A1D21] border-slate-100 dark:border-white/5'}`}>
+          <div className={`w-12 h-12 rounded-lg flex items-center justify-center shadow-sm ${isDark ? 'bg-rose-500/10 text-rose-400' : 'bg-rose-100 text-rose-600'}`}>
             <ArrowUpRight className="w-6 h-6" />
           </div>
           <div>
-            <p className={`text-[11px] font-bold uppercase tracking-wider ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Total Withdrawn</p>
-            <p className={`text-3xl font-black mt-1 tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>{formatCurrency(totalWithdrawn)}</p>
+            <p className={`text-[13px] font-semibold uppercase tracking-wider ${isDark ? 'text-white/40' : 'text-slate-500 dark:text-white/50'}`}>Total Withdrawn</p>
+            <p className={`text-2xl font-bold mt-1 ${isDark ? 'text-white' : 'text-slate-700 dark:text-white'}`}>{formatCurrency(totalWithdrawn)}</p>
           </div>
-          <p className={`text-xs font-bold ${isDark ? 'text-white/30' : 'text-slate-400'}`}>{transactions.filter(t => t.type === 'withdrawal').length} transactions</p>
+          <p className={`text-xs font-bold ${isDark ? 'text-white/30' : 'text-slate-400 dark:text-white/40'}`}>{transactions.filter(t => t.type === 'withdrawal').length} transactions</p>
         </div>
       </div>
 
       {/* Transaction Table */}
-      <div className={`rounded-[28px] shadow-sm overflow-hidden flex flex-col border transition-colors ${isDark ? 'bg-[#1A1D21] border-white/5' : 'bg-white border-slate-200/80'}`}>
-        <div className={`px-8 py-6 border-b flex items-center justify-between ${isDark ? 'border-white/5' : 'border-slate-100'}`}>
+      <div className={`rounded-xl shadow-sm overflow-hidden flex flex-col border transition-colors ${isDark ? 'bg-[#1A1D21] border-white/5' : 'bg-white dark:bg-[#1A1D21] border-slate-200/80'}`}>
+        <div className={`px-8 py-6 border-b flex items-center justify-between ${isDark ? 'border-white/5' : 'border-slate-100 dark:border-white/5'}`}>
           <div>
-            <h3 className={`text-xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>Transaction Ledger</h3>
-            <p className={`text-xs font-semibold mt-1 ${isDark ? 'text-white/40' : 'text-slate-400'}`}>{transactions.length} total records</p>
+            <h3 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Transaction Ledger</h3>
+            <p className={`text-xs font-medium mt-1 ${isDark ? 'text-white/40' : 'text-slate-400'}`}>{transactions.length} total records</p>
           </div>
           <button onClick={openDeposit}
             className="flex items-center gap-2 text-xs font-extrabold text-[#005645] bg-emerald-50 border border-emerald-100 px-4 py-2.5 rounded-xl hover:bg-emerald-100 transition-colors">
@@ -120,17 +120,17 @@ export default function Wallet() {
 
         <div className="flex-1 overflow-x-auto">
           {txLoading ? (
-            <div className="p-8 space-y-4">
-              {[1,2,3].map(i => <div key={i} className="h-16 bg-slate-100 rounded-2xl animate-pulse" />)}
+            <div className="p-6 space-y-4">
+              {[1,2,3].map(i => <div key={i} className="h-16 bg-slate-100 rounded-lg animate-pulse" />)}
             </div>
           ) : transactions.length === 0 ? (
             <div className="p-20 text-center flex flex-col items-center gap-5">
-              <div className="w-20 h-20 rounded-[24px] bg-slate-50 border border-slate-200 flex items-center justify-center">
+              <div className="w-20 h-20 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center">
                 <WalletIcon className="w-8 h-8 text-slate-300" />
               </div>
               <div>
-                <h4 className="font-extrabold text-slate-900 text-xl">No transactions yet</h4>
-                <p className="text-slate-500 font-medium mt-2 max-w-xs mx-auto text-sm">Deposit funds to start allocating capital to top-performing affiliate partners.</p>
+                <h4 className="font-extrabold text-slate-900 dark:text-white text-xl">No transactions yet</h4>
+                <p className="text-slate-500 dark:text-white/50 font-medium mt-2 max-w-xs mx-auto text-sm">Deposit funds to start allocating capital to top-performing affiliate partners.</p>
               </div>
               <button onClick={openDeposit} className="btn-lime px-8 py-3 text-sm shadow-lg">Make a Deposit</button>
             </div>
@@ -139,7 +139,7 @@ export default function Wallet() {
               {/* Desktop Ledger Table */}
               <div className="overflow-x-auto">
                 <table className="hidden md:table w-full text-sm whitespace-nowrap">
-                <thead className={`border-b text-xs font-bold uppercase tracking-wider ${isDark ? 'bg-white/5 border-white/5 text-white/40' : 'bg-slate-50 border-slate-100 text-slate-400'}`}>
+                <thead className={`border-b text-xs font-bold uppercase tracking-wider ${isDark ? 'bg-white/5 border-white/5 text-white/40' : 'bg-slate-50 dark:bg-white/5 border-slate-100 dark:border-white/5 text-slate-400 dark:text-white/40'}`}>
                   <tr>
                     <th className="px-8 py-4 text-left">Transaction Details</th>
                     <th className="px-6 py-4 text-left">Date & Time</th>
@@ -156,31 +156,31 @@ export default function Wallet() {
                       <tr key={tx.id} className={`transition-colors ${isDark ? 'hover:bg-white/5' : 'hover:bg-slate-50/80'}`}>
                         <td className="px-8 py-5">
                           <div className="flex items-center gap-4">
-                            <div className={`w-11 h-11 rounded-2xl flex items-center justify-center border shadow-sm
+                            <div className={`w-11 h-11 rounded-lg flex items-center justify-center border shadow-sm
                               ${isDeposit 
                                 ? isDark ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' : 'bg-emerald-50 border-emerald-100 text-[#005645]' 
-                                : isDark ? 'bg-white/5 border-white/10 text-white/60' : 'bg-slate-50 border-slate-200 text-slate-600'}`}>
+                                : isDark ? 'bg-white/5 border-white/10 text-white/60' : 'bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-600 dark:text-white/60'}`}>
                               {isDeposit ? <ArrowDownLeft className="w-5 h-5" /> : <ArrowUpRight className="w-5 h-5" />}
                             </div>
                             <div>
-                              <p className={`font-extrabold capitalize flex items-center gap-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                              <p className={`font-extrabold capitalize flex items-center gap-2 ${isDark ? 'text-white' : 'text-slate-900 dark:text-white'}`}>
                                 {tx.type} 
-                                <span className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded ${isDark ? 'bg-white/10 text-white/50' : 'bg-slate-100 text-slate-400'}`}>#{txId}</span>
+                                <span className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded ${isDark ? 'bg-white/10 text-white/50' : 'bg-slate-100 text-slate-400 dark:text-white/40'}`}>#{txId}</span>
                               </p>
-                              <p className={`text-xs font-semibold ${isDark ? 'text-white/40' : 'text-slate-400'}`}>{tx.method || 'Platform Transfer'}</p>
+                              <p className={`text-xs font-semibold ${isDark ? 'text-white/40' : 'text-slate-400 dark:text-white/40'}`}>{tx.method || 'Platform Transfer'}</p>
                             </div>
                           </div>
                         </td>
                         <td className="px-6 py-5">
-                          <p className={`font-semibold ${isDark ? 'text-white/80' : 'text-slate-700'}`}>
+                          <p className={`font-semibold ${isDark ? 'text-white/80' : 'text-slate-700 dark:text-white/80'}`}>
                             {new Date(tx.createdAt || tx.date || Date.now()).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
                           </p>
-                          <p className={`text-xs font-semibold mt-0.5 ${isDark ? 'text-white/40' : 'text-slate-400'}`}>
+                          <p className={`text-xs font-semibold mt-0.5 ${isDark ? 'text-white/40' : 'text-slate-400 dark:text-white/40'}`}>
                             {new Date(tx.createdAt || tx.date || Date.now()).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
                           </p>
                         </td>
                         <td className="px-6 py-5">
-                          <span className={`font-extrabold text-lg ${isDeposit ? (isDark ? 'text-emerald-400' : 'text-[#005645]') : (isDark ? 'text-white' : 'text-slate-900')}`}>
+                          <span className={`font-extrabold text-lg ${isDeposit ? (isDark ? 'text-emerald-400' : 'text-[#005645]') : (isDark ? 'text-white' : 'text-slate-900 dark:text-white')}`}>
                             {isDeposit ? '+' : '-'}{formatCurrency(tx.amount)}
                           </span>
                         </td>
@@ -207,30 +207,30 @@ export default function Wallet() {
                     <div key={tx.id} className="p-4 sm:p-5 flex flex-col gap-4">
                       <div className="flex items-start justify-between">
                         <div className="flex items-center gap-3">
-                          <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border shadow-sm
-                              ${isDeposit ? 'bg-emerald-50 border-emerald-100 text-[#005645]' : 'bg-slate-50 border-slate-200 text-slate-600'}`}>
+                          <div className={`w-12 h-12 rounded-lg flex items-center justify-center border shadow-sm
+                              ${isDeposit ? 'bg-emerald-50 border-emerald-100 text-[#005645]' : 'bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-600 dark:text-white/60'}`}>
                             {isDeposit ? <ArrowDownLeft className="w-5 h-5" /> : <ArrowUpRight className="w-5 h-5" />}
                           </div>
                           <div>
-                            <p className="font-extrabold text-slate-900 capitalize leading-tight">{tx.type}</p>
-                            <p className="text-xs text-slate-400 font-semibold mt-0.5">{tx.method || 'Platform Transfer'}</p>
+                            <p className="font-extrabold text-slate-900 dark:text-white capitalize leading-tight">{tx.type}</p>
+                            <p className="text-xs text-slate-400 dark:text-white/40 font-semibold mt-0.5">{tx.method || 'Platform Transfer'}</p>
                           </div>
                         </div>
-                        <span className={`font-extrabold text-lg ${isDeposit ? 'text-[#005645]' : 'text-slate-900'}`}>
+                        <span className={`font-extrabold text-lg ${isDeposit ? 'text-[#005645]' : 'text-slate-900 dark:text-white'}`}>
                           {isDeposit ? '+' : '-'}{formatCurrency(tx.amount)}
                         </span>
                       </div>
                       
-                      <div className="flex items-center justify-between bg-slate-50 p-3 rounded-xl border border-slate-100">
+                      <div className="flex items-center justify-between bg-slate-50 dark:bg-white/5 p-3 rounded-xl border border-slate-100 dark:border-white/5">
                         <div>
-                          <p className="text-[10px] font-bold text-slate-400 uppercase">Date</p>
-                          <p className="text-xs font-bold text-slate-700 mt-0.5">
+                          <p className="text-[10px] font-bold text-slate-400 dark:text-white/40 uppercase">Date</p>
+                          <p className="text-xs font-bold text-slate-700 dark:text-white/80 mt-0.5">
                             {new Date(tx.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                           </p>
                         </div>
                         <div>
-                          <p className="text-[10px] font-bold text-slate-400 uppercase">TxID</p>
-                          <p className="text-xs font-mono font-bold text-slate-500 mt-0.5">#{txId}</p>
+                          <p className="text-[10px] font-bold text-slate-400 dark:text-white/40 uppercase">TxID</p>
+                          <p className="text-xs font-mono font-bold text-slate-500 dark:text-white/50 mt-0.5">#{txId}</p>
                         </div>
                         <div className="text-right">
                           <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-md border text-[10px] font-extrabold uppercase tracking-wide ${meta.pill}`}>

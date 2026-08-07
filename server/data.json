@@ -5,224 +5,1812 @@
       "name": "Demo Operator",
       "email": "demo@mirrormarket.net",
       "password": "password123",
-      "balance": 12450,
-      "createdAt": "2026-08-02T07:25:41.597Z"
-    },
-    {
-      "id": "usr_msbh9olf",
-      "name": "i7tiug",
-      "email": "gotit1688@proton.me",
-      "password": "jbcdu89",
-      "balance": 5000,
-      "createdAt": "2026-08-02T07:27:28.707Z"
-    },
-    {
-      "id": "usr_msfcun4d",
-      "name": "hewffkfw",
-      "email": "Doreensun79@gmail.com",
-      "password": "hfgoh3",
-      "balance": 5000,
-      "createdAt": "2026-08-05T00:34:53.197Z"
+      "balance": 12451.138512731386,
+      "createdAt": "2026-08-07T07:21:57.031Z"
     }
   ],
   "marketers": [
     {
       "id": "m1",
-      "name": "Sarah Chen",
-      "niche": "Parenting & E-Commerce",
-      "revenue": 4850000,
-      "monthlyReturn": 22.4,
-      "followers": 142000,
+      "name": "Pat Flynn",
+      "avatar": "https://randomuser.me/api/portraits/women/95.jpg",
+      "niche": "Passive Income & Affiliate",
+      "revenue": 15000000,
+      "monthlyReturn": 25,
+      "followers": 500000,
       "rating": 4.9,
-      "minDeposit": 500,
+      "minDeposit": 1000,
       "winRate": 88,
-      "totalTrades": 3420,
-      "profitFactor": 2.85,
-      "sharpeRatio": 2.14,
-      "maxDrawdown": 6.2,
-      "yearsExperience": 7,
+      "totalTrades": 5000,
+      "profitFactor": 3,
+      "sharpeRatio": 2,
+      "maxDrawdown": 5,
+      "yearsExperience": 15,
       "verified": true,
       "premium": true,
-      "location": "Austin, TX",
-      "joinedDate": "2021-03-15",
-      "bio": "Pioneer in mompreneur affiliate portfolios and digital guide sales. Earning 6-figures consistently for 5+ years.",
-      "strategy": "Diversified high-converting affiliate funnels with email automation cycles.",
+      "location": "USA",
+      "joinedDate": "2019-01-15",
+      "bio": "Professional affiliate marketer and digital entrepreneur.",
+      "strategy": "Advanced traffic generation and conversion optimization.",
       "growth": [
-        100,
-        115,
-        128,
-        142,
-        160,
-        185,
-        210,
-        245,
-        290,
-        340,
-        410,
-        485
+        {
+          "date": "Jan",
+          "open": 120,
+          "high": 145,
+          "low": 115,
+          "close": 140,
+          "volume": 45000
+        },
+        {
+          "date": "Feb",
+          "open": 140,
+          "high": 168,
+          "low": 135,
+          "close": 165,
+          "volume": 52000
+        },
+        {
+          "date": "Mar",
+          "open": 165,
+          "high": 195,
+          "low": 160,
+          "close": 190,
+          "volume": 61000
+        },
+        {
+          "date": "Apr",
+          "open": 190,
+          "high": 235,
+          "low": 185,
+          "close": 225,
+          "volume": 74000
+        },
+        {
+          "date": "May",
+          "open": 225,
+          "high": 280,
+          "low": 220,
+          "close": 270,
+          "volume": 88000
+        },
+        {
+          "date": "Jun",
+          "open": 270,
+          "high": 340,
+          "low": 265,
+          "close": 330,
+          "volume": 105000
+        },
+        {
+          "date": "Jul",
+          "open": 330,
+          "high": 410,
+          "low": 320,
+          "close": 395,
+          "volume": 124000
+        },
+        {
+          "date": "Aug",
+          "open": 395,
+          "high": 485,
+          "low": 390,
+          "close": 485,
+          "volume": 142000
+        }
       ]
     },
     {
       "id": "m2",
-      "name": "Marcus Johnson",
-      "niche": "Tech & SaaS Subscriptions",
-      "revenue": 3200000,
-      "monthlyReturn": 18.2,
-      "followers": 98000,
-      "rating": 4.8,
+      "name": "Charles Ngo",
+      "avatar": "https://randomuser.me/api/portraits/women/90.jpg",
+      "niche": "Performance Affiliate Marketing",
+      "revenue": 14500000,
+      "monthlyReturn": 24.8,
+      "followers": 480000,
+      "rating": 4.9,
       "minDeposit": 1000,
-      "winRate": 84,
-      "totalTrades": 2150,
-      "profitFactor": 2.42,
-      "sharpeRatio": 1.95,
-      "maxDrawdown": 8.5,
-      "yearsExperience": 5,
+      "winRate": 88,
+      "totalTrades": 5000,
+      "profitFactor": 3,
+      "sharpeRatio": 2,
+      "maxDrawdown": 5,
+      "yearsExperience": 15,
       "verified": true,
-      "premium": false,
-      "location": "Seattle, WA",
-      "joinedDate": "2022-01-10",
-      "bio": "Software engineer turned full-time affiliate marketer specializing in B2B SaaS tool recommendations.",
-      "strategy": "SEO-driven comparative reviews and high-retention recurring commission models.",
+      "premium": true,
+      "location": "USA",
+      "joinedDate": "2019-01-15",
+      "bio": "Professional affiliate marketer and digital entrepreneur.",
+      "strategy": "Advanced traffic generation and conversion optimization.",
       "growth": [
-        100,
-        110,
-        122,
-        135,
-        150,
-        172,
-        195,
-        220,
-        255,
-        285,
-        305,
-        320
+        {
+          "date": "Jan",
+          "open": 120,
+          "high": 145,
+          "low": 115,
+          "close": 140,
+          "volume": 45000
+        },
+        {
+          "date": "Feb",
+          "open": 140,
+          "high": 168,
+          "low": 135,
+          "close": 165,
+          "volume": 52000
+        },
+        {
+          "date": "Mar",
+          "open": 165,
+          "high": 195,
+          "low": 160,
+          "close": 190,
+          "volume": 61000
+        },
+        {
+          "date": "Apr",
+          "open": 190,
+          "high": 235,
+          "low": 185,
+          "close": 225,
+          "volume": 74000
+        },
+        {
+          "date": "May",
+          "open": 225,
+          "high": 280,
+          "low": 220,
+          "close": 270,
+          "volume": 88000
+        },
+        {
+          "date": "Jun",
+          "open": 270,
+          "high": 340,
+          "low": 265,
+          "close": 330,
+          "volume": 105000
+        },
+        {
+          "date": "Jul",
+          "open": 330,
+          "high": 410,
+          "low": 320,
+          "close": 395,
+          "volume": 124000
+        },
+        {
+          "date": "Aug",
+          "open": 395,
+          "high": 485,
+          "low": 390,
+          "close": 485,
+          "volume": 142000
+        }
       ]
     },
     {
       "id": "m3",
-      "name": "Elena Rodriguez",
-      "niche": "Fitness & Digital Wellness",
-      "revenue": 2950000,
-      "monthlyReturn": 20.8,
-      "followers": 210000,
+      "name": "Neil Patel",
+      "avatar": "https://randomuser.me/api/portraits/women/51.jpg",
+      "niche": "Digital Marketing & SEO",
+      "revenue": 14000000,
+      "monthlyReturn": 24.6,
+      "followers": 460000,
       "rating": 4.9,
-      "minDeposit": 500,
-      "winRate": 86,
-      "totalTrades": 4100,
-      "profitFactor": 2.65,
-      "sharpeRatio": 2.05,
-      "maxDrawdown": 7.1,
-      "yearsExperience": 6,
+      "minDeposit": 1000,
+      "winRate": 88,
+      "totalTrades": 5000,
+      "profitFactor": 3,
+      "sharpeRatio": 2,
+      "maxDrawdown": 5,
+      "yearsExperience": 15,
       "verified": true,
       "premium": true,
-      "location": "Miami, FL",
-      "joinedDate": "2020-08-22",
-      "bio": "Wellness creator scaling high-ticket supplement and digital training course affiliate offers.",
-      "strategy": "Short-form video funnel matching with instant bonus digital downloads.",
+      "location": "USA",
+      "joinedDate": "2019-01-15",
+      "bio": "Professional affiliate marketer and digital entrepreneur.",
+      "strategy": "Advanced traffic generation and conversion optimization.",
       "growth": [
-        100,
-        112,
-        125,
-        140,
-        158,
-        180,
-        205,
-        230,
-        260,
-        275,
-        288,
-        295
+        {
+          "date": "Jan",
+          "open": 120,
+          "high": 145,
+          "low": 115,
+          "close": 140,
+          "volume": 45000
+        },
+        {
+          "date": "Feb",
+          "open": 140,
+          "high": 168,
+          "low": 135,
+          "close": 165,
+          "volume": 52000
+        },
+        {
+          "date": "Mar",
+          "open": 165,
+          "high": 195,
+          "low": 160,
+          "close": 190,
+          "volume": 61000
+        },
+        {
+          "date": "Apr",
+          "open": 190,
+          "high": 235,
+          "low": 185,
+          "close": 225,
+          "volume": 74000
+        },
+        {
+          "date": "May",
+          "open": 225,
+          "high": 280,
+          "low": 220,
+          "close": 270,
+          "volume": 88000
+        },
+        {
+          "date": "Jun",
+          "open": 270,
+          "high": 340,
+          "low": 265,
+          "close": 330,
+          "volume": 105000
+        },
+        {
+          "date": "Jul",
+          "open": 330,
+          "high": 410,
+          "low": 320,
+          "close": 395,
+          "volume": 124000
+        },
+        {
+          "date": "Aug",
+          "open": 395,
+          "high": 485,
+          "low": 390,
+          "close": 485,
+          "volume": 142000
+        }
       ]
     },
     {
       "id": "m4",
-      "name": "David Kim",
-      "niche": "Options Strategies & Finance",
-      "revenue": 5120000,
-      "monthlyReturn": 24.5,
-      "followers": 185000,
-      "rating": 5,
-      "minDeposit": 2000,
-      "winRate": 91,
-      "totalTrades": 1890,
-      "profitFactor": 3.12,
-      "sharpeRatio": 2.45,
-      "maxDrawdown": 5.4,
-      "yearsExperience": 9,
+      "name": "Ryan Deiss",
+      "avatar": "https://randomuser.me/api/portraits/men/42.jpg",
+      "niche": "Digital Marketing & Funnels",
+      "revenue": 13500000,
+      "monthlyReturn": 24.4,
+      "followers": 440000,
+      "rating": 4.9,
+      "minDeposit": 1000,
+      "winRate": 88,
+      "totalTrades": 5000,
+      "profitFactor": 3,
+      "sharpeRatio": 2,
+      "maxDrawdown": 5,
+      "yearsExperience": 15,
       "verified": true,
       "premium": true,
-      "location": "Chicago, IL",
-      "joinedDate": "2019-11-04",
-      "bio": "Former quant trader managing systematic covered call and cash-secured put option portfolios.",
-      "strategy": "Delta-neutral option income generation with strict stop-loss rules.",
+      "location": "USA",
+      "joinedDate": "2019-01-15",
+      "bio": "Professional affiliate marketer and digital entrepreneur.",
+      "strategy": "Advanced traffic generation and conversion optimization.",
       "growth": [
-        100,
-        120,
-        145,
-        175,
-        210,
-        250,
-        300,
-        360,
-        420,
-        460,
-        490,
-        512
+        {
+          "date": "Jan",
+          "open": 120,
+          "high": 145,
+          "low": 115,
+          "close": 140,
+          "volume": 45000
+        },
+        {
+          "date": "Feb",
+          "open": 140,
+          "high": 168,
+          "low": 135,
+          "close": 165,
+          "volume": 52000
+        },
+        {
+          "date": "Mar",
+          "open": 165,
+          "high": 195,
+          "low": 160,
+          "close": 190,
+          "volume": 61000
+        },
+        {
+          "date": "Apr",
+          "open": 190,
+          "high": 235,
+          "low": 185,
+          "close": 225,
+          "volume": 74000
+        },
+        {
+          "date": "May",
+          "open": 225,
+          "high": 280,
+          "low": 220,
+          "close": 270,
+          "volume": 88000
+        },
+        {
+          "date": "Jun",
+          "open": 270,
+          "high": 340,
+          "low": 265,
+          "close": 330,
+          "volume": 105000
+        },
+        {
+          "date": "Jul",
+          "open": 330,
+          "high": 410,
+          "low": 320,
+          "close": 395,
+          "volume": 124000
+        },
+        {
+          "date": "Aug",
+          "open": 395,
+          "high": 485,
+          "low": 390,
+          "close": 485,
+          "volume": 142000
+        }
       ]
     },
     {
       "id": "m5",
-      "name": "Patricia Williams",
-      "niche": "Real Estate & Wealth Building",
-      "revenue": 1890000,
-      "monthlyReturn": 15.6,
-      "followers": 74000,
-      "rating": 4.7,
-      "minDeposit": 1500,
-      "winRate": 82,
-      "totalTrades": 950,
-      "profitFactor": 2.2,
-      "sharpeRatio": 1.8,
-      "maxDrawdown": 9.2,
-      "yearsExperience": 8,
+      "name": "Missy Ward",
+      "avatar": "https://randomuser.me/api/portraits/men/43.jpg",
+      "niche": "Affiliate Marketing Events",
+      "revenue": 13000000,
+      "monthlyReturn": 24.2,
+      "followers": 420000,
+      "rating": 4.9,
+      "minDeposit": 1000,
+      "winRate": 88,
+      "totalTrades": 5000,
+      "profitFactor": 3,
+      "sharpeRatio": 2,
+      "maxDrawdown": 5,
+      "yearsExperience": 15,
       "verified": true,
-      "premium": false,
-      "location": "Atlanta, GA",
-      "joinedDate": "2021-06-18",
-      "bio": "Real estate investor creating affiliate channels for property management and REIT platforms.",
-      "strategy": "Long-term equity compounding and REIT dividend referral programs.",
+      "premium": true,
+      "location": "USA",
+      "joinedDate": "2019-01-15",
+      "bio": "Professional affiliate marketer and digital entrepreneur.",
+      "strategy": "Advanced traffic generation and conversion optimization.",
       "growth": [
-        100,
-        108,
-        118,
-        128,
-        140,
-        152,
-        164,
-        175,
-        180,
-        184,
-        187,
-        189
+        {
+          "date": "Jan",
+          "open": 120,
+          "high": 145,
+          "low": 115,
+          "close": 140,
+          "volume": 45000
+        },
+        {
+          "date": "Feb",
+          "open": 140,
+          "high": 168,
+          "low": 135,
+          "close": 165,
+          "volume": 52000
+        },
+        {
+          "date": "Mar",
+          "open": 165,
+          "high": 195,
+          "low": 160,
+          "close": 190,
+          "volume": 61000
+        },
+        {
+          "date": "Apr",
+          "open": 190,
+          "high": 235,
+          "low": 185,
+          "close": 225,
+          "volume": 74000
+        },
+        {
+          "date": "May",
+          "open": 225,
+          "high": 280,
+          "low": 220,
+          "close": 270,
+          "volume": 88000
+        },
+        {
+          "date": "Jun",
+          "open": 270,
+          "high": 340,
+          "low": 265,
+          "close": 330,
+          "volume": 105000
+        },
+        {
+          "date": "Jul",
+          "open": 330,
+          "high": 410,
+          "low": 320,
+          "close": 395,
+          "volume": 124000
+        },
+        {
+          "date": "Aug",
+          "open": 395,
+          "high": 485,
+          "low": 390,
+          "close": 485,
+          "volume": 142000
+        }
+      ]
+    },
+    {
+      "id": "m6",
+      "name": "Shawn Collins",
+      "avatar": "https://randomuser.me/api/portraits/women/34.jpg",
+      "niche": "Bot Traffic & Affiliate",
+      "revenue": 12500000,
+      "monthlyReturn": 24,
+      "followers": 400000,
+      "rating": 4.9,
+      "minDeposit": 1000,
+      "winRate": 88,
+      "totalTrades": 5000,
+      "profitFactor": 3,
+      "sharpeRatio": 2,
+      "maxDrawdown": 5,
+      "yearsExperience": 15,
+      "verified": true,
+      "premium": true,
+      "location": "USA",
+      "joinedDate": "2019-01-15",
+      "bio": "Professional affiliate marketer and digital entrepreneur.",
+      "strategy": "Advanced traffic generation and conversion optimization.",
+      "growth": [
+        {
+          "date": "Jan",
+          "open": 120,
+          "high": 145,
+          "low": 115,
+          "close": 140,
+          "volume": 45000
+        },
+        {
+          "date": "Feb",
+          "open": 140,
+          "high": 168,
+          "low": 135,
+          "close": 165,
+          "volume": 52000
+        },
+        {
+          "date": "Mar",
+          "open": 165,
+          "high": 195,
+          "low": 160,
+          "close": 190,
+          "volume": 61000
+        },
+        {
+          "date": "Apr",
+          "open": 190,
+          "high": 235,
+          "low": 185,
+          "close": 225,
+          "volume": 74000
+        },
+        {
+          "date": "May",
+          "open": 225,
+          "high": 280,
+          "low": 220,
+          "close": 270,
+          "volume": 88000
+        },
+        {
+          "date": "Jun",
+          "open": 270,
+          "high": 340,
+          "low": 265,
+          "close": 330,
+          "volume": 105000
+        },
+        {
+          "date": "Jul",
+          "open": 330,
+          "high": 410,
+          "low": 320,
+          "close": 395,
+          "volume": 124000
+        },
+        {
+          "date": "Aug",
+          "open": 395,
+          "high": 485,
+          "low": 390,
+          "close": 485,
+          "volume": 142000
+        }
+      ]
+    },
+    {
+      "id": "m7",
+      "name": "Rae Hoffman",
+      "avatar": "https://randomuser.me/api/portraits/men/89.jpg",
+      "niche": "SEO Affiliate Marketing",
+      "revenue": 12000000,
+      "monthlyReturn": 23.8,
+      "followers": 380000,
+      "rating": 4.9,
+      "minDeposit": 1000,
+      "winRate": 88,
+      "totalTrades": 5000,
+      "profitFactor": 3,
+      "sharpeRatio": 2,
+      "maxDrawdown": 5,
+      "yearsExperience": 15,
+      "verified": true,
+      "premium": true,
+      "location": "USA",
+      "joinedDate": "2019-01-15",
+      "bio": "Professional affiliate marketer and digital entrepreneur.",
+      "strategy": "Advanced traffic generation and conversion optimization.",
+      "growth": [
+        {
+          "date": "Jan",
+          "open": 120,
+          "high": 145,
+          "low": 115,
+          "close": 140,
+          "volume": 45000
+        },
+        {
+          "date": "Feb",
+          "open": 140,
+          "high": 168,
+          "low": 135,
+          "close": 165,
+          "volume": 52000
+        },
+        {
+          "date": "Mar",
+          "open": 165,
+          "high": 195,
+          "low": 160,
+          "close": 190,
+          "volume": 61000
+        },
+        {
+          "date": "Apr",
+          "open": 190,
+          "high": 235,
+          "low": 185,
+          "close": 225,
+          "volume": 74000
+        },
+        {
+          "date": "May",
+          "open": 225,
+          "high": 280,
+          "low": 220,
+          "close": 270,
+          "volume": 88000
+        },
+        {
+          "date": "Jun",
+          "open": 270,
+          "high": 340,
+          "low": 265,
+          "close": 330,
+          "volume": 105000
+        },
+        {
+          "date": "Jul",
+          "open": 330,
+          "high": 410,
+          "low": 320,
+          "close": 395,
+          "volume": 124000
+        },
+        {
+          "date": "Aug",
+          "open": 395,
+          "high": 485,
+          "low": 390,
+          "close": 485,
+          "volume": 142000
+        }
+      ]
+    },
+    {
+      "id": "m8",
+      "name": "John Chow",
+      "avatar": "https://randomuser.me/api/portraits/women/72.jpg",
+      "niche": "Blogging & Digital Marketing",
+      "revenue": 11500000,
+      "monthlyReturn": 23.6,
+      "followers": 360000,
+      "rating": 4.9,
+      "minDeposit": 1000,
+      "winRate": 88,
+      "totalTrades": 5000,
+      "profitFactor": 3,
+      "sharpeRatio": 2,
+      "maxDrawdown": 5,
+      "yearsExperience": 15,
+      "verified": true,
+      "premium": true,
+      "location": "USA",
+      "joinedDate": "2019-01-15",
+      "bio": "Professional affiliate marketer and digital entrepreneur.",
+      "strategy": "Advanced traffic generation and conversion optimization.",
+      "growth": [
+        {
+          "date": "Jan",
+          "open": 120,
+          "high": 145,
+          "low": 115,
+          "close": 140,
+          "volume": 45000
+        },
+        {
+          "date": "Feb",
+          "open": 140,
+          "high": 168,
+          "low": 135,
+          "close": 165,
+          "volume": 52000
+        },
+        {
+          "date": "Mar",
+          "open": 165,
+          "high": 195,
+          "low": 160,
+          "close": 190,
+          "volume": 61000
+        },
+        {
+          "date": "Apr",
+          "open": 190,
+          "high": 235,
+          "low": 185,
+          "close": 225,
+          "volume": 74000
+        },
+        {
+          "date": "May",
+          "open": 225,
+          "high": 280,
+          "low": 220,
+          "close": 270,
+          "volume": 88000
+        },
+        {
+          "date": "Jun",
+          "open": 270,
+          "high": 340,
+          "low": 265,
+          "close": 330,
+          "volume": 105000
+        },
+        {
+          "date": "Jul",
+          "open": 330,
+          "high": 410,
+          "low": 320,
+          "close": 395,
+          "volume": 124000
+        },
+        {
+          "date": "Aug",
+          "open": 395,
+          "high": 485,
+          "low": 390,
+          "close": 485,
+          "volume": 142000
+        }
+      ]
+    },
+    {
+      "id": "m9",
+      "name": "Miles Beckler",
+      "avatar": "https://randomuser.me/api/portraits/women/58.jpg",
+      "niche": "Digital Marketing & Sales",
+      "revenue": 11000000,
+      "monthlyReturn": 23.4,
+      "followers": 340000,
+      "rating": 4.9,
+      "minDeposit": 1000,
+      "winRate": 88,
+      "totalTrades": 5000,
+      "profitFactor": 3,
+      "sharpeRatio": 2,
+      "maxDrawdown": 5,
+      "yearsExperience": 15,
+      "verified": true,
+      "premium": true,
+      "location": "USA",
+      "joinedDate": "2019-01-15",
+      "bio": "Professional affiliate marketer and digital entrepreneur.",
+      "strategy": "Advanced traffic generation and conversion optimization.",
+      "growth": [
+        {
+          "date": "Jan",
+          "open": 120,
+          "high": 145,
+          "low": 115,
+          "close": 140,
+          "volume": 45000
+        },
+        {
+          "date": "Feb",
+          "open": 140,
+          "high": 168,
+          "low": 135,
+          "close": 165,
+          "volume": 52000
+        },
+        {
+          "date": "Mar",
+          "open": 165,
+          "high": 195,
+          "low": 160,
+          "close": 190,
+          "volume": 61000
+        },
+        {
+          "date": "Apr",
+          "open": 190,
+          "high": 235,
+          "low": 185,
+          "close": 225,
+          "volume": 74000
+        },
+        {
+          "date": "May",
+          "open": 225,
+          "high": 280,
+          "low": 220,
+          "close": 270,
+          "volume": 88000
+        },
+        {
+          "date": "Jun",
+          "open": 270,
+          "high": 340,
+          "low": 265,
+          "close": 330,
+          "volume": 105000
+        },
+        {
+          "date": "Jul",
+          "open": 330,
+          "high": 410,
+          "low": 320,
+          "close": 395,
+          "volume": 124000
+        },
+        {
+          "date": "Aug",
+          "open": 395,
+          "high": 485,
+          "low": 390,
+          "close": 485,
+          "volume": 142000
+        }
+      ]
+    },
+    {
+      "id": "m10",
+      "name": "Spencer Haws",
+      "avatar": "https://randomuser.me/api/portraits/women/80.jpg",
+      "niche": "Niche Sites & Affiliate",
+      "revenue": 10500000,
+      "monthlyReturn": 23.2,
+      "followers": 320000,
+      "rating": 4.9,
+      "minDeposit": 1000,
+      "winRate": 88,
+      "totalTrades": 5000,
+      "profitFactor": 3,
+      "sharpeRatio": 2,
+      "maxDrawdown": 5,
+      "yearsExperience": 15,
+      "verified": true,
+      "premium": true,
+      "location": "USA",
+      "joinedDate": "2019-01-15",
+      "bio": "Professional affiliate marketer and digital entrepreneur.",
+      "strategy": "Advanced traffic generation and conversion optimization.",
+      "growth": [
+        {
+          "date": "Jan",
+          "open": 120,
+          "high": 145,
+          "low": 115,
+          "close": 140,
+          "volume": 45000
+        },
+        {
+          "date": "Feb",
+          "open": 140,
+          "high": 168,
+          "low": 135,
+          "close": 165,
+          "volume": 52000
+        },
+        {
+          "date": "Mar",
+          "open": 165,
+          "high": 195,
+          "low": 160,
+          "close": 190,
+          "volume": 61000
+        },
+        {
+          "date": "Apr",
+          "open": 190,
+          "high": 235,
+          "low": 185,
+          "close": 225,
+          "volume": 74000
+        },
+        {
+          "date": "May",
+          "open": 225,
+          "high": 280,
+          "low": 220,
+          "close": 270,
+          "volume": 88000
+        },
+        {
+          "date": "Jun",
+          "open": 270,
+          "high": 340,
+          "low": 265,
+          "close": 330,
+          "volume": 105000
+        },
+        {
+          "date": "Jul",
+          "open": 330,
+          "high": 410,
+          "low": 320,
+          "close": 395,
+          "volume": 124000
+        },
+        {
+          "date": "Aug",
+          "open": 395,
+          "high": 485,
+          "low": 390,
+          "close": 485,
+          "volume": 142000
+        }
+      ]
+    },
+    {
+      "id": "m11",
+      "name": "Gael Breton",
+      "avatar": "https://randomuser.me/api/portraits/women/65.jpg",
+      "niche": "Authority Sites & Affiliate",
+      "revenue": 10000000,
+      "monthlyReturn": 23,
+      "followers": 300000,
+      "rating": 4.9,
+      "minDeposit": 1000,
+      "winRate": 88,
+      "totalTrades": 5000,
+      "profitFactor": 3,
+      "sharpeRatio": 2,
+      "maxDrawdown": 5,
+      "yearsExperience": 15,
+      "verified": true,
+      "premium": true,
+      "location": "USA",
+      "joinedDate": "2019-01-15",
+      "bio": "Professional affiliate marketer and digital entrepreneur.",
+      "strategy": "Advanced traffic generation and conversion optimization.",
+      "growth": [
+        {
+          "date": "Jan",
+          "open": 120,
+          "high": 145,
+          "low": 115,
+          "close": 140,
+          "volume": 45000
+        },
+        {
+          "date": "Feb",
+          "open": 140,
+          "high": 168,
+          "low": 135,
+          "close": 165,
+          "volume": 52000
+        },
+        {
+          "date": "Mar",
+          "open": 165,
+          "high": 195,
+          "low": 160,
+          "close": 190,
+          "volume": 61000
+        },
+        {
+          "date": "Apr",
+          "open": 190,
+          "high": 235,
+          "low": 185,
+          "close": 225,
+          "volume": 74000
+        },
+        {
+          "date": "May",
+          "open": 225,
+          "high": 280,
+          "low": 220,
+          "close": 270,
+          "volume": 88000
+        },
+        {
+          "date": "Jun",
+          "open": 270,
+          "high": 340,
+          "low": 265,
+          "close": 330,
+          "volume": 105000
+        },
+        {
+          "date": "Jul",
+          "open": 330,
+          "high": 410,
+          "low": 320,
+          "close": 395,
+          "volume": 124000
+        },
+        {
+          "date": "Aug",
+          "open": 395,
+          "high": 485,
+          "low": 390,
+          "close": 485,
+          "volume": 142000
+        }
+      ]
+    },
+    {
+      "id": "m12",
+      "name": "Mark Webster",
+      "avatar": "https://randomuser.me/api/portraits/men/3.jpg",
+      "niche": "Bot Affiliate Marketing",
+      "revenue": 9500000,
+      "monthlyReturn": 22.8,
+      "followers": 280000,
+      "rating": 4.9,
+      "minDeposit": 1000,
+      "winRate": 88,
+      "totalTrades": 5000,
+      "profitFactor": 3,
+      "sharpeRatio": 2,
+      "maxDrawdown": 5,
+      "yearsExperience": 15,
+      "verified": true,
+      "premium": true,
+      "location": "USA",
+      "joinedDate": "2019-01-15",
+      "bio": "Professional affiliate marketer and digital entrepreneur.",
+      "strategy": "Advanced traffic generation and conversion optimization.",
+      "growth": [
+        {
+          "date": "Jan",
+          "open": 120,
+          "high": 145,
+          "low": 115,
+          "close": 140,
+          "volume": 45000
+        },
+        {
+          "date": "Feb",
+          "open": 140,
+          "high": 168,
+          "low": 135,
+          "close": 165,
+          "volume": 52000
+        },
+        {
+          "date": "Mar",
+          "open": 165,
+          "high": 195,
+          "low": 160,
+          "close": 190,
+          "volume": 61000
+        },
+        {
+          "date": "Apr",
+          "open": 190,
+          "high": 235,
+          "low": 185,
+          "close": 225,
+          "volume": 74000
+        },
+        {
+          "date": "May",
+          "open": 225,
+          "high": 280,
+          "low": 220,
+          "close": 270,
+          "volume": 88000
+        },
+        {
+          "date": "Jun",
+          "open": 270,
+          "high": 340,
+          "low": 265,
+          "close": 330,
+          "volume": 105000
+        },
+        {
+          "date": "Jul",
+          "open": 330,
+          "high": 410,
+          "low": 320,
+          "close": 395,
+          "volume": 124000
+        },
+        {
+          "date": "Aug",
+          "open": 395,
+          "high": 485,
+          "low": 390,
+          "close": 485,
+          "volume": 142000
+        }
+      ]
+    },
+    {
+      "id": "m13",
+      "name": "Matt Diggity",
+      "avatar": "https://randomuser.me/api/portraits/men/84.jpg",
+      "niche": "SEO & Bot Strategies",
+      "revenue": 9000000,
+      "monthlyReturn": 22.6,
+      "followers": 260000,
+      "rating": 4.9,
+      "minDeposit": 1000,
+      "winRate": 88,
+      "totalTrades": 5000,
+      "profitFactor": 3,
+      "sharpeRatio": 2,
+      "maxDrawdown": 5,
+      "yearsExperience": 15,
+      "verified": true,
+      "premium": true,
+      "location": "USA",
+      "joinedDate": "2019-01-15",
+      "bio": "Professional affiliate marketer and digital entrepreneur.",
+      "strategy": "Advanced traffic generation and conversion optimization.",
+      "growth": [
+        {
+          "date": "Jan",
+          "open": 120,
+          "high": 145,
+          "low": 115,
+          "close": 140,
+          "volume": 45000
+        },
+        {
+          "date": "Feb",
+          "open": 140,
+          "high": 168,
+          "low": 135,
+          "close": 165,
+          "volume": 52000
+        },
+        {
+          "date": "Mar",
+          "open": 165,
+          "high": 195,
+          "low": 160,
+          "close": 190,
+          "volume": 61000
+        },
+        {
+          "date": "Apr",
+          "open": 190,
+          "high": 235,
+          "low": 185,
+          "close": 225,
+          "volume": 74000
+        },
+        {
+          "date": "May",
+          "open": 225,
+          "high": 280,
+          "low": 220,
+          "close": 270,
+          "volume": 88000
+        },
+        {
+          "date": "Jun",
+          "open": 270,
+          "high": 340,
+          "low": 265,
+          "close": 330,
+          "volume": 105000
+        },
+        {
+          "date": "Jul",
+          "open": 330,
+          "high": 410,
+          "low": 320,
+          "close": 395,
+          "volume": 124000
+        },
+        {
+          "date": "Aug",
+          "open": 395,
+          "high": 485,
+          "low": 390,
+          "close": 485,
+          "volume": 142000
+        }
+      ]
+    },
+    {
+      "id": "m14",
+      "name": "Craig Campbell",
+      "avatar": "https://randomuser.me/api/portraits/women/33.jpg",
+      "niche": "Blackhat SEO & Bot Traffic",
+      "revenue": 8500000,
+      "monthlyReturn": 22.4,
+      "followers": 240000,
+      "rating": 4.9,
+      "minDeposit": 1000,
+      "winRate": 88,
+      "totalTrades": 5000,
+      "profitFactor": 3,
+      "sharpeRatio": 2,
+      "maxDrawdown": 5,
+      "yearsExperience": 15,
+      "verified": true,
+      "premium": true,
+      "location": "USA",
+      "joinedDate": "2019-01-15",
+      "bio": "Professional affiliate marketer and digital entrepreneur.",
+      "strategy": "Advanced traffic generation and conversion optimization.",
+      "growth": [
+        {
+          "date": "Jan",
+          "open": 120,
+          "high": 145,
+          "low": 115,
+          "close": 140,
+          "volume": 45000
+        },
+        {
+          "date": "Feb",
+          "open": 140,
+          "high": 168,
+          "low": 135,
+          "close": 165,
+          "volume": 52000
+        },
+        {
+          "date": "Mar",
+          "open": 165,
+          "high": 195,
+          "low": 160,
+          "close": 190,
+          "volume": 61000
+        },
+        {
+          "date": "Apr",
+          "open": 190,
+          "high": 235,
+          "low": 185,
+          "close": 225,
+          "volume": 74000
+        },
+        {
+          "date": "May",
+          "open": 225,
+          "high": 280,
+          "low": 220,
+          "close": 270,
+          "volume": 88000
+        },
+        {
+          "date": "Jun",
+          "open": 270,
+          "high": 340,
+          "low": 265,
+          "close": 330,
+          "volume": 105000
+        },
+        {
+          "date": "Jul",
+          "open": 330,
+          "high": 410,
+          "low": 320,
+          "close": 395,
+          "volume": 124000
+        },
+        {
+          "date": "Aug",
+          "open": 395,
+          "high": 485,
+          "low": 390,
+          "close": 485,
+          "volume": 142000
+        }
+      ]
+    },
+    {
+      "id": "m15",
+      "name": "Jon Dykstra",
+      "avatar": "https://randomuser.me/api/portraits/women/80.jpg",
+      "niche": "Display Ads & Affiliate",
+      "revenue": 8000000,
+      "monthlyReturn": 22.2,
+      "followers": 220000,
+      "rating": 4.9,
+      "minDeposit": 1000,
+      "winRate": 88,
+      "totalTrades": 5000,
+      "profitFactor": 3,
+      "sharpeRatio": 2,
+      "maxDrawdown": 5,
+      "yearsExperience": 15,
+      "verified": true,
+      "premium": true,
+      "location": "USA",
+      "joinedDate": "2019-01-15",
+      "bio": "Professional affiliate marketer and digital entrepreneur.",
+      "strategy": "Advanced traffic generation and conversion optimization.",
+      "growth": [
+        {
+          "date": "Jan",
+          "open": 120,
+          "high": 145,
+          "low": 115,
+          "close": 140,
+          "volume": 45000
+        },
+        {
+          "date": "Feb",
+          "open": 140,
+          "high": 168,
+          "low": 135,
+          "close": 165,
+          "volume": 52000
+        },
+        {
+          "date": "Mar",
+          "open": 165,
+          "high": 195,
+          "low": 160,
+          "close": 190,
+          "volume": 61000
+        },
+        {
+          "date": "Apr",
+          "open": 190,
+          "high": 235,
+          "low": 185,
+          "close": 225,
+          "volume": 74000
+        },
+        {
+          "date": "May",
+          "open": 225,
+          "high": 280,
+          "low": 220,
+          "close": 270,
+          "volume": 88000
+        },
+        {
+          "date": "Jun",
+          "open": 270,
+          "high": 340,
+          "low": 265,
+          "close": 330,
+          "volume": 105000
+        },
+        {
+          "date": "Jul",
+          "open": 330,
+          "high": 410,
+          "low": 320,
+          "close": 395,
+          "volume": 124000
+        },
+        {
+          "date": "Aug",
+          "open": 395,
+          "high": 485,
+          "low": 390,
+          "close": 485,
+          "volume": 142000
+        }
+      ]
+    },
+    {
+      "id": "m16",
+      "name": "Doug Cunnington",
+      "avatar": "https://randomuser.me/api/portraits/men/38.jpg",
+      "niche": "Amazon Affiliate Marketing",
+      "revenue": 7500000,
+      "monthlyReturn": 22,
+      "followers": 200000,
+      "rating": 4.9,
+      "minDeposit": 1000,
+      "winRate": 88,
+      "totalTrades": 5000,
+      "profitFactor": 3,
+      "sharpeRatio": 2,
+      "maxDrawdown": 5,
+      "yearsExperience": 15,
+      "verified": true,
+      "premium": true,
+      "location": "USA",
+      "joinedDate": "2019-01-15",
+      "bio": "Professional affiliate marketer and digital entrepreneur.",
+      "strategy": "Advanced traffic generation and conversion optimization.",
+      "growth": [
+        {
+          "date": "Jan",
+          "open": 120,
+          "high": 145,
+          "low": 115,
+          "close": 140,
+          "volume": 45000
+        },
+        {
+          "date": "Feb",
+          "open": 140,
+          "high": 168,
+          "low": 135,
+          "close": 165,
+          "volume": 52000
+        },
+        {
+          "date": "Mar",
+          "open": 165,
+          "high": 195,
+          "low": 160,
+          "close": 190,
+          "volume": 61000
+        },
+        {
+          "date": "Apr",
+          "open": 190,
+          "high": 235,
+          "low": 185,
+          "close": 225,
+          "volume": 74000
+        },
+        {
+          "date": "May",
+          "open": 225,
+          "high": 280,
+          "low": 220,
+          "close": 270,
+          "volume": 88000
+        },
+        {
+          "date": "Jun",
+          "open": 270,
+          "high": 340,
+          "low": 265,
+          "close": 330,
+          "volume": 105000
+        },
+        {
+          "date": "Jul",
+          "open": 330,
+          "high": 410,
+          "low": 320,
+          "close": 395,
+          "volume": 124000
+        },
+        {
+          "date": "Aug",
+          "open": 395,
+          "high": 485,
+          "low": 390,
+          "close": 485,
+          "volume": 142000
+        }
+      ]
+    },
+    {
+      "id": "m17",
+      "name": "Justin Cooke",
+      "avatar": "https://randomuser.me/api/portraits/men/49.jpg",
+      "niche": "Digital Asset Brokering",
+      "revenue": 7000000,
+      "monthlyReturn": 21.8,
+      "followers": 180000,
+      "rating": 4.9,
+      "minDeposit": 1000,
+      "winRate": 88,
+      "totalTrades": 5000,
+      "profitFactor": 3,
+      "sharpeRatio": 2,
+      "maxDrawdown": 5,
+      "yearsExperience": 15,
+      "verified": true,
+      "premium": true,
+      "location": "USA",
+      "joinedDate": "2019-01-15",
+      "bio": "Professional affiliate marketer and digital entrepreneur.",
+      "strategy": "Advanced traffic generation and conversion optimization.",
+      "growth": [
+        {
+          "date": "Jan",
+          "open": 120,
+          "high": 145,
+          "low": 115,
+          "close": 140,
+          "volume": 45000
+        },
+        {
+          "date": "Feb",
+          "open": 140,
+          "high": 168,
+          "low": 135,
+          "close": 165,
+          "volume": 52000
+        },
+        {
+          "date": "Mar",
+          "open": 165,
+          "high": 195,
+          "low": 160,
+          "close": 190,
+          "volume": 61000
+        },
+        {
+          "date": "Apr",
+          "open": 190,
+          "high": 235,
+          "low": 185,
+          "close": 225,
+          "volume": 74000
+        },
+        {
+          "date": "May",
+          "open": 225,
+          "high": 280,
+          "low": 220,
+          "close": 270,
+          "volume": 88000
+        },
+        {
+          "date": "Jun",
+          "open": 270,
+          "high": 340,
+          "low": 265,
+          "close": 330,
+          "volume": 105000
+        },
+        {
+          "date": "Jul",
+          "open": 330,
+          "high": 410,
+          "low": 320,
+          "close": 395,
+          "volume": 124000
+        },
+        {
+          "date": "Aug",
+          "open": 395,
+          "high": 485,
+          "low": 390,
+          "close": 485,
+          "volume": 142000
+        }
+      ]
+    },
+    {
+      "id": "m18",
+      "name": "Joe Valley",
+      "avatar": "https://randomuser.me/api/portraits/women/82.jpg",
+      "niche": "Digital Asset Valuation",
+      "revenue": 6500000,
+      "monthlyReturn": 21.6,
+      "followers": 160000,
+      "rating": 4.9,
+      "minDeposit": 1000,
+      "winRate": 88,
+      "totalTrades": 5000,
+      "profitFactor": 3,
+      "sharpeRatio": 2,
+      "maxDrawdown": 5,
+      "yearsExperience": 15,
+      "verified": true,
+      "premium": true,
+      "location": "USA",
+      "joinedDate": "2019-01-15",
+      "bio": "Professional affiliate marketer and digital entrepreneur.",
+      "strategy": "Advanced traffic generation and conversion optimization.",
+      "growth": [
+        {
+          "date": "Jan",
+          "open": 120,
+          "high": 145,
+          "low": 115,
+          "close": 140,
+          "volume": 45000
+        },
+        {
+          "date": "Feb",
+          "open": 140,
+          "high": 168,
+          "low": 135,
+          "close": 165,
+          "volume": 52000
+        },
+        {
+          "date": "Mar",
+          "open": 165,
+          "high": 195,
+          "low": 160,
+          "close": 190,
+          "volume": 61000
+        },
+        {
+          "date": "Apr",
+          "open": 190,
+          "high": 235,
+          "low": 185,
+          "close": 225,
+          "volume": 74000
+        },
+        {
+          "date": "May",
+          "open": 225,
+          "high": 280,
+          "low": 220,
+          "close": 270,
+          "volume": 88000
+        },
+        {
+          "date": "Jun",
+          "open": 270,
+          "high": 340,
+          "low": 265,
+          "close": 330,
+          "volume": 105000
+        },
+        {
+          "date": "Jul",
+          "open": 330,
+          "high": 410,
+          "low": 320,
+          "close": 395,
+          "volume": 124000
+        },
+        {
+          "date": "Aug",
+          "open": 395,
+          "high": 485,
+          "low": 390,
+          "close": 485,
+          "volume": 142000
+        }
+      ]
+    },
+    {
+      "id": "m19",
+      "name": "Ann Handley",
+      "avatar": "https://randomuser.me/api/portraits/men/74.jpg",
+      "niche": "Content & Affiliate Marketing",
+      "revenue": 6000000,
+      "monthlyReturn": 21.4,
+      "followers": 140000,
+      "rating": 4.9,
+      "minDeposit": 1000,
+      "winRate": 88,
+      "totalTrades": 5000,
+      "profitFactor": 3,
+      "sharpeRatio": 2,
+      "maxDrawdown": 5,
+      "yearsExperience": 15,
+      "verified": true,
+      "premium": true,
+      "location": "USA",
+      "joinedDate": "2019-01-15",
+      "bio": "Professional affiliate marketer and digital entrepreneur.",
+      "strategy": "Advanced traffic generation and conversion optimization.",
+      "growth": [
+        {
+          "date": "Jan",
+          "open": 120,
+          "high": 145,
+          "low": 115,
+          "close": 140,
+          "volume": 45000
+        },
+        {
+          "date": "Feb",
+          "open": 140,
+          "high": 168,
+          "low": 135,
+          "close": 165,
+          "volume": 52000
+        },
+        {
+          "date": "Mar",
+          "open": 165,
+          "high": 195,
+          "low": 160,
+          "close": 190,
+          "volume": 61000
+        },
+        {
+          "date": "Apr",
+          "open": 190,
+          "high": 235,
+          "low": 185,
+          "close": 225,
+          "volume": 74000
+        },
+        {
+          "date": "May",
+          "open": 225,
+          "high": 280,
+          "low": 220,
+          "close": 270,
+          "volume": 88000
+        },
+        {
+          "date": "Jun",
+          "open": 270,
+          "high": 340,
+          "low": 265,
+          "close": 330,
+          "volume": 105000
+        },
+        {
+          "date": "Jul",
+          "open": 330,
+          "high": 410,
+          "low": 320,
+          "close": 395,
+          "volume": 124000
+        },
+        {
+          "date": "Aug",
+          "open": 395,
+          "high": 485,
+          "low": 390,
+          "close": 485,
+          "volume": 142000
+        }
+      ]
+    },
+    {
+      "id": "m20",
+      "name": "Rand Fishkin",
+      "avatar": "https://randomuser.me/api/portraits/women/73.jpg",
+      "niche": "Audience Intelligence",
+      "revenue": 5500000,
+      "monthlyReturn": 21.2,
+      "followers": 120000,
+      "rating": 4.9,
+      "minDeposit": 1000,
+      "winRate": 88,
+      "totalTrades": 5000,
+      "profitFactor": 3,
+      "sharpeRatio": 2,
+      "maxDrawdown": 5,
+      "yearsExperience": 15,
+      "verified": true,
+      "premium": true,
+      "location": "USA",
+      "joinedDate": "2019-01-15",
+      "bio": "Professional affiliate marketer and digital entrepreneur.",
+      "strategy": "Advanced traffic generation and conversion optimization.",
+      "growth": [
+        {
+          "date": "Jan",
+          "open": 120,
+          "high": 145,
+          "low": 115,
+          "close": 140,
+          "volume": 45000
+        },
+        {
+          "date": "Feb",
+          "open": 140,
+          "high": 168,
+          "low": 135,
+          "close": 165,
+          "volume": 52000
+        },
+        {
+          "date": "Mar",
+          "open": 165,
+          "high": 195,
+          "low": 160,
+          "close": 190,
+          "volume": 61000
+        },
+        {
+          "date": "Apr",
+          "open": 190,
+          "high": 235,
+          "low": 185,
+          "close": 225,
+          "volume": 74000
+        },
+        {
+          "date": "May",
+          "open": 225,
+          "high": 280,
+          "low": 220,
+          "close": 270,
+          "volume": 88000
+        },
+        {
+          "date": "Jun",
+          "open": 270,
+          "high": 340,
+          "low": 265,
+          "close": 330,
+          "volume": 105000
+        },
+        {
+          "date": "Jul",
+          "open": 330,
+          "high": 410,
+          "low": 320,
+          "close": 395,
+          "volume": 124000
+        },
+        {
+          "date": "Aug",
+          "open": 395,
+          "high": 485,
+          "low": 390,
+          "close": 485,
+          "volume": 142000
+        }
       ]
     }
   ],
   "mirrored": [
     {
-      "id": "m1",
+      "id": "mir_1",
       "userId": "usr_demo",
       "marketerId": "m1",
-      "multiplier": 1.2,
-      "deposit": 500,
-      "createdAt": "2026-08-02T07:25:41.598Z"
+      "multiplier": 1.5,
+      "stopLoss": 10,
+      "deposit": 1500,
+      "status": "active",
+      "createdAt": "2026-08-07T07:21:57.033Z"
     },
     {
-      "id": "m3",
+      "id": "mir_2",
       "userId": "usr_demo",
       "marketerId": "m3",
       "multiplier": 1,
-      "deposit": 500,
-      "createdAt": "2026-08-02T07:25:41.598Z"
+      "stopLoss": 15,
+      "deposit": 1000,
+      "status": "active",
+      "createdAt": "2026-08-07T07:21:57.033Z"
     }
   ],
   "transactions": [
@@ -232,476 +1820,470 @@
       "type": "deposit",
       "amount": 10000,
       "status": "approved",
-      "createdAt": "2026-07-30T07:25:41.598Z"
+      "method": "Bank Transfer (ACH)",
+      "createdAt": "2026-08-04T07:21:57.033Z"
     },
     {
       "id": "tx_102",
       "userId": "usr_demo",
       "type": "deposit",
-      "amount": 2450,
+      "amount": 4950,
       "status": "approved",
-      "createdAt": "2026-08-01T07:25:41.598Z"
-    },
-    {
-      "id": "tx_msf7ij9l",
-      "userId": "usr-1",
-      "type": "deposit",
-      "amount": 500,
-      "status": "approved",
-      "method": "Standard Transfer",
-      "createdAt": "2026-08-04T22:05:30.249Z"
+      "method": "Instant Card Deposit",
+      "createdAt": "2026-08-06T07:21:57.033Z"
     }
   ],
   "tradeLogs": [
     {
-      "id": "trd_msgwlnnj",
-      "trader": "Elena Rodriguez",
+      "id": "trd_msioidjv",
+      "trader": "Mark Webster",
+      "copier": "Marcus K.",
+      "amount": "$2,400",
+      "returnVal": "+15.2%",
+      "niche": "Bot Affiliate Marketing",
+      "timestamp": "2026-08-07T08:24:34.843Z"
+    },
+    {
+      "id": "trd_msioi9oy",
+      "trader": "Neil Patel",
+      "copier": "Sarah M.",
+      "amount": "$3,200",
+      "returnVal": "+15.8%",
+      "niche": "Digital Marketing & SEO",
+      "timestamp": "2026-08-07T08:24:29.843Z"
+    },
+    {
+      "id": "trd_msioi5tn",
+      "trader": "Justin Cooke",
+      "copier": "Alex P.",
+      "amount": "$1,100",
+      "returnVal": "+18.4%",
+      "niche": "Digital Asset Brokering",
+      "timestamp": "2026-08-07T08:24:24.827Z"
+    },
+    {
+      "id": "trd_msioi1yk",
+      "trader": "Charles Ngo",
+      "copier": "Elena R.",
+      "amount": "$2,000",
+      "returnVal": "+18.3%",
+      "niche": "Performance Affiliate Marketing",
+      "timestamp": "2026-08-07T08:24:19.820Z"
+    },
+    {
+      "id": "trd_msiohy3i",
+      "trader": "Rand Fishkin",
+      "copier": "David T.",
+      "amount": "$4,900",
+      "returnVal": "+18.4%",
+      "niche": "Audience Intelligence",
+      "timestamp": "2026-08-07T08:24:14.814Z"
+    },
+    {
+      "id": "trd_msiohu8l",
+      "trader": "Gael Breton",
+      "copier": "Sarah M.",
+      "amount": "$1,200",
+      "returnVal": "+12.0%",
+      "niche": "Authority Sites & Affiliate",
+      "timestamp": "2026-08-07T08:24:09.813Z"
+    },
+    {
+      "id": "trd_msiohqdm",
+      "trader": "Miles Beckler",
+      "copier": "Marcus K.",
+      "amount": "$1,400",
+      "returnVal": "+15.0%",
+      "niche": "Digital Marketing & Sales",
+      "timestamp": "2026-08-07T08:24:04.810Z"
+    },
+    {
+      "id": "trd_msiohmib",
+      "trader": "Spencer Haws",
+      "copier": "Marcus K.",
+      "amount": "$2,000",
+      "returnVal": "+13.4%",
+      "niche": "Niche Sites & Affiliate",
+      "timestamp": "2026-08-07T08:23:59.795Z"
+    },
+    {
+      "id": "trd_msiohin6",
+      "trader": "Joe Valley",
+      "copier": "Elena R.",
+      "amount": "$3,600",
+      "returnVal": "+18.8%",
+      "niche": "Digital Asset Valuation",
+      "timestamp": "2026-08-07T08:23:54.786Z"
+    },
+    {
+      "id": "trd_msiohery",
+      "trader": "Pat Flynn",
+      "copier": "Jessica W.",
+      "amount": "$4,300",
+      "returnVal": "+18.2%",
+      "niche": "Passive Income & Affiliate",
+      "timestamp": "2026-08-07T08:23:49.774Z"
+    },
+    {
+      "id": "trd_msiohax0",
+      "trader": "Ryan Deiss",
+      "copier": "David T.",
+      "amount": "$1,200",
+      "returnVal": "+14.2%",
+      "niche": "Digital Marketing & Funnels",
+      "timestamp": "2026-08-07T08:23:44.772Z"
+    },
+    {
+      "id": "trd_msioh71w",
+      "trader": "Rae Hoffman",
+      "copier": "Elena R.",
+      "amount": "$600",
+      "returnVal": "+12.4%",
+      "niche": "SEO Affiliate Marketing",
+      "timestamp": "2026-08-07T08:23:39.764Z"
+    },
+    {
+      "id": "trd_msioh36s",
+      "trader": "Neil Patel",
+      "copier": "Marcus K.",
+      "amount": "$700",
+      "returnVal": "+18.4%",
+      "niche": "Digital Marketing & SEO",
+      "timestamp": "2026-08-07T08:23:34.756Z"
+    },
+    {
+      "id": "trd_msiogzbn",
+      "trader": "Miles Beckler",
+      "copier": "Jessica W.",
+      "amount": "$3,800",
+      "returnVal": "+14.5%",
+      "niche": "Digital Marketing & Sales",
+      "timestamp": "2026-08-07T08:23:29.747Z"
+    },
+    {
+      "id": "trd_msiogvgb",
+      "trader": "Ryan Deiss",
+      "copier": "Alex P.",
+      "amount": "$3,800",
+      "returnVal": "+15.1%",
+      "niche": "Digital Marketing & Funnels",
+      "timestamp": "2026-08-07T08:23:24.732Z"
+    },
+    {
+      "id": "trd_msiogrl9",
+      "trader": "Rand Fishkin",
+      "copier": "Jessica W.",
+      "amount": "$2,400",
+      "returnVal": "+15.5%",
+      "niche": "Audience Intelligence",
+      "timestamp": "2026-08-07T08:23:19.726Z"
+    },
+    {
+      "id": "trd_msiognq9",
+      "trader": "Pat Flynn",
+      "copier": "Marcus K.",
+      "amount": "$1,200",
+      "returnVal": "+16.6%",
+      "niche": "Passive Income & Affiliate",
+      "timestamp": "2026-08-07T08:23:14.722Z"
+    },
+    {
+      "id": "trd_msiogjvb",
+      "trader": "Craig Campbell",
       "copier": "Elena R.",
       "amount": "$4,200",
-      "returnVal": "+14.1%",
-      "niche": "Fitness & Digital Wellness",
-      "timestamp": "2026-08-06T02:35:32.479Z"
-    },
-    {
-      "id": "trd_msgwljsl",
-      "trader": "David Kim",
-      "copier": "Jessica W.",
-      "amount": "$3,800",
-      "returnVal": "+17.7%",
-      "niche": "Options Strategies & Finance",
-      "timestamp": "2026-08-06T02:35:27.477Z"
-    },
-    {
-      "id": "trd_msgwlfxf",
-      "trader": "David Kim",
-      "copier": "Alex P.",
-      "amount": "$3,800",
-      "returnVal": "+19.4%",
-      "niche": "Options Strategies & Finance",
-      "timestamp": "2026-08-06T02:35:22.467Z"
-    },
-    {
-      "id": "trd_msgwlc2f",
-      "trader": "Sarah Chen",
-      "copier": "David T.",
-      "amount": "$4,000",
-      "returnVal": "+15.5%",
-      "niche": "Parenting & E-Commerce",
-      "timestamp": "2026-08-06T02:35:17.463Z"
-    },
-    {
-      "id": "trd_msgwl87f",
-      "trader": "David Kim",
-      "copier": "David T.",
-      "amount": "$2,000",
-      "returnVal": "+13.6%",
-      "niche": "Options Strategies & Finance",
-      "timestamp": "2026-08-06T02:35:12.459Z"
-    },
-    {
-      "id": "trd_msgwl4cc",
-      "trader": "Sarah Chen",
-      "copier": "Alex P.",
-      "amount": "$1,500",
-      "returnVal": "+18.7%",
-      "niche": "Parenting & E-Commerce",
-      "timestamp": "2026-08-06T02:35:07.452Z"
-    },
-    {
-      "id": "trd_msgwl0hd",
-      "trader": "Patricia Williams",
-      "copier": "Marcus K.",
-      "amount": "$2,100",
-      "returnVal": "+15.9%",
-      "niche": "Real Estate & Wealth Building",
-      "timestamp": "2026-08-06T02:35:02.449Z"
-    },
-    {
-      "id": "trd_msgwkwm2",
-      "trader": "Marcus Johnson",
-      "copier": "Elena R.",
-      "amount": "$3,700",
-      "returnVal": "+18.4%",
-      "niche": "Tech & SaaS Subscriptions",
-      "timestamp": "2026-08-06T02:34:57.434Z"
-    },
-    {
-      "id": "trd_msgwksr2",
-      "trader": "Patricia Williams",
-      "copier": "Marcus K.",
-      "amount": "$2,600",
-      "returnVal": "+16.4%",
-      "niche": "Real Estate & Wealth Building",
-      "timestamp": "2026-08-06T02:34:52.430Z"
-    },
-    {
-      "id": "trd_msgwkow3",
-      "trader": "Elena Rodriguez",
-      "copier": "Elena R.",
-      "amount": "$3,100",
-      "returnVal": "+19.6%",
-      "niche": "Fitness & Digital Wellness",
-      "timestamp": "2026-08-06T02:34:47.427Z"
-    },
-    {
-      "id": "trd_msgwkl0s",
-      "trader": "Marcus Johnson",
-      "copier": "Marcus K.",
-      "amount": "$1,700",
-      "returnVal": "+18.1%",
-      "niche": "Tech & SaaS Subscriptions",
-      "timestamp": "2026-08-06T02:34:42.412Z"
-    },
-    {
-      "id": "trd_msgwkh5n",
-      "trader": "Patricia Williams",
-      "copier": "Alex P.",
-      "amount": "$600",
-      "returnVal": "+13.4%",
-      "niche": "Real Estate & Wealth Building",
-      "timestamp": "2026-08-06T02:34:37.403Z"
-    },
-    {
-      "id": "trd_msgwkdak",
-      "trader": "Elena Rodriguez",
-      "copier": "David T.",
-      "amount": "$2,500",
-      "returnVal": "+19.6%",
-      "niche": "Fitness & Digital Wellness",
-      "timestamp": "2026-08-06T02:34:32.396Z"
-    },
-    {
-      "id": "trd_msgwk9fl",
-      "trader": "Marcus Johnson",
-      "copier": "Sarah M.",
-      "amount": "$2,200",
-      "returnVal": "+18.1%",
-      "niche": "Tech & SaaS Subscriptions",
-      "timestamp": "2026-08-06T02:34:27.393Z"
-    },
-    {
-      "id": "trd_msgwk5kp",
-      "trader": "David Kim",
-      "copier": "Marcus K.",
-      "amount": "$500",
-      "returnVal": "+15.1%",
-      "niche": "Options Strategies & Finance",
-      "timestamp": "2026-08-06T02:34:22.393Z"
-    },
-    {
-      "id": "trd_msgwk1pn",
-      "trader": "David Kim",
-      "copier": "Marcus K.",
-      "amount": "$4,500",
-      "returnVal": "+16.4%",
-      "niche": "Options Strategies & Finance",
-      "timestamp": "2026-08-06T02:34:17.387Z"
-    },
-    {
-      "id": "trd_msgwjxuq",
-      "trader": "Sarah Chen",
-      "copier": "Marcus K.",
-      "amount": "$1,800",
-      "returnVal": "+16.0%",
-      "niche": "Parenting & E-Commerce",
-      "timestamp": "2026-08-06T02:34:12.386Z"
-    },
-    {
-      "id": "trd_msgwjtzk",
-      "trader": "Marcus Johnson",
-      "copier": "Sarah M.",
-      "amount": "$4,400",
-      "returnVal": "+18.0%",
-      "niche": "Tech & SaaS Subscriptions",
-      "timestamp": "2026-08-06T02:34:07.376Z"
-    },
-    {
-      "id": "trd_msgwjq4n",
-      "trader": "Marcus Johnson",
-      "copier": "David T.",
-      "amount": "$3,400",
-      "returnVal": "+12.7%",
-      "niche": "Tech & SaaS Subscriptions",
-      "timestamp": "2026-08-06T02:34:02.375Z"
-    },
-    {
-      "id": "trd_msgwjm9d",
-      "trader": "Patricia Williams",
-      "copier": "Sarah M.",
-      "amount": "$900",
-      "returnVal": "+16.9%",
-      "niche": "Real Estate & Wealth Building",
-      "timestamp": "2026-08-06T02:33:57.361Z"
-    },
-    {
-      "id": "trd_msgwjie4",
-      "trader": "Sarah Chen",
-      "copier": "Alex P.",
-      "amount": "$3,200",
-      "returnVal": "+13.4%",
-      "niche": "Parenting & E-Commerce",
-      "timestamp": "2026-08-06T02:33:52.348Z"
-    },
-    {
-      "id": "trd_msgwjej4",
-      "trader": "Marcus Johnson",
-      "copier": "Jessica W.",
-      "amount": "$2,800",
-      "returnVal": "+17.3%",
-      "niche": "Tech & SaaS Subscriptions",
-      "timestamp": "2026-08-06T02:33:47.344Z"
-    },
-    {
-      "id": "trd_msgwjanz",
-      "trader": "Sarah Chen",
-      "copier": "Alex P.",
-      "amount": "$1,200",
-      "returnVal": "+12.4%",
-      "niche": "Parenting & E-Commerce",
-      "timestamp": "2026-08-06T02:33:42.336Z"
-    },
-    {
-      "id": "trd_msgwj6st",
-      "trader": "David Kim",
-      "copier": "David T.",
-      "amount": "$2,600",
-      "returnVal": "+18.5%",
-      "niche": "Options Strategies & Finance",
-      "timestamp": "2026-08-06T02:33:37.325Z"
-    },
-    {
-      "id": "trd_msgwj2xj",
-      "trader": "Marcus Johnson",
-      "copier": "David T.",
-      "amount": "$2,200",
       "returnVal": "+19.5%",
-      "niche": "Tech & SaaS Subscriptions",
-      "timestamp": "2026-08-06T02:33:32.312Z"
+      "niche": "Blackhat SEO & Bot Traffic",
+      "timestamp": "2026-08-07T08:23:09.719Z"
     },
     {
-      "id": "trd_msgwiz2l",
-      "trader": "Marcus Johnson",
-      "copier": "David T.",
-      "amount": "$3,800",
-      "returnVal": "+15.0%",
-      "niche": "Tech & SaaS Subscriptions",
-      "timestamp": "2026-08-06T02:33:27.309Z"
-    },
-    {
-      "id": "trd_msgwiv7i",
-      "trader": "Patricia Williams",
-      "copier": "Elena R.",
-      "amount": "$1,200",
-      "returnVal": "+16.9%",
-      "niche": "Real Estate & Wealth Building",
-      "timestamp": "2026-08-06T02:33:22.302Z"
-    },
-    {
-      "id": "trd_msgwirci",
-      "trader": "Sarah Chen",
-      "copier": "Jessica W.",
-      "amount": "$900",
-      "returnVal": "+16.2%",
-      "niche": "Parenting & E-Commerce",
-      "timestamp": "2026-08-06T02:33:17.298Z"
-    },
-    {
-      "id": "trd_msgwinhb",
-      "trader": "Sarah Chen",
-      "copier": "Alex P.",
-      "amount": "$2,200",
-      "returnVal": "+13.9%",
-      "niche": "Parenting & E-Commerce",
-      "timestamp": "2026-08-06T02:33:12.287Z"
-    },
-    {
-      "id": "trd_msgwijm6",
-      "trader": "Marcus Johnson",
-      "copier": "Alex P.",
-      "amount": "$4,300",
-      "returnVal": "+17.0%",
-      "niche": "Tech & SaaS Subscriptions",
-      "timestamp": "2026-08-06T02:33:07.278Z"
-    },
-    {
-      "id": "trd_msgwifr4",
-      "trader": "Elena Rodriguez",
-      "copier": "Jessica W.",
-      "amount": "$4,600",
-      "returnVal": "+15.5%",
-      "niche": "Fitness & Digital Wellness",
-      "timestamp": "2026-08-06T02:33:02.272Z"
-    },
-    {
-      "id": "trd_msgwibw6",
-      "trader": "Sarah Chen",
+      "id": "trd_msiogg0d",
+      "trader": "Matt Diggity",
       "copier": "Marcus K.",
-      "amount": "$1,200",
-      "returnVal": "+15.8%",
-      "niche": "Parenting & E-Commerce",
-      "timestamp": "2026-08-06T02:32:57.270Z"
+      "amount": "$4,700",
+      "returnVal": "+15.0%",
+      "niche": "SEO & Bot Strategies",
+      "timestamp": "2026-08-07T08:23:04.717Z"
     },
     {
-      "id": "trd_msgwi814",
-      "trader": "Patricia Williams",
-      "copier": "Alex P.",
-      "amount": "$1,500",
-      "returnVal": "+18.3%",
-      "niche": "Real Estate & Wealth Building",
-      "timestamp": "2026-08-06T02:32:52.264Z"
-    },
-    {
-      "id": "trd_msgwi460",
-      "trader": "Marcus Johnson",
-      "copier": "David T.",
-      "amount": "$4,800",
-      "returnVal": "+17.6%",
-      "niche": "Tech & SaaS Subscriptions",
-      "timestamp": "2026-08-06T02:32:47.256Z"
-    },
-    {
-      "id": "trd_msgwi0ar",
-      "trader": "Sarah Chen",
-      "copier": "Jessica W.",
-      "amount": "$3,800",
-      "returnVal": "+15.1%",
-      "niche": "Parenting & E-Commerce",
-      "timestamp": "2026-08-06T02:32:42.243Z"
-    },
-    {
-      "id": "trd_msgwhwfo",
-      "trader": "Patricia Williams",
-      "copier": "Alex P.",
-      "amount": "$1,500",
-      "returnVal": "+13.2%",
-      "niche": "Real Estate & Wealth Building",
-      "timestamp": "2026-08-06T02:32:37.236Z"
-    },
-    {
-      "id": "trd_msgwhskc",
-      "trader": "Marcus Johnson",
+      "id": "trd_msiogc54",
+      "trader": "Joe Valley",
       "copier": "Elena R.",
-      "amount": "$1,800",
+      "amount": "$2,600",
       "returnVal": "+16.2%",
-      "niche": "Tech & SaaS Subscriptions",
-      "timestamp": "2026-08-06T02:32:32.220Z"
+      "niche": "Digital Asset Valuation",
+      "timestamp": "2026-08-07T08:22:59.704Z"
     },
     {
-      "id": "trd_msgwhop1",
-      "trader": "Elena Rodriguez",
+      "id": "trd_msiog8a1",
+      "trader": "Gael Breton",
+      "copier": "Jessica W.",
+      "amount": "$4,000",
+      "returnVal": "+19.4%",
+      "niche": "Authority Sites & Affiliate",
+      "timestamp": "2026-08-07T08:22:54.697Z"
+    },
+    {
+      "id": "trd_msiog4eq",
+      "trader": "Ann Handley",
+      "copier": "Alex P.",
+      "amount": "$4,600",
+      "returnVal": "+14.6%",
+      "niche": "Content & Affiliate Marketing",
+      "timestamp": "2026-08-07T08:22:49.682Z"
+    },
+    {
+      "id": "trd_msiog0jl",
+      "trader": "Doug Cunnington",
+      "copier": "Jessica W.",
+      "amount": "$2,400",
+      "returnVal": "+17.9%",
+      "niche": "Amazon Affiliate Marketing",
+      "timestamp": "2026-08-07T08:22:44.673Z"
+    },
+    {
+      "id": "trd_msiofwoi",
+      "trader": "Matt Diggity",
+      "copier": "Jessica W.",
+      "amount": "$4,900",
+      "returnVal": "+15.6%",
+      "niche": "SEO & Bot Strategies",
+      "timestamp": "2026-08-07T08:22:39.666Z"
+    },
+    {
+      "id": "trd_msiofstg",
+      "trader": "Ryan Deiss",
+      "copier": "Alex P.",
+      "amount": "$3,400",
+      "returnVal": "+19.3%",
+      "niche": "Digital Marketing & Funnels",
+      "timestamp": "2026-08-07T08:22:34.660Z"
+    },
+    {
+      "id": "trd_msiofoyj",
+      "trader": "Missy Ward",
       "copier": "David T.",
-      "amount": "$3,300",
-      "returnVal": "+15.7%",
-      "niche": "Fitness & Digital Wellness",
-      "timestamp": "2026-08-06T02:32:27.205Z"
+      "amount": "$4,900",
+      "returnVal": "+16.5%",
+      "niche": "Affiliate Marketing Events",
+      "timestamp": "2026-08-07T08:22:29.659Z"
     },
     {
-      "id": "trd_msgwhku2",
-      "trader": "Patricia Williams",
-      "copier": "David T.",
-      "amount": "$1,500",
-      "returnVal": "+19.1%",
-      "niche": "Real Estate & Wealth Building",
-      "timestamp": "2026-08-06T02:32:22.202Z"
+      "id": "trd_msiofl39",
+      "trader": "Charles Ngo",
+      "copier": "Jessica W.",
+      "amount": "$800",
+      "returnVal": "+15.3%",
+      "niche": "Performance Affiliate Marketing",
+      "timestamp": "2026-08-07T08:22:24.645Z"
     },
     {
-      "id": "trd_msgwhgyy",
-      "trader": "Patricia Williams",
+      "id": "trd_msiofh80",
+      "trader": "Charles Ngo",
       "copier": "David T.",
       "amount": "$4,400",
-      "returnVal": "+15.7%",
-      "niche": "Real Estate & Wealth Building",
-      "timestamp": "2026-08-06T02:32:17.194Z"
+      "returnVal": "+19.6%",
+      "niche": "Performance Affiliate Marketing",
+      "timestamp": "2026-08-07T08:22:19.632Z"
     },
     {
-      "id": "trd_msgwhd3t",
-      "trader": "David Kim",
-      "copier": "Elena R.",
-      "amount": "$2,500",
-      "returnVal": "+13.0%",
-      "niche": "Options Strategies & Finance",
-      "timestamp": "2026-08-06T02:32:12.185Z"
+      "id": "trd_msiofdd4",
+      "trader": "Ann Handley",
+      "copier": "Alex P.",
+      "amount": "$3,300",
+      "returnVal": "+12.7%",
+      "niche": "Content & Affiliate Marketing",
+      "timestamp": "2026-08-07T08:22:14.632Z"
     },
     {
-      "id": "trd_msgwh98p",
-      "trader": "Marcus Johnson",
-      "copier": "Jessica W.",
-      "amount": "$1,700",
-      "returnVal": "+15.4%",
-      "niche": "Tech & SaaS Subscriptions",
-      "timestamp": "2026-08-06T02:32:07.178Z"
-    },
-    {
-      "id": "trd_msgwh5dq",
-      "trader": "Patricia Williams",
-      "copier": "Elena R.",
-      "amount": "$2,000",
-      "returnVal": "+18.0%",
-      "niche": "Real Estate & Wealth Building",
-      "timestamp": "2026-08-06T02:32:02.174Z"
-    },
-    {
-      "id": "trd_msgwh1if",
-      "trader": "Elena Rodriguez",
-      "copier": "David T.",
-      "amount": "$4,000",
-      "returnVal": "+13.1%",
-      "niche": "Fitness & Digital Wellness",
-      "timestamp": "2026-08-06T02:31:57.159Z"
-    },
-    {
-      "id": "trd_msgwgxne",
-      "trader": "Elena Rodriguez",
-      "copier": "David T.",
-      "amount": "$1,400",
-      "returnVal": "+14.6%",
-      "niche": "Fitness & Digital Wellness",
-      "timestamp": "2026-08-06T02:31:52.154Z"
-    },
-    {
-      "id": "trd_msgwgts8",
-      "trader": "Marcus Johnson",
+      "id": "trd_msiof9i3",
+      "trader": "Gael Breton",
       "copier": "Sarah M.",
-      "amount": "$3,400",
-      "returnVal": "+16.2%",
-      "niche": "Tech & SaaS Subscriptions",
-      "timestamp": "2026-08-06T02:31:47.144Z"
+      "amount": "$3,000",
+      "returnVal": "+18.4%",
+      "niche": "Authority Sites & Affiliate",
+      "timestamp": "2026-08-07T08:22:09.627Z"
     },
     {
-      "id": "trd_msgwgpx6",
-      "trader": "Patricia Williams",
-      "copier": "David T.",
-      "amount": "$4,100",
-      "returnVal": "+20.0%",
-      "niche": "Real Estate & Wealth Building",
-      "timestamp": "2026-08-06T02:31:42.138Z"
-    },
-    {
-      "id": "trd_msgwgm26",
-      "trader": "Elena Rodriguez",
-      "copier": "Jessica W.",
-      "amount": "$2,300",
-      "returnVal": "+18.2%",
-      "niche": "Fitness & Digital Wellness",
-      "timestamp": "2026-08-06T02:31:37.134Z"
-    },
-    {
-      "id": "trd_msgwgi6v",
-      "trader": "David Kim",
+      "id": "trd_msiof5my",
+      "trader": "Doug Cunnington",
       "copier": "David T.",
       "amount": "$4,700",
-      "returnVal": "+17.5%",
-      "niche": "Options Strategies & Finance",
-      "timestamp": "2026-08-06T02:31:32.119Z"
+      "returnVal": "+18.5%",
+      "niche": "Amazon Affiliate Marketing",
+      "timestamp": "2026-08-07T08:22:04.618Z"
     },
     {
-      "id": "trd_msgwgebq",
-      "trader": "Patricia Williams",
+      "id": "trd_msiof1rq",
+      "trader": "Justin Cooke",
+      "copier": "David T.",
+      "amount": "$3,100",
+      "returnVal": "+15.5%",
+      "niche": "Digital Asset Brokering",
+      "timestamp": "2026-08-07T08:21:59.606Z"
+    },
+    {
+      "id": "trd_msioexws",
+      "trader": "Rae Hoffman",
+      "copier": "Elena R.",
+      "amount": "$2,600",
+      "returnVal": "+16.2%",
+      "niche": "SEO Affiliate Marketing",
+      "timestamp": "2026-08-07T08:21:54.604Z"
+    },
+    {
+      "id": "trd_msioeu1v",
+      "trader": "Mark Webster",
+      "copier": "Marcus K.",
+      "amount": "$2,300",
+      "returnVal": "+15.7%",
+      "niche": "Bot Affiliate Marketing",
+      "timestamp": "2026-08-07T08:21:49.604Z"
+    },
+    {
+      "id": "trd_msioeq6q",
+      "trader": "Ryan Deiss",
+      "copier": "Sarah M.",
+      "amount": "$3,900",
+      "returnVal": "+18.8%",
+      "niche": "Digital Marketing & Funnels",
+      "timestamp": "2026-08-07T08:21:44.594Z"
+    },
+    {
+      "id": "trd_msioembr",
+      "trader": "Spencer Haws",
+      "copier": "Jessica W.",
+      "amount": "$2,700",
+      "returnVal": "+16.7%",
+      "niche": "Niche Sites & Affiliate",
+      "timestamp": "2026-08-07T08:21:39.592Z"
+    },
+    {
+      "id": "trd_msioeign",
+      "trader": "Ann Handley",
+      "copier": "Jessica W.",
+      "amount": "$4,000",
+      "returnVal": "+12.1%",
+      "niche": "Content & Affiliate Marketing",
+      "timestamp": "2026-08-07T08:21:34.583Z"
+    },
+    {
+      "id": "trd_msioeelg",
+      "trader": "Pat Flynn",
       "copier": "Alex P.",
+      "amount": "$2,000",
+      "returnVal": "+19.6%",
+      "niche": "Passive Income & Affiliate",
+      "timestamp": "2026-08-07T08:21:29.572Z"
+    },
+    {
+      "id": "trd_msioeaqc",
+      "trader": "Missy Ward",
+      "copier": "Marcus K.",
+      "amount": "$4,700",
+      "returnVal": "+18.2%",
+      "niche": "Affiliate Marketing Events",
+      "timestamp": "2026-08-07T08:21:24.564Z"
+    },
+    {
+      "id": "trd_msioe6v9",
+      "trader": "Spencer Haws",
+      "copier": "David T.",
+      "amount": "$3,700",
+      "returnVal": "+13.4%",
+      "niche": "Niche Sites & Affiliate",
+      "timestamp": "2026-08-07T08:21:19.557Z"
+    },
+    {
+      "id": "trd_msioe307",
+      "trader": "Pat Flynn",
+      "copier": "Marcus K.",
+      "amount": "$2,700",
+      "returnVal": "+17.2%",
+      "niche": "Passive Income & Affiliate",
+      "timestamp": "2026-08-07T08:21:14.551Z"
+    },
+    {
+      "id": "trd_msiodz53",
+      "trader": "Rand Fishkin",
+      "copier": "Alex P.",
+      "amount": "$1,100",
+      "returnVal": "+19.6%",
+      "niche": "Audience Intelligence",
+      "timestamp": "2026-08-07T08:21:09.543Z"
+    },
+    {
+      "id": "trd_msiodva2",
+      "trader": "Spencer Haws",
+      "copier": "Marcus K.",
+      "amount": "$2,300",
+      "returnVal": "+17.2%",
+      "niche": "Niche Sites & Affiliate",
+      "timestamp": "2026-08-07T08:21:04.538Z"
+    },
+    {
+      "id": "trd_msiodrf4",
+      "trader": "Rand Fishkin",
+      "copier": "Alex P.",
+      "amount": "$700",
+      "returnVal": "+18.9%",
+      "niche": "Audience Intelligence",
+      "timestamp": "2026-08-07T08:20:59.536Z"
+    },
+    {
+      "id": "trd_msiodnjt",
+      "trader": "Ann Handley",
+      "copier": "Sarah M.",
+      "amount": "$2,000",
+      "returnVal": "+13.0%",
+      "niche": "Content & Affiliate Marketing",
+      "timestamp": "2026-08-07T08:20:54.521Z"
+    },
+    {
+      "id": "trd_msiodjoj",
+      "trader": "Gael Breton",
+      "copier": "Sarah M.",
+      "amount": "$800",
+      "returnVal": "+14.2%",
+      "niche": "Authority Sites & Affiliate",
+      "timestamp": "2026-08-07T08:20:49.507Z"
+    },
+    {
+      "id": "trd_msiodfti",
+      "trader": "Miles Beckler",
+      "copier": "David T.",
+      "amount": "$1,600",
+      "returnVal": "+17.7%",
+      "niche": "Digital Marketing & Sales",
+      "timestamp": "2026-08-07T08:20:44.502Z"
+    },
+    {
+      "id": "trd_msiodbyb",
+      "trader": "Justin Cooke",
+      "copier": "Elena R.",
+      "amount": "$2,800",
+      "returnVal": "+17.3%",
+      "niche": "Digital Asset Brokering",
+      "timestamp": "2026-08-07T08:20:39.491Z"
+    },
+    {
+      "id": "trd_msiod83d",
+      "trader": "Gael Breton",
+      "copier": "Elena R.",
+      "amount": "$3,100",
+      "returnVal": "+15.1%",
+      "niche": "Authority Sites & Affiliate",
+      "timestamp": "2026-08-07T08:20:34.489Z"
+    },
+    {
+      "id": "trd_msiod488",
+      "trader": "Jon Dykstra",
+      "copier": "Sarah M.",
       "amount": "$4,500",
-      "returnVal": "+16.4%",
-      "niche": "Real Estate & Wealth Building",
-      "timestamp": "2026-08-06T02:31:27.110Z"
+      "returnVal": "+18.4%",
+      "niche": "Display Ads & Affiliate",
+      "timestamp": "2026-08-07T08:20:29.480Z"
     }
-  ]
+  ],
+  "auditLogs": []
 }

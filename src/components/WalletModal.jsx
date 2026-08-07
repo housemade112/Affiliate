@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext.jsx'
 import { useToast } from '../context/ToastContext.jsx'
+import { api } from '../lib/api.js'
 import { formatCurrency } from '../lib/utils.js'
 import {
   X, CheckCircle2, ArrowDownToLine, ArrowUpFromLine,
@@ -33,14 +34,7 @@ const FilteredIcon = ({ src, filter }) => (
   <img src={src} alt="icon" className="w-7 h-7 object-contain" style={{ filter }} />
 )
 
-// Payment Methods
-const DEPOSIT_METHODS = [
-  { id: 'usdt_trc20', label: 'USDT (TRC-20)', network: 'Tron Network', icon: LOGOS.USDT, address: 'TQnGxxx...USDT_ADDRESS' },
-  { id: 'usdt_erc20', label: 'USDT (ERC-20)', network: 'Ethereum Network', icon: LOGOS.USDT, address: '0xSample...ERC20_ADDRESS' },
-  { id: 'bitcoin',    label: 'Bitcoin (BTC)',  network: 'Bitcoin Network',  icon: LOGOS.BTC, address: 'bc1qSample...BTC_ADDRESS' },
-  { id: 'ethereum',   label: 'Ethereum (ETH)', network: 'Ethereum Mainnet', icon: LOGOS.ETH, address: '0xSample...ETH_ADDRESS' },
-  { id: 'usdc',       label: 'USDC',           network: 'Ethereum Network', icon: LOGOS.USDC, address: '0xSample...USDC_ADDRESS' },
-]
+// DEPOSIT_METHODS is now generated dynamically from adminWallets
 
 const WITHDRAW_METHODS = [
   { id: 'cashapp',    label: 'Cash App',       network: 'USD Transfer',        icon: LOGOS.CASHAPP, filter: 'invert(58%) sepia(86%) saturate(2206%) hue-rotate(92deg) brightness(97%) contrast(106%)' },
@@ -49,7 +43,7 @@ const WITHDRAW_METHODS = [
 ]
 
 export default function WalletModal({ isOpen, onClose, onSuccess, defaultType = 'deposit' }) {
-  const { user, addTransaction } = useAuth()
+  const { user, refreshUser } = useAuth()
   const { addToast } = useToast()
 
   const [type, setType]         = useState(defaultType)
@@ -83,6 +77,12 @@ export default function WalletModal({ isOpen, onClose, onSuccess, defaultType = 
 
   if (!isOpen) return null
 
+  const activeWallets = adminWallets.filter(w => w.active)
+
+  const DEPOSIT_METHODS = [
+    { id: 'crypto', label: 'Cryptocurrency', network: 'Blockchain Transfer', icon: LOGOS.BTC }
+  ]
+
   const methods = type === 'deposit' ? DEPOSIT_METHODS : WITHDRAW_METHODS
 
   const resetAndClose = () => {
@@ -102,18 +102,32 @@ export default function WalletModal({ isOpen, onClose, onSuccess, defaultType = 
     }
 
     setSubmitting(true)
+    let finalAsset = cryptoCoin
+    let finalAddress = address
+    let displayMethodLabel = method.label
+
+    if (type === 'deposit' && method.id === 'crypto') {
+      const selectedWallet = activeWallets.find(w => w.id === cryptoCoin) || activeWallets[0]
+      if (!selectedWallet) { addToast('No active deposit wallets available', 'error'); setSubmitting(false); return }
+      finalAsset = selectedWallet.asset
+      finalAddress = selectedWallet.address
+      displayMethodLabel = selectedWallet.name
+    }
+
     const txLabel = type === 'withdrawal' && method.id === 'crypto' 
       ? `Withdrawal (${cryptoCoin})`
-      : method.label
+      : type === 'deposit' && method.id === 'crypto'
+      ? `Deposit (${finalAsset})`
+      : displayMethodLabel
 
     const res = await api.wallet.transact(
       user?.id,
       type,
       val,
       txLabel,
-      method.asset || cryptoCoin,
+      method.asset || finalAsset,
       txHash,
-      address
+      finalAddress
     )
     setSubmitting(false)
 
@@ -123,6 +137,7 @@ export default function WalletModal({ isOpen, onClose, onSuccess, defaultType = 
       } else {
         addToast(`Withdrawal of ${formatCurrency(val)} submitted! Pending Admin Approval.`, 'info')
       }
+      if (refreshUser) await refreshUser()
       setAmount(''); setAddress(''); setTxHash(''); setStep(1); setMethod(null)
       if (onSuccess) onSuccess(res.transaction)
       onClose()
@@ -132,38 +147,38 @@ export default function WalletModal({ isOpen, onClose, onSuccess, defaultType = 
   }
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm animate-fade-in flex items-center justify-center p-4">
-      <div className="bg-white w-full sm:max-w-lg rounded-t-[32px] sm:rounded-[32px] shadow-2xl relative overflow-hidden max-h-full flex flex-col">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/40 backdrop-blur-sm animate-fade-in flex items-center justify-center p-4">
+      <div className="bg-white text-slate-900 w-full sm:max-w-lg rounded-t-[36px] sm:rounded-[36px] shadow-2xl relative overflow-hidden max-h-full flex flex-col border border-slate-100">
 
         {/* Header */}
         <div className="bg-white border-b border-slate-100 px-6 py-5 flex items-center justify-between z-10">
           <div className="flex items-center gap-3">
             {step === 2 && (
-              <button onClick={() => setStep(1)} className="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center hover:bg-slate-200 transition-colors mr-1">
-                <ChevronRight className="w-4 h-4 text-slate-600 rotate-180" />
+              <button onClick={() => setStep(1)} className="w-9 h-9 rounded-xl bg-slate-50 flex items-center justify-center hover:bg-slate-100 transition-colors border border-slate-100 mr-1">
+                <ChevronRight className="w-4 h-4 text-slate-700 rotate-180" />
               </button>
             )}
-            <div className="w-10 h-10 rounded-xl bg-[#005645] flex items-center justify-center text-[#C3F53C] shadow-md">
+            <div className="w-10 h-10 rounded-lg bg-emerald-50 text-[#005645] flex items-center justify-center shadow-sm border border-emerald-100">
               {type === 'deposit' ? <ArrowDownToLine className="w-5 h-5" /> : <ArrowUpFromLine className="w-5 h-5" />}
             </div>
             <div>
-              <h3 className="font-extrabold text-slate-900 text-lg leading-tight">
-                {step === 1 ? 'Select Method' : type === 'deposit' ? 'Deposit Funds' : 'Withdraw Funds'}
+              <h3 className="font-extrabold text-slate-900 text-base tracking-tight leading-tight">
+                {step === 1 ? 'Select Crypto / Payment' : type === 'deposit' ? 'Deposit Funds' : 'Withdraw Funds'}
               </h3>
             </div>
           </div>
-          <button onClick={resetAndClose} className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center hover:bg-slate-200 transition-colors">
-            <X className="w-4 h-4 text-slate-600" />
+          <button onClick={resetAndClose} className="w-9 h-9 rounded-full bg-slate-50 flex items-center justify-center hover:bg-slate-100 transition-colors border border-slate-100">
+            <X className="w-4 h-4 text-slate-700" />
           </button>
         </div>
 
         <div className="p-6 overflow-y-auto space-y-5">
           {/* Type Toggle */}
-          <div className="flex gap-2 p-1.5 bg-slate-100 border border-slate-200 rounded-2xl">
+          <div className="flex gap-2 p-1.5 bg-slate-50 border border-slate-100 rounded-lg">
             {['deposit', 'withdrawal'].map(t => (
               <button key={t} type="button" onClick={() => { setType(t); setStep(1); setMethod(null) }}
-                className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-extrabold transition-all ${
-                  type === t ? 'bg-white text-slate-900 shadow-sm border border-slate-200/60' : 'text-slate-500 hover:text-slate-900'
+                className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-xs font-extrabold tracking-wide uppercase transition-all ${
+                  type === t ? 'bg-white text-slate-900 shadow-sm border border-slate-200/50' : 'text-slate-700 hover:text-slate-600'
                 }`}>
                 {t === 'deposit' ? <ArrowDownToLine className="w-4 h-4" /> : <ArrowUpFromLine className="w-4 h-4" />}
                 {t === 'deposit' ? 'Deposit' : 'Withdraw'}
@@ -174,38 +189,47 @@ export default function WalletModal({ isOpen, onClose, onSuccess, defaultType = 
           {/* STEP 1: Method Selection */}
           {step === 1 && (
             <div className="space-y-3">
-              <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Choose payment method</p>
-              <div className="space-y-2">
-                {methods.map(m => (
-                  <button key={m.id} type="button"
-                    onClick={() => { setMethod(m); setStep(2) }}
-                    className="w-full flex items-center justify-between p-4 rounded-2xl border-2 border-slate-100 bg-white hover:border-[#005645] hover:bg-emerald-50/50 transition-all group text-left">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm border border-slate-100 bg-white group-hover:border-[#005645]/20 transition-colors">
-                        {m.filter ? (
-                          <FilteredIcon src={m.icon} filter={m.filter} />
-                        ) : (
-                          <img src={m.icon} alt={m.label} className="w-7 h-7 object-contain" />
-                        )}
+              <p className="text-[11px] font-bold text-slate-700 uppercase tracking-widest">Select Asset or Wallet</p>
+              <div className="space-y-2.5">
+                {methods.map((m, idx) => {
+                  return (
+                    <button key={m.id} type="button"
+                      onClick={() => { setMethod(m); setStep(2) }}
+                      className="w-full flex items-center justify-between p-4 rounded-lg border border-slate-100 bg-white hover:bg-slate-50 hover:border-slate-200 transition-all group text-left shadow-sm">
+                      <div className="flex items-center gap-3.5">
+                        <div className="w-11 h-11 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center p-2 group-hover:scale-105 transition-transform">
+                          {m.filter ? (
+                            <FilteredIcon src={m.icon} filter={m.filter} />
+                          ) : (
+                            <img src={m.icon} alt={m.label} className="w-7 h-7 object-contain" />
+                          )}
+                        </div>
+                        <div>
+                          <p className="font-extrabold text-slate-900 text-sm tracking-tight">{m.label}</p>
+                          <p className="text-xs text-slate-700 font-semibold mt-0.5">{m.network}</p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="font-extrabold text-slate-900 text-sm">{m.label}</p>
-                        <p className="text-xs text-slate-400 font-semibold mt-0.5">{m.network}</p>
+
+                      <div className="flex items-center gap-4">
+                        <ChevronRight className="w-5 h-5 text-slate-300 group-hover:text-slate-700 transition-colors" />
                       </div>
-                    </div>
-                    <ChevronRight className="w-5 h-5 text-slate-300 group-hover:text-[#005645] transition-colors" />
-                  </button>
-                ))}
+                    </button>
+                  )
+                })}
               </div>
+
+              <p className="text-[11px] text-slate-700 text-center pt-3 leading-relaxed">
+                A top-up or withdrawal request will be initiated. Once compliance checks are completed by admin, funds reflect instantly.
+              </p>
             </div>
           )}
 
-          {/* STEP 2: Amount + Address */}
+          {/* STEP 2: Amount + Address Form */}
           {step === 2 && method && (
             <form onSubmit={handleSubmit} className="space-y-5 pb-2">
               {/* Selected method display */}
-              <div className="flex items-center gap-3 p-4 bg-emerald-50 border border-emerald-200 rounded-2xl">
-                <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm border border-emerald-100">
+              <div className="flex items-center gap-3 p-4 bg-slate-50 border border-slate-100 rounded-lg">
+                <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center border border-slate-100 shadow-sm">
                   {method.filter ? (
                     <FilteredIcon src={method.icon} filter={method.filter} />
                   ) : (
@@ -214,9 +238,9 @@ export default function WalletModal({ isOpen, onClose, onSuccess, defaultType = 
                 </div>
                 <div>
                   <p className="font-extrabold text-slate-900 text-sm">{method.label}</p>
-                  <p className="text-xs text-slate-500 font-semibold">{method.network}</p>
+                  <p className="text-xs text-slate-700 font-semibold">{method.network}</p>
                 </div>
-                <button type="button" onClick={() => setStep(1)} className="ml-auto text-xs font-bold text-[#005645] bg-[#005645]/10 px-3 py-1.5 rounded-lg hover:bg-[#005645]/20 transition-colors">
+                <button type="button" onClick={() => setStep(1)} className="ml-auto text-xs font-bold text-[#005645] bg-emerald-50 px-3 py-1.5 rounded-lg hover:bg-emerald-100 transition-colors">
                   Change
                 </button>
               </div>
@@ -224,31 +248,63 @@ export default function WalletModal({ isOpen, onClose, onSuccess, defaultType = 
               {/* Deposit wallet address to send to */}
               {type === 'deposit' && (
                 <div className="space-y-4">
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Send to this Admin Address</label>
-                    <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl">
-                      <p className="font-mono text-xs text-slate-900 font-bold break-all">
-                        {adminWallets.find(w => w.asset === method.asset)?.address || method.address}
-                      </p>
-                      <button type="button" onClick={() => { 
-                        const addr = adminWallets.find(w => w.asset === method.asset)?.address || method.address
-                        navigator.clipboard.writeText(addr); 
-                        addToast('Address copied!', 'success') 
-                      }}
-                        className="mt-2 text-xs font-bold text-[#005645] hover:underline">
-                        Copy Deposit Address
-                      </button>
+                  {method.id === 'crypto' && (
+                    <div className="space-y-2">
+                      <label className="text-[11px] font-bold text-slate-700 uppercase tracking-widest">Select Coin</label>
+                      <select 
+                        value={cryptoCoin} 
+                        onChange={(e) => setCryptoCoin(e.target.value)}
+                        className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg text-slate-900 text-sm font-bold focus:outline-none focus:border-emerald-500 transition-all cursor-pointer shadow-sm"
+                      >
+                        {activeWallets.length === 0 ? (
+                           <option value="">No active wallets</option>
+                        ) : (
+                           activeWallets.map(w => (
+                             <option key={w.id} value={w.id}>{w.name} ({w.asset})</option>
+                           ))
+                        )}
+                      </select>
                     </div>
-                    <p className="text-[11px] text-amber-700 font-semibold bg-amber-50 border border-amber-200/60 rounded-xl p-3">
-                      ⚠️ Send only {method.label} to this address. After sending, paste your Transaction Hash below for Admin verification.
-                    </p>
-                  </div>
+                  )}
+
+                  {(() => {
+                    const selectedWallet = method.id === 'crypto' 
+                      ? activeWallets.find(w => w.id === cryptoCoin) || activeWallets[0]
+                      : method
+                    
+                    if (!selectedWallet && method.id === 'crypto') return (
+                      <p className="text-sm text-red-500 p-4">No deposit wallets configured.</p>
+                    )
+
+                    return (
+                      <div className="space-y-4">
+                        <div className="space-y-2">
+                          <label className="text-[11px] font-bold text-slate-700 uppercase tracking-widest">Send to Admin Address</label>
+                          <div className="p-4 bg-slate-50 border border-slate-100 rounded-lg">
+                            <p className="font-mono text-xs text-slate-700 font-bold break-all">
+                              {selectedWallet.address}
+                            </p>
+                            <button type="button" onClick={() => { 
+                              navigator.clipboard.writeText(selectedWallet.address); 
+                              addToast('Address copied!', 'success') 
+                            }}
+                              className="mt-2 text-xs font-extrabold text-[#005645] hover:underline">
+                              Copy Deposit Address
+                            </button>
+                          </div>
+                          <p className="text-[11px] text-amber-700 font-medium bg-amber-50 border border-amber-100 rounded-xl p-3">
+                            ⚠️ Send only {selectedWallet.name || selectedWallet.label} to this address. After sending, paste your TxHash below.
+                          </p>
+                        </div>
+                      </div>
+                    )
+                  })()}
 
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Transaction Hash / Proof (TxHash)</label>
+                    <label className="text-[11px] font-bold text-slate-700 uppercase tracking-widest">TxHash / Proof</label>
                     <input type="text" value={txHash} onChange={e => setTxHash(e.target.value)}
-                      placeholder="Paste your 0x... or transaction hash here"
-                      className="w-full px-4 py-4 bg-slate-50 border-2 border-slate-200 rounded-2xl text-slate-900 text-sm font-mono placeholder-slate-400 focus:outline-none focus:border-[#005645] transition-all"
+                      placeholder="Paste 0x... or transaction hash here"
+                      className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg text-slate-900 text-sm font-mono placeholder-slate-400 focus:outline-none focus:border-emerald-500 transition-all shadow-sm"
                       required />
                   </div>
                 </div>
@@ -259,11 +315,11 @@ export default function WalletModal({ isOpen, onClose, onSuccess, defaultType = 
                 <div className="space-y-4">
                   {method.id === 'crypto' && (
                     <div className="space-y-2">
-                      <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Select Coin</label>
+                      <label className="text-[11px] font-bold text-slate-700 uppercase tracking-widest">Select Coin</label>
                       <select 
                         value={cryptoCoin} 
                         onChange={(e) => setCryptoCoin(e.target.value)}
-                        className="w-full px-4 py-4 bg-slate-50 border-2 border-slate-200 rounded-2xl text-slate-900 text-sm font-bold focus:outline-none focus:border-[#005645] transition-all cursor-pointer"
+                        className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg text-slate-900 text-sm font-bold focus:outline-none focus:border-emerald-500 transition-all cursor-pointer shadow-sm"
                       >
                         <option value="BTC">Bitcoin (BTC)</option>
                         <option value="ETH">Ethereum (ETH)</option>
@@ -274,12 +330,12 @@ export default function WalletModal({ isOpen, onClose, onSuccess, defaultType = 
                   )}
 
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                    <label className="text-[11px] font-bold text-slate-700 uppercase tracking-widest">
                       {method.id === 'cashapp' ? 'Your $Cashtag' : method.id === 'paypal' ? 'Your PayPal Email' : 'Your Wallet Address'}
                     </label>
                     <input type="text" value={address} onChange={e => setAddress(e.target.value)}
                       placeholder={method.id === 'cashapp' ? '$username' : method.id === 'paypal' ? 'email@example.com' : 'Paste address here...'}
-                      className="w-full px-4 py-4 bg-slate-50 border-2 border-slate-200 rounded-2xl text-slate-900 text-sm font-medium placeholder-slate-400 focus:outline-none focus:border-[#005645] transition-all"
+                      className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg text-slate-900 text-sm font-medium placeholder-slate-400 focus:outline-none focus:border-emerald-500 transition-all shadow-sm"
                       required />
                   </div>
                 </div>
@@ -287,14 +343,14 @@ export default function WalletModal({ isOpen, onClose, onSuccess, defaultType = 
 
               {/* Amount */}
               <div className="space-y-2">
-                <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-                  {type === 'deposit' ? 'Amount you are sending (USD)' : 'Amount to withdraw (USD)'}
+                <label className="text-[11px] font-bold text-slate-700 uppercase tracking-widest">
+                  {type === 'deposit' ? 'Amount to send (USD)' : 'Amount to withdraw (USD)'}
                 </label>
                 <div className="relative">
-                  <span className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 text-xl font-extrabold">$</span>
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-700 text-lg font-extrabold">$</span>
                   <input type="number" value={amount} onChange={e => setAmount(e.target.value)}
                     placeholder="0.00" min="0" step="0.01" max={type === 'withdrawal' ? user?.balance : undefined}
-                    className="w-full pl-9 pr-5 py-5 bg-slate-50 border-2 border-slate-200 rounded-2xl text-slate-900 text-2xl font-extrabold placeholder-slate-300 focus:outline-none focus:border-[#005645] transition-all"
+                    className="w-full pl-8 pr-4 py-3 bg-white border border-slate-200 rounded-lg text-slate-900 text-xl font-extrabold placeholder-slate-300 focus:outline-none focus:border-emerald-500 transition-all shadow-sm"
                     required />
                 </div>
                 {type === 'withdrawal' && (
@@ -306,25 +362,25 @@ export default function WalletModal({ isOpen, onClose, onSuccess, defaultType = 
               </div>
 
               {/* Fee info */}
-              <div className="bg-slate-50 border border-slate-100 rounded-2xl p-4 space-y-2 text-xs">
-                <div className="flex justify-between font-semibold text-slate-600">
+              <div className="bg-slate-50 border border-slate-100 rounded-lg p-4 space-y-2 text-xs">
+                <div className="flex justify-between font-semibold text-slate-700">
                   <span>Network Fee</span><span className="text-slate-900 font-bold">$0.00</span>
                 </div>
-                <div className="flex justify-between font-semibold text-slate-600">
+                <div className="flex justify-between font-semibold text-slate-700">
                   <span>Platform Fee</span><span className="text-slate-900 font-bold">0%</span>
                 </div>
-                <div className="flex justify-between font-extrabold text-slate-900 border-t border-slate-200 pt-2">
+                <div className="flex justify-between font-extrabold text-slate-900 border-t border-slate-200/50 pt-2">
                   <span>You {type === 'deposit' ? 'receive' : 'withdraw'}</span>
                   <span className="text-[#005645]">{amount ? formatCurrency(parseFloat(amount)) : '$0'}</span>
                 </div>
               </div>
 
               <button type="submit" disabled={submitting}
-                className="w-full py-4 rounded-2xl bg-[#005645] text-[#C3F53C] font-extrabold text-base shadow-lg hover:bg-[#004235] active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed">
-                {submitting ? 'Processing...' : `Confirm ${type === 'deposit' ? 'Deposit' : 'Withdrawal'}`}
+                className="w-full py-3 rounded-lg btn-lime text-sm shadow-lg disabled:opacity-50 disabled:cursor-not-allowed">
+                {submitting ? 'Processing...' : `Continue`}
               </button>
 
-              <p className="text-center text-xs font-bold text-slate-400 flex items-center justify-center gap-1.5 pt-2 pb-4">
+              <p className="text-center text-xs font-bold text-slate-700 flex items-center justify-center gap-1.5 pt-2 pb-2">
                 🔒 256-bit Encrypted · Funds are SAFU
               </p>
             </form>

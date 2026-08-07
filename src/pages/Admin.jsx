@@ -155,7 +155,7 @@ export default function Admin() {
     }
   }
 
-  const cardStyle = `rounded-[24px] border p-6 ${isDark ? 'bg-[#1A1D21] border-white/5' : 'bg-white border-slate-200/80 shadow-sm'}`
+  const cardStyle = `rounded-xl border p-6 ${isDark ? 'bg-[#1A1D21] border-white/5' : 'bg-white border-slate-200/80 shadow-sm'}`
 
   return (
     <div className="animate-fade-in pb-24 space-y-6 max-w-[1400px] mx-auto">
@@ -185,7 +185,7 @@ export default function Admin() {
               {pendingTxs.length}
             </div>
           </div>
-          <p className={`text-3xl font-black mt-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>{pendingTxs.length}</p>
+          <p className={`text-2xl font-bold mt-3 ${isDark ? 'text-white' : 'text-slate-800'}`}>{pendingTxs.length}</p>
           <span className="text-[11px] font-semibold text-amber-500 mt-1 inline-block">Requires Action</span>
         </div>
 
@@ -194,7 +194,7 @@ export default function Admin() {
             <span className={`text-xs font-bold ${isDark ? 'text-white/40' : 'text-slate-400'}`}>Deposit Wallets</span>
             <Wallet className="w-5 h-5 text-emerald-500" />
           </div>
-          <p className={`text-3xl font-black mt-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>{wallets.length}</p>
+          <p className={`text-2xl font-bold mt-3 ${isDark ? 'text-white' : 'text-slate-800'}`}>{wallets.length}</p>
           <span className="text-[11px] font-semibold text-emerald-500 mt-1 inline-block">Configured Assets</span>
         </div>
 
@@ -203,7 +203,7 @@ export default function Admin() {
             <span className={`text-xs font-bold ${isDark ? 'text-white/40' : 'text-slate-400'}`}>Total Registered Users</span>
             <Users className="w-5 h-5 text-blue-500" />
           </div>
-          <p className={`text-3xl font-black mt-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>{users.length}</p>
+          <p className={`text-2xl font-bold mt-3 ${isDark ? 'text-white' : 'text-slate-800'}`}>{users.length}</p>
           <span className="text-[11px] font-semibold text-blue-500 mt-1 inline-block">Active Platform Accounts</span>
         </div>
 
@@ -212,13 +212,13 @@ export default function Admin() {
             <span className={`text-xs font-bold ${isDark ? 'text-white/40' : 'text-slate-400'}`}>Total System Transactions</span>
             <Clock className="w-5 h-5 text-purple-500" />
           </div>
-          <p className={`text-3xl font-black mt-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>{transactions.length}</p>
+          <p className={`text-2xl font-bold mt-3 ${isDark ? 'text-white' : 'text-slate-800'}`}>{transactions.length}</p>
           <span className="text-[11px] font-semibold text-purple-500 mt-1 inline-block">Audit Logs</span>
         </div>
       </div>
 
       {/* ── TAB NAVIGATION ── */}
-      <div className={`flex flex-wrap items-center gap-2 p-1.5 rounded-2xl w-fit ${isDark ? 'bg-white/5' : 'bg-slate-100 border border-slate-200'}`}>
+      <div className={`flex flex-wrap items-center gap-2 p-1.5 rounded-lg w-fit ${isDark ? 'bg-white/5' : 'bg-slate-100 border border-slate-200'}`}>
         {[
           { id: 'pending', label: `Pending Queue (${pendingTxs.length})` },
           { id: 'copies',  label: 'Active Copies Control' },
@@ -285,7 +285,7 @@ export default function Admin() {
                       <td className="px-6 py-4">
                         <p className={`font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>User #{t.userId}</p>
                       </td>
-                      <td className="px-6 py-4 font-black text-sm text-emerald-400">
+                      <td className="px-6 py-4 font-bold text-sm text-emerald-500">
                         {formatCurrency(t.amount)}
                       </td>
                       <td className="px-6 py-4 font-semibold text-slate-400">
@@ -370,7 +370,7 @@ export default function Admin() {
                       <td className="px-6 py-4 font-bold text-purple-400">
                         {m.marketerId}
                       </td>
-                      <td className="px-6 py-4 font-black text-sm text-emerald-400">
+                      <td className="px-6 py-4 font-bold text-sm text-emerald-500">
                         {formatCurrency(m.deposit)}
                       </td>
                       <td className="px-6 py-4 font-mono text-[11px] text-slate-400">
@@ -422,7 +422,7 @@ export default function Admin() {
 
           <div className="space-y-4">
             {wallets.map((w, index) => (
-              <div key={w.id} className={`p-5 rounded-2xl border ${isDark ? 'bg-white/5 border-white/10' : 'bg-slate-50 border-slate-200'} space-y-3`}>
+              <div key={w.id} className={`p-5 rounded-lg border ${isDark ? 'bg-white/5 border-white/10' : 'bg-slate-50 border-slate-200'} space-y-3`}>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div>
                     <label className="text-[10px] font-bold text-slate-400 uppercase">Wallet Label</label>
@@ -479,7 +479,7 @@ export default function Admin() {
                     <td className="px-6 py-4 font-mono font-bold text-slate-400">#{u.id}</td>
                     <td className={`px-6 py-4 font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>{u.name}</td>
                     <td className="px-6 py-4 text-slate-400">{u.email}</td>
-                    <td className="px-6 py-4 font-black text-sm text-emerald-400">{formatCurrency(u.balance)}</td>
+                    <td className="px-6 py-4 font-bold text-sm text-emerald-500">{formatCurrency(u.balance)}</td>
                     <td className="px-6 py-4">
                       <span className="px-2.5 py-1 rounded-md text-[10px] font-black uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
                         {u.status}
@@ -527,7 +527,7 @@ export default function Admin() {
                     <td className="px-6 py-4 font-mono text-slate-500">{t.id}</td>
                     <td className="px-6 py-4 font-bold capitalize">{t.type}</td>
                     <td className="px-6 py-4">User #{t.userId}</td>
-                    <td className="px-6 py-4 font-black text-emerald-400">{formatCurrency(t.amount)}</td>
+                    <td className="px-6 py-4 font-bold text-emerald-500">{formatCurrency(t.amount)}</td>
                     <td className="px-6 py-4">
                       <span className={`px-2.5 py-1 rounded-md text-[10px] font-black uppercase ${
                         t.status === 'approved' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' :
@@ -549,7 +549,7 @@ export default function Admin() {
       {/* ── DECLINE REASON MODAL ── */}
       {declineTxId && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <form onSubmit={handleDeclineSubmit} className={`w-full max-w-md p-6 rounded-[24px] border shadow-2xl space-y-4 ${isDark ? 'bg-[#1A1D21] border-white/10' : 'bg-white border-slate-200'}`}>
+          <form onSubmit={handleDeclineSubmit} className={`w-full max-w-md p-6 rounded-xl border shadow-2xl space-y-4 ${isDark ? 'bg-[#1A1D21] border-white/10' : 'bg-white border-slate-200'}`}>
             <h3 className={`text-lg font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>Decline Transaction</h3>
             <p className={`text-xs ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Specify reason for declining this request (will be logged):</p>
             <textarea value={declineReason} onChange={e => setDeclineReason(e.target.value)}
@@ -569,7 +569,7 @@ export default function Admin() {
       {/* ── USER BALANCE ADJUST MODAL ── */}
       {adjustUser && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <form onSubmit={handleBalanceSubmit} className={`w-full max-w-md p-6 rounded-[24px] border shadow-2xl space-y-4 ${isDark ? 'bg-[#1A1D21] border-white/10' : 'bg-white border-slate-200'}`}>
+          <form onSubmit={handleBalanceSubmit} className={`w-full max-w-md p-6 rounded-xl border shadow-2xl space-y-4 ${isDark ? 'bg-[#1A1D21] border-white/10' : 'bg-white border-slate-200'}`}>
             <h3 className={`text-lg font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>Override User Balance</h3>
             <p className={`text-xs ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Adjusting balance for <span className="font-bold text-emerald-400">{adjustUser.name}</span></p>
             

@@ -7,7 +7,7 @@ export default function CandlestickChart({ data = [], metrics = {} }) {
 
   if (!data || data.length === 0) {
     return (
-      <div className="h-64 flex items-center justify-center bg-neutral-950/60 rounded-2xl border border-neutral-800">
+      <div className="h-64 flex items-center justify-center bg-neutral-950/60 rounded-lg border border-neutral-800">
         <p className="text-slate-500 text-xs font-mono">No historical time-series data available</p>
       </div>
     )
@@ -41,7 +41,7 @@ export default function CandlestickChart({ data = [], metrics = {} }) {
         </div>
 
         {/* Range Controls */}
-        <div className="flex items-center gap-1.5 bg-neutral-950/60 p-1.5 rounded-2xl border border-neutral-800">
+        <div className="flex items-center gap-1.5 bg-neutral-950/60 p-1.5 rounded-lg border border-neutral-800">
           {['1D', '1W', '1M', '3M', '1Y', 'ALL'].map((r) => (
             <button
               key={r}
@@ -93,19 +93,19 @@ export default function CandlestickChart({ data = [], metrics = {} }) {
 
       {/* Numerical Metrics Strip */}
       <div className="grid grid-cols-4 gap-3 pt-2 font-mono text-center">
-        <div className="p-3 bg-neutral-950/60 border border-neutral-800 rounded-2xl">
+        <div className="p-3 bg-neutral-950/60 border border-neutral-800 rounded-lg">
           <p className="text-[10px] text-slate-400 uppercase font-sans">WIN RATE</p>
           <p className="text-sm font-bold text-white mt-0.5">{metrics.winRate || 88}%</p>
         </div>
-        <div className="p-3 bg-neutral-950/60 border border-neutral-800 rounded-2xl">
+        <div className="p-3 bg-neutral-950/60 border border-neutral-800 rounded-lg">
           <p className="text-[10px] text-slate-400 uppercase font-sans">PROFIT FACTOR</p>
           <p className="text-sm font-bold text-[#C3F53C] mt-0.5">{metrics.profitFactor || 2.85}</p>
         </div>
-        <div className="p-3 bg-neutral-950/60 border border-neutral-800 rounded-2xl">
+        <div className="p-3 bg-neutral-950/60 border border-neutral-800 rounded-lg">
           <p className="text-[10px] text-slate-400 uppercase font-sans">SHARPE RATIO</p>
           <p className="text-sm font-bold text-white mt-0.5">{metrics.sharpeRatio || 2.14}</p>
         </div>
-        <div className="p-3 bg-neutral-950/60 border border-neutral-800 rounded-2xl">
+        <div className="p-3 bg-neutral-950/60 border border-neutral-800 rounded-lg">
           <p className="text-[10px] text-slate-400 uppercase font-sans">MAX DRAWDOWN</p>
           <p className="text-sm font-bold text-rose-400 mt-0.5">{metrics.maxDrawdown || 6.2}%</p>
         </div>
