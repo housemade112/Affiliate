@@ -61,7 +61,7 @@ export default function Layout() {
     <div className={`h-full flex flex-col w-64 transition-colors ${isDark ? 'bg-[#1A1D21] border-r border-white/5' : 'bg-[#005645] border-r border-emerald-800/40'}`}>
       {/* Logo */}
       <div className="h-20 flex items-center justify-between px-6 border-b border-emerald-800/30">
-        <Link to="/" className="flex items-center gap-2">
+        <Link to="/dashboard" className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-xl bg-[#C3F53C] flex items-center justify-center text-[#005645] font-black text-sm shadow-sm">
             S
           </div>
@@ -269,7 +269,7 @@ export default function Layout() {
         <nav className={`lg:hidden fixed bottom-0 left-0 right-0 z-40 flex items-center justify-around border-t h-16 safe-area-pb ${
           isDark ? 'bg-[#1A1D21]/95 border-white/10 backdrop-blur-xl' : 'bg-white/95 border-slate-200 backdrop-blur-xl shadow-2xl'
         }`}>
-          {NAV_ITEMS.filter(n => ['/dashboard','/marketers','/wallet','/profile'].includes(n.path)).map(item => (
+          {NAV_ITEMS.filter(n => ['/dashboard','/marketers','/leaderboard','/wallet','/profile'].includes(n.path)).map(item => (
             <Link key={item.path} to={item.path}
               className={`flex flex-col items-center gap-1 py-2 px-3 rounded-xl transition-all ${
                 isActive(item.path)

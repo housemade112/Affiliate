@@ -81,7 +81,7 @@ export default function Dashboard() {
     <div className="animate-fade-in pb-24 font-sans space-y-6">
 
       {/* ── TAB SWITCHER ── */}
-      <div className={`flex items-center gap-1 p-1.5 rounded-lg w-fit ${isDark ? 'bg-white/5' : 'bg-white border border-slate-200/80 shadow-sm'}`}>
+      <div className={`hidden md:flex items-center gap-1 p-1.5 rounded-lg w-fit ${isDark ? 'bg-white/5' : 'bg-white border border-slate-200/80 shadow-sm'}`}>
         {TABS.map(tab => (
           <button key={tab.id} onClick={() => setActiveTab(tab.id)}
             className={`px-5 py-2.5 rounded-xl text-sm font-extrabold transition-all ${
