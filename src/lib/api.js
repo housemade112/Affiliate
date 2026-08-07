@@ -5,24 +5,36 @@ const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 export const api = {
   auth: {
     login: async (email, password) => {
-      const res = await fetch(`${API_BASE}/api/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-      })
-      return await res.json()
+      try {
+        const res = await fetch(`${API_BASE}/api/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        })
+        return await res.json()
+      } catch (e) {
+        return { success: false, error: 'Network error - Backend unreachable' }
+      }
     },
     register: async (name, email, password) => {
-      const res = await fetch(`${API_BASE}/api/auth/register`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password })
-      })
-      return await res.json()
+      try {
+        const res = await fetch(`${API_BASE}/api/auth/register`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, password })
+        })
+        return await res.json()
+      } catch (e) {
+        return { success: false, error: 'Network error - Backend unreachable' }
+      }
     },
     me: async (userId) => {
-      const res = await fetch(`${API_BASE}/api/auth/me/${userId}`)
-      return await res.json()
+      try {
+        const res = await fetch(`${API_BASE}/api/auth/me/${userId}`)
+        return await res.json()
+      } catch (e) {
+        return { success: false, error: 'Network error - Backend unreachable' }
+      }
     },
   },
 
@@ -110,25 +122,33 @@ export const api = {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId, type, amount, method, asset, txHash, walletAddress })
       })
-      return await res.json()
+      try {
+        const res = await fetch(`${API_BASE}/api/wallet/transaction`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId, type, amount, method, asset, txHash, walletAddress })
+        })
+        return await res.json()
+      } catch (e) {
+        return { success: false, error: 'Network error - Backend unreachable' }
+      }
     },
   },
 
   admin: {
     login: async (email, password) => {
-      const res = await fetch(`${API_BASE}/api/admin/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-      })
-      if (!res.ok) {
-        const err = await res.json()
-        return { success: false, error: err.error || 'Authentication failed' }
+      try {
+        const res = await fetch(`${API_BASE}/api/admin/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        })
+        return await res.json()
+      } catch (e) {
+        return { success: false, error: 'Network error - Backend unreachable' }
       }
-      return await res.json()
     },
     getTransactions: async () => {
-      const res = await fetch(`${API_BASE}/api/admin/transactions`)
       return await res.json()
     },
     approveTransaction: async (txId) => {
