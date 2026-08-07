@@ -73,7 +73,7 @@ export default function Wallet() {
           </div>
           <div className="relative z-10">
             <h2 className={`text-[13px] font-semibold uppercase tracking-wider ${isDark ? 'text-white/40' : 'text-slate-500 dark:text-white/50'}`}>Available Balance</h2>
-            <p className={`text-3xl font-bold mt-1 ${isDark ? 'text-white' : 'text-slate-700 dark:text-white'}`}>{formatCurrency(user?.balance || 0)}</p>
+            <p className={`text-2xl font-bold mt-1 ${isDark ? 'text-white' : 'text-slate-700 dark:text-white'}`}>{formatCurrency(user?.balance || 0)}</p>
           </div>
           <div className="relative z-10 flex items-center gap-2 text-xs font-bold text-[#005645] dark:text-[#C3F53C]">
             <ShieldCheck className="w-4 h-4" /> Verified & Secured
