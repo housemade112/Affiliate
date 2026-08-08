@@ -241,51 +241,94 @@ export default function Dashboard() {
                     <button onClick={() => setActiveTab('directory')} className="btn-lime text-xs px-6 py-2.5 shadow-sm">Browse Partners</button>
                   </div>
                 ) : (
-                  <table className="w-full text-sm whitespace-nowrap">
-                    <thead className={`border-b text-xs font-bold uppercase tracking-wider ${isDark ? 'bg-white/5 border-white/5 text-white/40' : 'bg-slate-50 border-slate-100 text-slate-600'}`}>
-                      <tr>
-                        <th className="px-8 py-4 text-left">Partner</th>
-                        <th className="px-6 py-4 text-left">Deposited</th>
-                        <th className="px-6 py-4 text-left">Profit</th>
-                        <th className="px-6 py-4 text-right">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody className={`divide-y ${isDark ? 'divide-white/5' : 'divide-slate-50'}`}>
+                  <>
+                    {/* Desktop Table */}
+                    <table className="hidden md:table w-full text-sm whitespace-nowrap">
+                      <thead className={`border-b text-xs font-bold uppercase tracking-wider ${isDark ? 'bg-white/5 border-white/5 text-white/40' : 'bg-slate-50 border-slate-100 text-slate-600'}`}>
+                        <tr>
+                          <th className="px-8 py-4 text-left">Partner</th>
+                          <th className="px-6 py-4 text-left">Deposited</th>
+                          <th className="px-6 py-4 text-left">Profit</th>
+                          <th className="px-6 py-4 text-right">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody className={`divide-y ${isDark ? 'divide-white/5' : 'divide-slate-50'}`}>
+                        {copiedAffiliates.map(a => (
+                          <tr key={a.id} className={`transition-colors group ${isDark ? 'hover:bg-white/5' : 'hover:bg-slate-50'}`}>
+                            <td className="px-8 py-5">
+                              <div className="flex items-center gap-4">
+                                <img src={a.avatar} alt={a.name}
+                                  className="w-11 h-11 rounded-lg object-cover border border-slate-200 shadow-sm"
+                                  onError={e => { e.target.style.display='none' }} />
+                                <div>
+                                  <div className="flex items-center gap-1.5">
+                                    <p className={`font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{a.name}</p>
+                                    {a.verified && <BadgeCheck className="w-4 h-4 text-blue-500" />}
+                                  </div>
+                                  <p className={`text-xs font-medium ${isDark ? 'text-white/40' : 'text-slate-600'}`}>{a.niche}</p>
+                                </div>
+                              </div>
+                            </td>
+                            <td className={`px-6 py-5 font-bold text-base ${isDark ? 'text-white' : 'text-slate-700'}`}>{formatCurrency(a.minDeposit)}</td>
+                            <td className="px-6 py-5">
+                              <span className="inline-flex items-center gap-1.5 text-[#005645] font-bold bg-gradient-to-r from-[#C3F53C] to-[#9EE86F] px-3.5 py-1.5 rounded-xl shadow-sm text-sm">
+                                <ArrowUpRight className="w-4 h-4" />{a.monthlyReturn}%
+                              </span>
+                            </td>
+                            <td className="px-6 py-5 text-right">
+                              <button onClick={() => handleStopCopying(a.id)}
+                                className={`w-9 h-9 flex items-center justify-center rounded-xl transition-colors ${
+                                  isDark ? 'text-rose-400 hover:bg-rose-500/20' : 'text-rose-500 hover:bg-rose-50'
+                                }`}
+                                title="Stop Copying">
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+
+                    {/* Mobile Stacked Cards */}
+                    <div className={`md:hidden flex flex-col divide-y ${isDark ? 'divide-white/5' : 'divide-slate-100'}`}>
                       {copiedAffiliates.map(a => (
-                        <tr key={a.id} className={`transition-colors group ${isDark ? 'hover:bg-white/5' : 'hover:bg-slate-50'}`}>
-                          <td className="px-8 py-5">
-                            <div className="flex items-center gap-4">
+                        <div key={a.id} className={`p-4 flex flex-col gap-4 ${isDark ? 'hover:bg-white/5' : 'hover:bg-slate-50'}`}>
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
                               <img src={a.avatar} alt={a.name}
-                                className="w-11 h-11 rounded-lg object-cover border border-slate-200 shadow-sm"
+                                className="w-10 h-10 rounded-lg object-cover border border-slate-200 shadow-sm"
                                 onError={e => { e.target.style.display='none' }} />
                               <div>
                                 <div className="flex items-center gap-1.5">
-                                  <p className={`font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{a.name}</p>
-                                  {a.verified && <BadgeCheck className="w-4 h-4 text-blue-500" />}
+                                  <p className={`font-bold text-sm ${isDark ? 'text-white' : 'text-slate-900'}`}>{a.name}</p>
+                                  {a.verified && <BadgeCheck className="w-3.5 h-3.5 text-blue-500" />}
                                 </div>
-                                <p className={`text-xs font-medium ${isDark ? 'text-white/40' : 'text-slate-600'}`}>{a.niche}</p>
+                                <p className={`text-[10px] font-medium uppercase tracking-wider ${isDark ? 'text-white/40' : 'text-slate-500'}`}>{a.niche}</p>
                               </div>
                             </div>
-                          </td>
-                          <td className={`px-6 py-5 font-bold text-base ${isDark ? 'text-white' : 'text-slate-700'}`}>{formatCurrency(a.minDeposit)}</td>
-                          <td className="px-6 py-5">
-                            <span className="inline-flex items-center gap-1.5 text-[#005645] font-bold bg-gradient-to-r from-[#C3F53C] to-[#9EE86F] px-3.5 py-1.5 rounded-xl shadow-sm text-sm">
-                              <ArrowUpRight className="w-4 h-4" />{a.monthlyReturn}%
-                            </span>
-                          </td>
-                          <td className="px-6 py-5 text-right">
                             <button onClick={() => handleStopCopying(a.id)}
-                              className={`w-9 h-9 flex items-center justify-center rounded-xl transition-colors ${
-                                isDark ? 'text-rose-400 hover:bg-rose-500/20' : 'text-rose-500 hover:bg-rose-50'
-                              }`}
-                              title="Stop Copying">
+                              className={`p-2 rounded-lg transition-colors ${isDark ? 'text-rose-400 bg-rose-500/10' : 'text-rose-500 bg-rose-50'}`}>
                               <Trash2 className="w-4 h-4" />
                             </button>
-                          </td>
-                        </tr>
+                          </div>
+                          
+                          <div className={`flex items-center justify-between p-3 rounded-xl ${isDark ? 'bg-black/30' : 'bg-slate-50'}`}>
+                            <div>
+                              <p className={`text-[10px] font-bold uppercase tracking-wider ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Deposited</p>
+                              <p className={`font-bold text-sm ${isDark ? 'text-white' : 'text-slate-900'}`}>{formatCurrency(a.minDeposit)}</p>
+                            </div>
+                            <div className="text-right">
+                              <p className={`text-[10px] font-bold uppercase tracking-wider ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Profit</p>
+                              <span className="inline-flex items-center gap-1 text-[#005645] font-extrabold text-xs">
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                                +{a.monthlyReturn}%
+                              </span>
+                            </div>
+                          </div>
+                        </div>
                       ))}
-                    </tbody>
-                  </table>
+                    </div>
+                  </>
                 )}
               </div>
             </div>

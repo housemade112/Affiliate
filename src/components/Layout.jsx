@@ -116,7 +116,7 @@ export default function Layout() {
   )
 
   return (
-    <div className={`min-h-screen flex transition-colors ${isDark ? 'bg-[#111317] text-white' : 'bg-[#EFF2F0] text-slate-900'}`}>
+    <div className={`min-h-[100dvh] flex flex-col lg:flex-row transition-colors overflow-x-hidden ${isDark ? 'bg-[#111317] text-white' : 'bg-[#EFF2F0] text-slate-900'}`}>
 
       {/* ── DESKTOP SIDEBAR ── */}
       <div className="hidden lg:block h-screen fixed left-0 top-0 z-40 shadow-2xl">
@@ -134,7 +134,7 @@ export default function Layout() {
       )}
 
       {/* ── MAIN AREA ── */}
-      <div className="flex-1 lg:ml-64 flex flex-col min-h-screen">
+      <div className="flex-1 lg:ml-64 flex flex-col min-h-[100dvh] w-full overflow-x-hidden">
 
         {/* ── TOP BAR ── */}
         <header className={`sticky top-0 z-30 flex items-center justify-between h-16 px-4 sm:px-8 border-b transition-colors ${
@@ -247,7 +247,7 @@ export default function Layout() {
         </header>
 
         {/* ── PAGE CONTENT ── */}
-        <main className="flex-1 px-4 sm:px-6 lg:px-10 py-6 pb-24 lg:pb-8 max-w-[1400px] mx-auto w-full">
+        <main className="flex-1 w-full max-w-[100vw] lg:max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 py-6 pb-28 lg:pb-8 overflow-x-hidden">
           <Outlet />
         </main>
 
@@ -266,25 +266,30 @@ export default function Layout() {
         </footer>
 
         {/* ── MOBILE BOTTOM NAV ── */}
-        <nav className={`lg:hidden fixed bottom-0 left-0 right-0 z-40 flex items-center justify-around border-t h-16 safe-area-pb ${
-          isDark ? 'bg-[#1A1D21]/95 border-white/10 backdrop-blur-xl' : 'bg-white/95 border-slate-200 backdrop-blur-xl shadow-2xl'
+        <nav className={`lg:hidden fixed bottom-0 left-0 right-0 z-40 flex items-center justify-around border-t h-[72px] pb-safe ${
+          isDark ? 'bg-[#1A1D21]/95 border-white/10 backdrop-blur-2xl' : 'bg-white/95 border-slate-200 backdrop-blur-2xl shadow-[0_-4px_24px_rgba(0,0,0,0.04)]'
         }`}>
-          {NAV_ITEMS.filter(n => ['/dashboard','/marketers','/leaderboard','/wallet','/profile'].includes(n.path)).map(item => (
-            <Link key={item.path} to={item.path}
-              className={`flex flex-col items-center gap-1 py-2 px-3 rounded-xl transition-all ${
-                isActive(item.path)
-                  ? 'text-[#005645]'
-                  : isDark ? 'text-white/40' : 'text-slate-400'
-              }`}>
-              <item.icon className={`w-5 h-5 transition-all ${isActive(item.path) ? 'text-[#005645]' : ''}`} />
-              <span className={`text-[10px] font-semibold ${isActive(item.path) ? 'text-[#005645]' : ''}`}>
-                {item.label}
-              </span>
-              {isActive(item.path) && (
-                <span className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-[#005645]" style={{position:'relative', marginTop:'-6px'}} />
-              )}
-            </Link>
-          ))}
+          {NAV_ITEMS.map(item => {
+            // Keep wallet out of bottom nav if it gets too crowded, or show 5 max. Let's show 5 max.
+            if (item.path === '/leaderboard') return null; // hide leaderboard from bottom nav to save space
+            
+            return (
+              <Link key={item.path} to={item.path}
+                className={`flex flex-col items-center justify-center gap-1 w-16 h-full transition-all active:scale-90 ${
+                  isActive(item.path)
+                    ? 'text-[#005645] dark:text-[#C3F53C]'
+                    : isDark ? 'text-white/40 hover:text-white/80' : 'text-slate-400 hover:text-slate-600'
+                }`}>
+                <item.icon className={`w-5 h-5 transition-transform duration-300 ${isActive(item.path) ? 'scale-110' : ''}`} />
+                <span className="text-[10px] font-bold">
+                  {item.label}
+                </span>
+                {isActive(item.path) && (
+                  <span className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-[#005645] dark:bg-[#C3F53C]" />
+                )}
+              </Link>
+            )
+          })}
         </nav>
       </div>
 

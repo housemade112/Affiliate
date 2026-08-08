@@ -116,7 +116,7 @@ export default function Wallet() {
           </button>
         </div>
 
-        <div className="flex-1 overflow-x-auto">
+        <div className="flex-1 w-full overflow-hidden">
           {txLoading ? (
             <div className="p-6 space-y-4">
               {[1,2,3].map(i => <div key={i} className="h-16 bg-slate-100 rounded-lg animate-pulse" />)}
@@ -195,7 +195,7 @@ export default function Wallet() {
               </div>
 
               {/* Mobile Ledger List */}
-              <div className="md:hidden overflow-x-auto flex flex-col divide-y divide-slate-100">
+              <div className="md:hidden flex flex-col divide-y divide-slate-100 dark:divide-white/5">
                 {transactions.map(tx => {
                   const isDeposit = tx.type === 'deposit' || tx.type === 'profit' || tx.type === 'mirror_deposit'
                   const meta = statusMeta[tx.status] || statusMeta.pending
