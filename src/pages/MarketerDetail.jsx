@@ -8,7 +8,7 @@ import {
   ArrowLeft, Star, CheckCircle2, TrendingUp,
   Users, Shield, Zap, Check, AlertCircle, Package, ArrowUpRight, BadgeCheck
 } from 'lucide-react'
-import MirrorModal from '../components/MirrorModal.jsx'
+import CopyModal from '../components/CopyModal.jsx'
 import { useState, useEffect } from 'react'
 
 export default function MarketerDetail() {
@@ -272,7 +272,7 @@ export default function MarketerDetail() {
       )}
 
       {aff && (
-        <MirrorModal marketer={aff} isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+        <CopyModal marketer={aff} isOpen={modalOpen} onClose={() => setModalOpen(false)} />
       )}
     </div>
   )

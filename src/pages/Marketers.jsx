@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.jsx'
 import { formatCurrency, formatNumber } from '../lib/utils.js'
 import { api } from '../lib/api.js'
-import MirrorModal from '../components/MirrorModal.jsx'
+import CopyModal from '../components/CopyModal.jsx'
 import { 
   Search, Star, CheckCircle2, TrendingUp, Users, DollarSign,
   SlidersHorizontal, ArrowUpRight, ChevronDown, X, BadgeCheck
@@ -222,7 +222,7 @@ export default function Marketers() {
       )}
 
       {modalOpen && targetMarketer && (
-        <MirrorModal
+        <CopyModal
           marketer={targetMarketer}
           isOpen={modalOpen}
           onClose={() => setModalOpen(false)}
