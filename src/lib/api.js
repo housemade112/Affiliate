@@ -1,6 +1,6 @@
 // Removed affiliates.js import
 
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+const API_BASE = import.meta.env.VITE_API_URL || 'https://affiliate-backend-ft4a.onrender.com'
 
 export const api = {
   auth: {
