@@ -86,13 +86,13 @@ export const api = {
     },
   },
 
-  mirror: {
+  copy: {
     list: async (userId) => {
-      const res = await fetch(`${API_BASE}/api/mirror/${userId}`)
+      const res = await fetch(`${API_BASE}/api/copy/${userId}`)
       return await res.json()
     },
-    add: async (userId, marketerId, multiplier, stopLoss, deposit) => {
-      const res = await fetch(`${API_BASE}/api/mirror`, {
+    request: async (userId, marketerId, multiplier, stopLoss, deposit) => {
+      const res = await fetch(`${API_BASE}/api/copy/request`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId, marketerId, multiplier, stopLoss, deposit })
@@ -100,7 +100,7 @@ export const api = {
       return await res.json()
     },
     remove: async (userId, marketerId) => {
-      const res = await fetch(`${API_BASE}/api/mirror/${userId}/${marketerId}`, {
+      const res = await fetch(`${API_BASE}/api/copy/${userId}/${marketerId}`, {
         method: 'DELETE'
       })
       return await res.json()
@@ -149,6 +149,7 @@ export const api = {
       }
     },
     getTransactions: async () => {
+      const res = await fetch(`${API_BASE}/api/admin/transactions`)
       return await res.json()
     },
     approveTransaction: async (txId) => {
@@ -189,24 +190,36 @@ export const api = {
       })
       return await res.json()
     },
-    getMirrors: async () => {
-      const res = await fetch(`${API_BASE}/api/admin/mirrors`)
+    getCopyRequests: async () => {
+      const res = await fetch(`${API_BASE}/api/admin/copy-requests`)
       return await res.json()
     },
-    blockMirror: async (id) => {
-      const res = await fetch(`${API_BASE}/api/admin/mirrors/${id}/block`, { method: 'PATCH' })
+    getActiveCopies: async () => {
+      const res = await fetch(`${API_BASE}/api/admin/copies`)
       return await res.json()
     },
-    approveMirror: async (id) => {
-      const res = await fetch(`${API_BASE}/api/admin/mirrors/${id}/approve`, { method: 'POST' })
+    activateCopy: async (id, payload) => {
+      const res = await fetch(`${API_BASE}/api/admin/copies/${id}/activate`, { 
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
       return await res.json()
     },
-    declineMirror: async (id, adminEmail) => {
-      const res = await fetch(`${API_BASE}/api/admin/mirrors/${id}/decline?adminEmail=${encodeURIComponent(adminEmail)}`, { method: 'POST' })
+    blockCopy: async (id) => {
+      const res = await fetch(`${API_BASE}/api/admin/copies/${id}/block`, { method: 'PATCH' })
       return await res.json()
     },
-    deleteMirror: async (id, adminEmail) => {
-      const res = await fetch(`${API_BASE}/api/admin/mirrors/${id}?adminEmail=${encodeURIComponent(adminEmail)}`, { method: 'DELETE' })
+    approveCopyRequest: async (id) => {
+      const res = await fetch(`${API_BASE}/api/admin/copy-requests/${id}/approve`, { method: 'POST' })
+      return await res.json()
+    },
+    declineCopyRequest: async (id, adminEmail) => {
+      const res = await fetch(`${API_BASE}/api/admin/copy-requests/${id}/decline?adminEmail=${encodeURIComponent(adminEmail)}`, { method: 'POST' })
+      return await res.json()
+    },
+    deleteCopy: async (id, adminEmail) => {
+      const res = await fetch(`${API_BASE}/api/admin/copies/${id}?adminEmail=${encodeURIComponent(adminEmail)}`, { method: 'DELETE' })
       return await res.json()
     }
   },

@@ -6,7 +6,7 @@ import { formatCurrency } from '../lib/utils.js'
 import { api } from '../lib/api.js'
 import { X, CheckCircle2, DollarSign, ArrowRight, TrendingUp } from 'lucide-react'
 
-export default function MirrorModal({ marketer, isOpen, onClose, onSuccess }) {
+export default function CopyModal({ marketer, isOpen, onClose, onSuccess }) {
   const { user } = useAuth()
   const { addToast } = useToast()
   const { theme } = useTheme()
@@ -20,7 +20,7 @@ export default function MirrorModal({ marketer, isOpen, onClose, onSuccess }) {
   const estimatedMonthlyReturn = (deposit * (marketer.monthlyReturn / 100)).toFixed(2)
   const projectedQuarterlyReturn = (estimatedMonthlyReturn * 3).toFixed(2)
 
-  const handleConfirm = async (e) => {
+  const handleCopy = async (e) => {
     e.preventDefault()
     if (!user) { addToast('Please sign in to copy marketers', 'warning'); return }
     if (user.balance < deposit) {
@@ -31,10 +31,10 @@ export default function MirrorModal({ marketer, isOpen, onClose, onSuccess }) {
     setSubmitting(true)
     try {
       // API call now ignores multiplier/stoploss (sends defaults)
-      const res = await api.mirror.add(user.id, marketer.id, 1.0, 10, deposit)
+      const res = await api.copy.request(user.id, marketer.id, 1.0, 10, deposit)
       setSubmitting(false)
       if (res.success) {
-        addToast(`Copy allocation active for ${marketer.name}!`, 'success')
+        addToast(`Copy request for ${marketer.name} sent to admin for approval!`, 'success')
         if (onSuccess) onSuccess(res)
         onClose()
       } else {
@@ -138,10 +138,10 @@ export default function MirrorModal({ marketer, isOpen, onClose, onSuccess }) {
             {submitting ? (
               <span className="flex items-center gap-2">
                 <div className="w-4 h-4 border-2 border-[#005645]/30 border-t-[#005645] rounded-full animate-spin" />
-                Executing Allocation…
+                Sending Request…
               </span>
             ) : (
-              <>Start Copying <ArrowRight className="w-4 h-4" /></>
+              <>Request Copy <ArrowRight className="w-4 h-4" /></>
             )}
           </button>
         </form>

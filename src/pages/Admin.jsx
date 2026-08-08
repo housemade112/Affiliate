@@ -17,8 +17,16 @@ export default function Admin() {
   const [transactions, setTransactions] = useState([])
   const [wallets, setWallets] = useState([])
   const [users, setUsers] = useState([])
-  const [mirrors, setMirrors] = useState([])
+  const [activeCopies, setActiveCopies] = useState([])
+  const [copyRequests, setCopyRequests] = useState([])
   const [loading, setLoading] = useState(true)
+
+  // Activation Modal State
+  const [activateReq, setActivateReq] = useState(null)
+  const [actAmount, setActAmount] = useState('')
+  const [actProfit, setActProfit] = useState('5.0')
+  const [actPayouts, setActPayouts] = useState('1')
+  const [actDuration, setActDuration] = useState('30')
 
   // Decline Modal State
   const [declineTxId, setDeclineTxId] = useState(null)
@@ -32,16 +40,18 @@ export default function Admin() {
   const fetchData = async () => {
     setLoading(true)
     try {
-      const [txRes, walletRes, userRes, mirrorRes] = await Promise.all([
+      const [txRes, walletRes, userRes, reqRes, copyRes] = await Promise.all([
         api.admin.getTransactions(),
         api.admin.getWallets(),
         api.admin.getUsers(),
-        api.admin.getMirrors()
+        api.admin.getCopyRequests(),
+        api.admin.getActiveCopies()
       ])
       if (txRes.success) setTransactions(txRes.transactions || [])
       if (walletRes.success) setWallets(walletRes.wallets || [])
       if (userRes.success) setUsers(userRes.users || [])
-      if (mirrorRes.success) setMirrors(mirrorRes.mirrors || [])
+      if (reqRes.success) setCopyRequests(reqRes.copyRequests || [])
+      if (copyRes.success) setActiveCopies(copyRes.activeCopies || [])
     } catch (e) {
       console.error(e)
       addToast('Failed to load admin data', 'error')
@@ -66,8 +76,8 @@ export default function Admin() {
     }
   }
 
-  const handleBlockMirror = async (mirrorId) => {
-    const res = await api.admin.blockMirror(mirrorId)
+  const handleBlockCopy = async (id) => {
+    const res = await api.admin.blockCopy(id)
     if (res.success) {
       addToast('Copy allocation blocked successfully', 'success')
       fetchData()
@@ -76,7 +86,7 @@ export default function Admin() {
     }
   }
 
-  const handleDeleteMirror = async (mirrorId) => {
+  const handleDeleteCopy = async (id) => {
     if (!window.confirm('CRITICAL ACTION: Are you sure you want to completely DELETE this active copy record? This action will be audited.')) return
     
     let adminEmail = 'Unknown Admin'
@@ -85,12 +95,54 @@ export default function Admin() {
       if (session && session.email) adminEmail = session.email
     } catch (e) {}
 
-    const res = await api.admin.deleteMirror(mirrorId, adminEmail)
+    const res = await api.admin.deleteCopy(id, adminEmail)
     if (res.success) {
       addToast('Copy allocation permanently deleted', 'info')
       fetchData()
     } else {
       addToast(res.error || 'Failed to delete copy', 'error')
+    }
+  }
+
+  const handleDeclineRequest = async (id) => {
+    let adminEmail = 'Unknown Admin'
+    try {
+      const session = JSON.parse(localStorage.getItem('scalely_admin_session'))
+      if (session && session.email) adminEmail = session.email
+    } catch (e) {}
+
+    const res = await api.admin.declineCopyRequest(id, adminEmail)
+    if (res.success) {
+      addToast('Copy request declined', 'info')
+      fetchData()
+    } else {
+      addToast(res.error || 'Failed to decline request', 'error')
+    }
+  }
+
+  const handleActivateSubmit = async (e) => {
+    e.preventDefault()
+    if (!activateReq) return
+    let adminEmail = 'Unknown Admin'
+    try {
+      const session = JSON.parse(localStorage.getItem('scalely_admin_session'))
+      if (session && session.email) adminEmail = session.email
+    } catch (e) {}
+
+    const terms = {
+      deposit: parseFloat(actAmount),
+      profitPercent: parseFloat(actProfit),
+      payoutsPerDay: parseInt(actPayouts),
+      durationDays: parseInt(actDuration)
+    }
+
+    const res = await api.admin.activateCopy(activateReq.id, { adminEmail, terms })
+    if (res.success) {
+      addToast('Copy successfully activated!', 'success')
+      setActivateReq(null)
+      fetchData()
+    } else {
+      addToast(res.error || 'Failed to activate copy', 'error')
     }
   }
 
@@ -221,6 +273,7 @@ export default function Admin() {
       <div className={`flex flex-wrap items-center gap-2 p-1.5 rounded-lg w-fit ${isDark ? 'bg-white/5' : 'bg-slate-100 border border-slate-200'}`}>
         {[
           { id: 'pending', label: `Pending Queue (${pendingTxs.length})` },
+          { id: 'requests', label: `Copy Requests (${copyRequests.length})` },
           { id: 'copies',  label: 'Active Copies Control' },
           { id: 'wallets', label: 'Deposit Wallets Configurator' },
           { id: 'users',   label: 'User Control & Balances' },
@@ -324,21 +377,76 @@ export default function Admin() {
         </div>
       )}
 
-      {/* ── TAB 1.5: ACTIVE COPIES CONTROL ── */}
+      {/* ── TAB 1.5: COPY REQUESTS ── */}
+      {activeTab === 'requests' && (
+        <div className={cardStyle}>
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h3 className={`text-lg font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>Pending Copy Requests</h3>
+              <p className={`text-xs mt-0.5 ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Review and activate user copy requests.</p>
+            </div>
+          </div>
+
+          {copyRequests.length === 0 ? (
+            <div className="py-16 text-center">
+              <CheckCircle2 className="w-12 h-12 text-emerald-500/40 mx-auto mb-3" />
+              <p className={`text-base font-bold ${isDark ? 'text-white' : 'text-slate-800'}`}>No Pending Copy Requests!</p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-xs whitespace-nowrap">
+                <thead className={`border-b font-bold uppercase tracking-wider ${isDark ? 'bg-white/5 border-white/5 text-white/40' : 'bg-slate-50 border-slate-200 text-slate-400'}`}>
+                  <tr>
+                    <th className="px-6 py-4 text-left">User ID</th>
+                    <th className="px-6 py-4 text-left">Partner ID</th>
+                    <th className="px-6 py-4 text-left">Requested Amount</th>
+                    <th className="px-6 py-4 text-left">Date</th>
+                    <th className="px-6 py-4 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className={`divide-y ${isDark ? 'divide-white/5' : 'divide-slate-100'}`}>
+                  {copyRequests.map(req => (
+                    <tr key={req.id} className={isDark ? 'hover:bg-white/5' : 'hover:bg-slate-50'}>
+                      <td className="px-6 py-4 font-bold text-blue-400">{req.userId}</td>
+                      <td className="px-6 py-4 font-bold text-purple-400">{req.marketerId}</td>
+                      <td className="px-6 py-4 font-bold text-sm text-emerald-500">{formatCurrency(req.deposit)}</td>
+                      <td className="px-6 py-4 text-slate-400 font-medium">{new Date(req.createdAt).toLocaleString()}</td>
+                      <td className="px-6 py-4 text-right">
+                        <div className="flex items-center justify-end gap-2">
+                          <button onClick={() => { setActivateReq(req); setActAmount(req.deposit.toString()) }}
+                            className="px-3.5 py-1.5 rounded-lg bg-emerald-500 text-slate-950 font-black hover:bg-emerald-400 transition-colors shadow-sm">
+                            Activate
+                          </button>
+                          <button onClick={() => handleDeclineRequest(req.id)}
+                            className="px-3.5 py-1.5 rounded-lg bg-rose-500/20 text-rose-400 border border-rose-500/30 font-bold hover:bg-rose-500/30 transition-colors">
+                            Decline
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ── TAB 1.6: ACTIVE COPIES CONTROL ── */}
       {activeTab === 'copies' && (
         <div className={cardStyle}>
           <div className="flex items-center justify-between mb-6">
             <div>
               <h3 className={`text-lg font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>Active Copies Control</h3>
-              <p className={`text-xs mt-0.5 ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Monitor, block, or forcefully delete user active mirror trading copies.</p>
+              <p className={`text-xs mt-0.5 ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Monitor, block, or forcefully delete user active copy allocations.</p>
             </div>
           </div>
 
-          {mirrors.length === 0 ? (
+          {activeCopies.length === 0 ? (
             <div className="py-16 text-center">
               <CheckCircle2 className="w-12 h-12 text-emerald-500/40 mx-auto mb-3" />
               <p className={`text-base font-bold ${isDark ? 'text-white' : 'text-slate-800'}`}>No Active Copies!</p>
-              <p className={`text-xs mt-1 ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Users have not mirrored any traders yet.</p>
+              <p className={`text-xs mt-1 ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Users have not copied any partners yet.</p>
             </div>
           ) : (
             <div className="overflow-x-auto">
@@ -355,7 +463,7 @@ export default function Admin() {
                   </tr>
                 </thead>
                 <tbody className={`divide-y ${isDark ? 'divide-white/5' : 'divide-slate-100'}`}>
-                  {mirrors.map(m => (
+                  {activeCopies.map(m => (
                     <tr key={m.id} className={isDark ? 'hover:bg-white/5' : 'hover:bg-slate-50'}>
                       <td className="px-6 py-4">
                         <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg font-black uppercase text-[10px] ${
@@ -381,11 +489,11 @@ export default function Admin() {
                       </td>
                       <td className="px-6 py-4 text-right">
                         <div className="flex items-center justify-end gap-2">
-                          <button onClick={() => handleBlockMirror(m.id)} disabled={m.status === 'blocked'}
+                          <button onClick={() => handleBlockCopy(m.id)} disabled={m.status === 'blocked'}
                             className="px-3.5 py-1.5 rounded-lg bg-amber-500/20 text-amber-400 border border-amber-500/30 font-bold hover:bg-amber-500/30 transition-colors disabled:opacity-50">
                             {m.status === 'blocked' ? 'Blocked' : 'Block'}
                           </button>
-                          <button onClick={() => handleDeleteMirror(m.id)}
+                          <button onClick={() => handleDeleteCopy(m.id)}
                             className="px-3.5 py-1.5 rounded-lg bg-rose-500/20 text-rose-400 border border-rose-500/30 font-bold hover:bg-rose-500/30 transition-colors">
                             Delete
                           </button>
@@ -543,6 +651,52 @@ export default function Admin() {
               </tbody>
             </table>
           </div>
+        </div>
+      )}
+
+      {/* ── ACTIVATE COPY MODAL ── */}
+      {activateReq && (
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+          <form onSubmit={handleActivateSubmit} className={`w-full max-w-md p-6 rounded-xl border shadow-2xl space-y-4 ${isDark ? 'bg-[#1A1D21] border-white/10' : 'bg-white border-slate-200'}`}>
+            <h3 className={`text-lg font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>Activate Copy Request</h3>
+            <p className={`text-xs ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Configure terms for this copy allocation.</p>
+            
+            <div>
+              <label className="text-[10px] font-bold text-slate-400 uppercase">Deposit Amount ($)</label>
+              <input type="number" step="0.01" value={actAmount} onChange={e => setActAmount(e.target.value)}
+                className={`w-full p-3 rounded-xl text-sm font-extrabold border mt-1 ${isDark ? 'bg-black/30 border-white/10 text-white' : 'bg-slate-50 border-slate-200 text-slate-900'} focus:outline-none`}
+                required />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="text-[10px] font-bold text-slate-400 uppercase">Profit / Trade (%)</label>
+                <input type="number" step="0.1" value={actProfit} onChange={e => setActProfit(e.target.value)}
+                  className={`w-full p-3 rounded-xl text-xs border mt-1 ${isDark ? 'bg-black/30 border-white/10 text-white' : 'bg-slate-50 border-slate-200 text-slate-900'} focus:outline-none`}
+                  required />
+              </div>
+              <div>
+                <label className="text-[10px] font-bold text-slate-400 uppercase">Payouts / Day</label>
+                <input type="number" step="1" value={actPayouts} onChange={e => setActPayouts(e.target.value)}
+                  className={`w-full p-3 rounded-xl text-xs border mt-1 ${isDark ? 'bg-black/30 border-white/10 text-white' : 'bg-slate-50 border-slate-200 text-slate-900'} focus:outline-none`}
+                  required />
+              </div>
+            </div>
+
+            <div>
+              <label className="text-[10px] font-bold text-slate-400 uppercase">Duration (Days)</label>
+              <input type="number" step="1" value={actDuration} onChange={e => setActDuration(e.target.value)}
+                className={`w-full p-3 rounded-xl text-sm border mt-1 ${isDark ? 'bg-black/30 border-white/10 text-white' : 'bg-slate-50 border-slate-200 text-slate-900'} focus:outline-none`}
+                required />
+            </div>
+
+            <div className="flex gap-2 justify-end pt-2">
+              <button type="button" onClick={() => setActivateReq(null)}
+                className="px-4 py-2 rounded-xl text-xs font-bold text-[#A3A3A3] hover:text-white">Cancel</button>
+              <button type="submit"
+                className="px-4 py-2 rounded-xl text-xs font-extrabold bg-emerald-500 text-slate-950 hover:bg-emerald-400">Activate Now</button>
+            </div>
+          </form>
         </div>
       )}
 

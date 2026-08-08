@@ -109,13 +109,13 @@ app.get('/api/marketers/:id/history', (req, res) => {
   })
 })
 
-// ── Interactive Mirror Engine ──
-app.get('/api/mirror/:userId', (req, res) => {
-  const mirrored = db.getMirroredByUser(req.params.userId)
-  return res.json({ success: true, mirrored })
+// ── Interactive Copy Engine ──
+app.get('/api/copy/:userId', (req, res) => {
+  const activeCopies = db.getActiveCopiesByUser(req.params.userId)
+  return res.json({ success: true, activeCopies })
 })
 
-app.post('/api/mirror', (req, res) => {
+app.post('/api/copy/request', (req, res) => {
   const { userId, marketerId, multiplier, stopLoss, deposit } = req.body
   if (!userId || !marketerId) {
     return res.status(400).json({ success: false, error: 'userId and marketerId are required' })
@@ -126,27 +126,26 @@ app.post('/api/mirror', (req, res) => {
     return res.status(404).json({ success: false, error: 'Marketer not found' })
   }
 
-  const result = db.addMirror(userId, marketerId, multiplier || 1.0, stopLoss || 10, deposit || marketer.minDeposit)
+  const result = db.addCopyRequest(userId, marketerId, multiplier || 1.0, stopLoss || 10, deposit || marketer.minDeposit)
   if (!result.success) {
     return res.status(400).json({ success: false, error: result.error })
   }
 
   return res.json({
     success: true,
-    mirroredAffiliates: result.mirrored.map(m => m.marketerId),
-    mirroredAllocations: result.mirrored,
+    copyRequests: result.copyRequests,
     balance: result.balance
   })
 })
 
-app.delete('/api/mirror/:userId/:marketerId', (req, res) => {
+app.delete('/api/copy/:userId/:marketerId', (req, res) => {
   const { userId, marketerId } = req.params
-  const result = db.removeMirror(userId, marketerId)
+  const result = db.removeCopy(userId, marketerId)
 
   return res.json({
     success: true,
-    mirroredAffiliates: result.mirrored.map(m => m.marketerId),
-    mirroredAllocations: result.mirrored,
+    copiedAffiliates: result.activeCopies.map(m => m.marketerId),
+    activeCopies: result.activeCopies,
     balance: result.balance
   })
 })
@@ -247,33 +246,40 @@ app.post('/api/admin/wallets', (req, res) => {
   return res.json({ success: true, wallets: db.getDepositWallets() })
 })
 
-app.get('/api/admin/mirrors', (req, res) => {
-  const mirrors = db.getAllMirrors()
-  return res.json({ success: true, mirrors })
+app.get('/api/admin/copy-requests', (req, res) => {
+  const copyRequests = db.getAllCopyRequests()
+  return res.json({ success: true, copyRequests })
 })
 
-app.patch('/api/admin/mirrors/:id/block', (req, res) => {
-  const result = db.blockMirror(req.params.id)
+app.get('/api/admin/copies', (req, res) => {
+  const activeCopies = db.getAllCopies()
+  return res.json({ success: true, activeCopies })
+})
+
+app.patch('/api/admin/copies/:id/block', (req, res) => {
+  const result = db.blockCopy(req.params.id)
   if (!result.success) return res.status(400).json(result)
   return res.json(result)
 })
 
-app.post('/api/admin/mirrors/:id/approve', (req, res) => {
-  const result = db.approveMirror(req.params.id)
+app.post('/api/admin/copies/:id/activate', (req, res) => {
+  const adminEmail = req.body.adminEmail || 'Unknown Admin'
+  const terms = req.body.terms || {}
+  const result = db.activateCopy(req.params.id, adminEmail, terms)
   if (!result.success) return res.status(400).json(result)
   return res.json(result)
 })
 
-app.post('/api/admin/mirrors/:id/decline', (req, res) => {
+app.post('/api/admin/copy-requests/:id/decline', (req, res) => {
   const adminEmail = req.query.adminEmail || 'Unknown Admin'
-  const result = db.declineMirror(req.params.id, adminEmail)
+  const result = db.declineCopyRequest(req.params.id, adminEmail)
   if (!result.success) return res.status(400).json(result)
   return res.json(result)
 })
 
-app.delete('/api/admin/mirrors/:id', (req, res) => {
+app.delete('/api/admin/copies/:id', (req, res) => {
   const adminEmail = req.query.adminEmail || 'Unknown Admin'
-  const result = db.deleteMirror(req.params.id, adminEmail)
+  const result = db.deleteCopy(req.params.id, adminEmail)
   if (!result.success) return res.status(400).json(result)
   return res.json(result)
 })

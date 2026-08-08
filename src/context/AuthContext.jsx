@@ -84,20 +84,20 @@ export function AuthProvider({ children }) {
     return null
   }
 
-  const mirrorAffiliate = async (affiliateId, depositAmount = 500) => {
+  const requestCopy = async (affiliateId, depositAmount = 500) => {
     if (!user) return { success: false, error: 'Must be logged in' }
-    const res = await api.mirror.add(user.id, affiliateId, 1.0, 10, depositAmount)
+    const res = await api.copy.request(user.id, affiliateId, 1.0, 10, depositAmount)
     if (res.success) {
-      // Re-fetch user to get updated balance and mirrored list
+      // Re-fetch user to get updated balance and mirrored list (though balance won't change yet for requests)
       await fetchUser(user.id)
       return { success: true }
     }
     return res
   }
 
-  const unmirrorAffiliate = async (affiliateId) => {
+  const stopCopying = async (affiliateId) => {
     if (!user) return { success: false }
-    const res = await api.mirror.remove(user.id, affiliateId)
+    const res = await api.copy.remove(user.id, affiliateId)
     if (res.success) {
       await fetchUser(user.id)
       return { success: true }
@@ -115,7 +115,7 @@ export function AuthProvider({ children }) {
   return (
     <AuthContext.Provider value={{
       user, loading, login, register, logout,
-      addTransaction, mirrorAffiliate, unmirrorAffiliate,
+      addTransaction, requestCopy, stopCopying,
       refreshUser
     }}>
       {children}

@@ -4,7 +4,7 @@ import { useTheme } from '../context/ThemeContext.jsx'
 import { getAllAffiliates } from '../data/affiliates.js'
 import { formatCurrency } from '../lib/utils.js'
 import { api } from '../lib/api.js'
-import { ArrowUpRight, TrendingUp, Wallet, ArrowDownToLine, Users, ChevronRight, Activity, Copy, Clock, Search, LayoutGrid, BadgeCheck } from 'lucide-react'
+import { ArrowUpRight, TrendingUp, Wallet, ArrowDownToLine, Users, ChevronRight, Activity, Copy, Clock, Search, LayoutGrid, BadgeCheck, Trash2 } from 'lucide-react'
 import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer } from 'recharts'
 import GaugeComponent from 'react-gauge-component'
 import { useState, useMemo, useEffect } from 'react'
@@ -19,13 +19,13 @@ const TABS = [
 ]
 
 export default function Dashboard() {
-  const { user, unmirrorAffiliate } = useAuth()
+  const { user, stopCopying } = useAuth()
   const { addToast } = useToast()
   const { theme } = useTheme()
   const isDark = theme === 'dark'
 
   const [activeTab, setActiveTab]     = useState('overview')
-  const [mirroredList, setMirroredList] = useState(user?.mirroredAffiliates || [])
+  const [copiedList, setCopiedList] = useState(user?.copiedAffiliates || [])
   const [transactions, setTransactions] = useState([])
   const [allAffiliates, setAllAffiliates] = useState([])
 
@@ -42,19 +42,19 @@ export default function Dashboard() {
       .catch(console.error)
   }, [user])
 
-  const handleUnmirror = (affId) => {
-    unmirrorAffiliate(affId)
-    setMirroredList(prev => prev.filter(id => id !== affId))
+  const handleStopCopying = (affId) => {
+    stopCopying(affId)
+    setCopiedList(prev => prev.filter(id => id !== affId))
     addToast('Stopped copying partner', 'info')
   }
 
-  const mirroredAffiliates = useMemo(
-    () => allAffiliates.filter(a => mirroredList.includes(a.id)),
-    [mirroredList, allAffiliates]
+  const copiedAffiliates = useMemo(
+    () => allAffiliates.filter(a => copiedList.includes(a.id)),
+    [copiedList, allAffiliates]
   )
 
-  const totalInvested   = mirroredAffiliates.reduce((s, a) => s + a.minDeposit, 0)
-  const estimatedReturn = mirroredAffiliates.reduce((s, a) => s + (a.minDeposit * a.monthlyReturn / 100), 0)
+  const totalInvested   = copiedAffiliates.reduce((s, a) => s + a.minDeposit, 0)
+  const estimatedReturn = copiedAffiliates.reduce((s, a) => s + (a.minDeposit * a.monthlyReturn / 100), 0)
   const totalCapital    = (user?.balance || 0) + totalInvested
 
   // Profit % is real: estimatedReturn / totalCapital
@@ -220,7 +220,7 @@ export default function Dashboard() {
                   </div>
                   <div>
                     <h3 className={`text-base font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Active Copies</h3>
-                    <p className={`text-xs font-medium ${isDark ? 'text-white/40' : 'text-slate-700'}`}>{mirroredAffiliates.length} partners generating Profit</p>
+                    <p className={`text-xs font-medium ${isDark ? 'text-white/40' : 'text-slate-700'}`}>{copiedAffiliates.length} partners generating Profit</p>
                   </div>
                 </div>
                 <button onClick={() => setActiveTab('directory')}
@@ -229,7 +229,7 @@ export default function Dashboard() {
                 </button>
               </div>
               <div className="flex-1 overflow-x-auto">
-                {mirroredAffiliates.length === 0 ? (
+                {copiedAffiliates.length === 0 ? (
                   <div className="p-16 text-center flex flex-col items-center gap-4">
                     <div className={`w-20 h-20 rounded-xl flex items-center justify-center border ${isDark ? 'bg-white/5 border-white/10' : 'bg-slate-50 border-slate-200'}`}>
                       <Users className={`w-8 h-8 ${isDark ? 'text-white/20' : 'text-slate-300'}`} />
@@ -251,7 +251,7 @@ export default function Dashboard() {
                       </tr>
                     </thead>
                     <tbody className={`divide-y ${isDark ? 'divide-white/5' : 'divide-slate-50'}`}>
-                      {mirroredAffiliates.map(a => (
+                      {copiedAffiliates.map(a => (
                         <tr key={a.id} className={`transition-colors group ${isDark ? 'hover:bg-white/5' : 'hover:bg-slate-50'}`}>
                           <td className="px-8 py-5">
                             <div className="flex items-center gap-4">
@@ -274,9 +274,12 @@ export default function Dashboard() {
                             </span>
                           </td>
                           <td className="px-6 py-5 text-right">
-                            <button onClick={() => handleUnmirror(a.id)}
-                              className="px-4 py-2 text-xs font-bold text-rose-600 bg-rose-50 hover:bg-rose-100 rounded-xl border border-rose-100 transition-colors">
-                              Stop
+                            <button onClick={() => handleStopCopying(a.id)}
+                              className={`w-9 h-9 flex items-center justify-center rounded-xl transition-colors ${
+                                isDark ? 'text-rose-400 hover:bg-rose-500/20' : 'text-rose-500 hover:bg-rose-50'
+                              }`}
+                              title="Stop Copying">
+                              <Trash2 className="w-4 h-4" />
                             </button>
                           </td>
                         </tr>

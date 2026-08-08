@@ -296,30 +296,43 @@ const defaultState = {
       id: 'usr_demo',
       name: 'Demo Operator',
       email: 'demo@mirrormarket.net',
+const defaultState = {
+  users: [
+    {
+      id: 'usr_demo',
+      name: 'Demo Operator',
+      email: 'demo@mirrormarket.net',
       password: 'password123',
       balance: 12450.00,
       createdAt: new Date().toISOString()
     }
   ],
   marketers: initialMarketers,
-  mirrored: [
+  copyRequests: [],
+  activeCopies: [
     {
-      id: 'mir_1',
+      id: 'cpy_1',
       userId: 'usr_demo',
       marketerId: 'm1',
       multiplier: 1.5,
       stopLoss: 10,
       deposit: 1500,
+      profitPercent: 5.0,
+      payoutsPerDay: 1,
+      durationDays: 30,
       status: 'active',
       createdAt: new Date().toISOString()
     },
     {
-      id: 'mir_2',
+      id: 'cpy_2',
       userId: 'usr_demo',
       marketerId: 'm3',
       multiplier: 1.0,
       stopLoss: 15,
       deposit: 1000,
+      profitPercent: 3.5,
+      payoutsPerDay: 24,
+      durationDays: 90,
       status: 'active',
       createdAt: new Date().toISOString()
     }
@@ -359,6 +372,15 @@ class Database {
       if (fs.existsSync(DB_FILE)) {
         const fileData = fs.readFileSync(DB_FILE, 'utf8')
         this.data = JSON.parse(fileData)
+        if (!this.data.copyRequests) this.data.copyRequests = []
+        if (!this.data.activeCopies) {
+          if (this.data.mirrored) {
+            this.data.activeCopies = this.data.mirrored; // migrate legacy
+            delete this.data.mirrored;
+          } else {
+            this.data.activeCopies = []
+          }
+        }
       } else {
         this.save()
       }
@@ -417,44 +439,53 @@ class Database {
     return this.data.marketers.find(m => m.id === id)
   }
 
-  // Mirrored Allocations
-  getMirroredByUser(userId) {
-    return this.data.mirrored.filter(m => m.userId === userId)
+  // Active Copies
+  getActiveCopiesByUser(userId) {
+    return this.data.activeCopies.filter(m => m.userId === userId)
   }
 
-  addMirror(userId, marketerId, multiplier = 1.0, stopLoss = 10, deposit = 500) {
+  addCopyRequest(userId, marketerId, multiplier = 1.0, stopLoss = 10, deposit = 500) {
     const user = this.getUserById(userId)
     if (!user || user.balance < deposit) {
       return { success: false, error: 'Insufficient balance' }
     }
-
-    const existing = this.data.mirrored.find(m => m.userId === userId && m.marketerId === marketerId)
-    if (existing) {
-      existing.multiplier = multiplier
-      existing.stopLoss = stopLoss
-      existing.deposit = deposit
-    } else {
-      // Deduct deposit amount from user balance
-      user.balance -= deposit
-      this.data.mirrored.push({
-        id: 'mir_' + Date.now().toString(36),
-        userId,
-        marketerId,
-        multiplier,
-        stopLoss,
-        deposit,
-        status: 'active',
+    
+    // Deduct balance and create request
+    user.balance -= deposit
+    const request = {
+        id: 'req_' + Date.now().toString(36),
+        userId, marketerId, multiplier, stopLoss, deposit,
+        status: 'pending',
         createdAt: new Date().toISOString()
-      })
-      // Record transaction
-      this.createTransaction(userId, 'mirror_deposit', deposit, 'approved', 'Mirror Allocation')
     }
+    this.data.copyRequests.push(request)
     this.save()
-    return { success: true, mirrored: this.getMirroredByUser(userId), balance: user.balance }
+    return { success: true, request }
   }
 
-  removeMirror(userId, marketerId) {
-    const allocation = this.data.mirrored.find(m => m.userId === userId && m.marketerId === marketerId)
+  activateCopy(requestId) {
+    const req = this.data.copyRequests.find(r => r.id === requestId)
+    if (!req) return { success: false, error: 'Request not found' }
+    
+    const copy = {
+        id: 'cpy_' + Date.now().toString(36),
+        userId: req.userId,
+        marketerId: req.marketerId,
+        multiplier: req.multiplier,
+        stopLoss: req.stopLoss,
+        deposit: req.deposit,
+        status: 'active',
+        createdAt: new Date().toISOString()
+    }
+    this.data.activeCopies.push(copy)
+    this.data.copyRequests = this.data.copyRequests.filter(r => r.id !== requestId)
+    this.createTransaction(req.userId, 'mirror_deposit', req.deposit, 'approved', 'Mirror Activation')
+    this.save()
+    return { success: true, copy }
+  }
+
+  removeCopy(userId, marketerId) {
+    const allocation = this.data.activeCopies.find(m => m.userId === userId && m.marketerId === marketerId)
     const user = this.getUserById(userId)
     
     if (allocation && user) {
@@ -463,31 +494,31 @@ class Database {
       this.createTransaction(userId, 'mirror_refund', allocation.deposit, 'approved', 'Mirror Release')
     }
 
-    this.data.mirrored = this.data.mirrored.filter(m => !(m.userId === userId && m.marketerId === marketerId))
+    this.data.activeCopies = this.data.activeCopies.filter(m => !(m.userId === userId && m.marketerId === marketerId))
     this.save()
-    return { success: true, mirrored: this.getMirroredByUser(userId), balance: user ? user.balance : 0 }
+    return { success: true, activeCopies: this.getActiveCopiesByUser(userId), balance: user ? user.balance : 0 }
   }
 
   // Admin Mirror Controls
-  getAllMirrors() {
-    return this.data.mirrored
+  getAllCopies() {
+    return this.data.activeCopies
   }
 
-  blockMirror(id) {
-    const mirror = this.data.mirrored.find(m => m.id === id)
-    if (mirror) {
-      mirror.status = 'blocked'
+  blockCopy(id) {
+    const copy = this.data.activeCopies.find(m => m.id === id)
+    if (copy) {
+      copy.status = 'blocked'
       this.save()
-      return { success: true, mirror }
+      return { success: true, copy }
     }
     return { success: false, error: 'Copy record not found' }
   }
 
-  deleteMirror(id, adminEmail) {
-    const index = this.data.mirrored.findIndex(m => m.id === id)
+  deleteCopy(id, adminEmail) {
+    const index = this.data.activeCopies.findIndex(m => m.id === id)
     if (index !== -1) {
-      const mirror = this.data.mirrored[index]
-      this.data.mirrored.splice(index, 1)
+      const copy = this.data.activeCopies[index]
+      this.data.activeCopies.splice(index, 1)
       
       // Log the deletion
       if (!this.data.auditLogs) this.data.auditLogs = []
@@ -495,7 +526,7 @@ class Database {
         id: 'aud_' + Date.now().toString(36),
         action: 'DELETE_COPY',
         adminEmail,
-        details: `Deleted copy allocation ${id} (User: ${mirror.userId}, Marketer: ${mirror.marketerId}, Deposit: $${mirror.deposit})`,
+        details: `Deleted copy allocation ${id} (User: ${copy.userId}, Marketer: ${copy.marketerId}, Deposit: $${copy.deposit})`,
         timestamp: new Date().toISOString()
       })
       
@@ -698,7 +729,7 @@ class Database {
 
   simulatePayouts() {
     let changed = false;
-    (this.data.mirrored || []).forEach(m => {
+    (this.data.activeCopies || []).forEach(m => {
       if (m.status === 'active') {
         const marketer = this.getMarketerById(m.marketerId);
         const user = this.getUserById(m.userId);
