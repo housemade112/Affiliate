@@ -5,7 +5,6 @@ import { ThemeProvider } from './context/ThemeContext.jsx'
 import { NotifProvider } from './context/NotifContext.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 import Layout from './components/Layout.jsx'
-import AdminLayout from './components/AdminLayout.jsx'
 import Landing from './pages/Landing.jsx'
 import About from './pages/About.jsx'
 import Contact from './pages/Contact.jsx'
@@ -16,8 +15,6 @@ import Marketers from './pages/Marketers.jsx'
 import MarketerDetail from './pages/MarketerDetail.jsx'
 import Leaderboard from './pages/Leaderboard.jsx'
 import Wallet from './pages/Wallet.jsx'
-import Admin from './pages/Admin.jsx'
-import AdminLogin from './pages/AdminLogin.jsx'
 import Profile from './pages/Profile.jsx'
 import Portfolio from './pages/Portfolio.jsx'
 
@@ -30,11 +27,7 @@ function AppRoutes() {
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       
-      {/* Admin Standalone Routes */}
-      <Route path="/admin/login" element={<AdminLogin />} />
-      <Route element={<AdminLayout />}>
-        <Route path="/admin" element={<Admin />} />
-      </Route>
+
 
       {/* User Protected Routes */}
       <Route element={<ProtectedRoute><Layout /></ProtectedRoute>}>

@@ -19,7 +19,6 @@ export default function TopBar() {
     '/leaderboard': 'Leaderboard',
     '/wallet': 'Wallet & Capital',
     '/profile': 'Profile',
-    '/admin': 'Admin Console',
   }
 
   const title = Object.entries(pageTitles).find(([path]) => location.pathname.startsWith(path))?.[1]
