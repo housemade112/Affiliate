@@ -144,17 +144,23 @@ export default function About() {
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4 tracking-tight leading-tight">
           Trusted by 5,000+ affiliate companies<br />agencies 1500+ <span className="text-[#C3F53C]">5-star ratings.</span>
         </h2>
-        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12 mb-16">
+        <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8 mb-16">
           <div className="flex items-center gap-3 bg-white/5 px-6 py-3 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors">
-            <img src="https://logo.clearbit.com/trustpilot.com" className="w-8 h-8 rounded-full" alt="Trustpilot" />
+            <div className="w-7 h-7 bg-[#00B67A] rounded flex items-center justify-center">
+              <Star className="w-4 h-4 text-white fill-white" />
+            </div>
             <span className="text-white font-bold text-lg">Trustpilot</span>
           </div>
           <div className="flex items-center gap-3 bg-white/5 px-6 py-3 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors">
-            <img src="https://logo.clearbit.com/g2.com" className="w-8 h-8 rounded-lg" alt="G2" />
+            <div className="w-7 h-7 bg-[#FF492C] rounded flex items-center justify-center">
+              <span className="text-white font-black text-xs">G2</span>
+            </div>
             <span className="text-white font-bold text-lg">G2</span>
           </div>
           <div className="flex items-center gap-3 bg-white/5 px-6 py-3 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors">
-            <img src="https://logo.clearbit.com/capterra.com" className="w-8 h-8 rounded-lg" alt="Capterra" />
+            <div className="w-7 h-7 bg-[#0052CC] rounded flex items-center justify-center">
+              <span className="text-white font-black text-sm">C</span>
+            </div>
             <span className="text-white font-bold text-lg">Capterra</span>
           </div>
         </div>
