@@ -147,7 +147,7 @@ export default function Wallet() {
                 </thead>
                 <tbody className={`divide-y ${isDark ? 'divide-white/5' : 'divide-slate-50'}`}>
                   {transactions.map(tx => {
-                    const isDeposit = tx.type === 'deposit'
+                    const isDeposit = tx.type === 'deposit' || tx.type === 'profit' || tx.type === 'mirror_deposit'
                     const meta = statusMeta[tx.status] || statusMeta.pending
                     const txId = tx.id.substring(0, 8).toUpperCase()
                     return (
@@ -197,7 +197,7 @@ export default function Wallet() {
               {/* Mobile Ledger List */}
               <div className="md:hidden overflow-x-auto flex flex-col divide-y divide-slate-100">
                 {transactions.map(tx => {
-                  const isDeposit = tx.type === 'deposit'
+                  const isDeposit = tx.type === 'deposit' || tx.type === 'profit' || tx.type === 'mirror_deposit'
                   const meta = statusMeta[tx.status] || statusMeta.pending
                   const txId = tx.id.substring(0, 8).toUpperCase()
                   

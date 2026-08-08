@@ -1,7 +1,9 @@
+import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext.jsx'
 import { useTheme } from '../context/ThemeContext.jsx'
 import { getAllAffiliates } from '../data/affiliates.js'
 import { formatCurrency } from '../lib/utils.js'
+import { api } from '../lib/api.js'
 import { PieChart, LineChart, TrendingUp, ArrowUpRight, Activity } from 'lucide-react'
 
 export default function Portfolio() {
@@ -9,11 +11,24 @@ export default function Portfolio() {
   const { theme } = useTheme()
   const isDark = theme === 'dark'
 
-  const allAffiliates = getAllAffiliates()
-  const mirroredAffiliates = allAffiliates.filter(a => user?.mirroredAffiliates?.includes(a.id))
+  const [activeCopies, setActiveCopies] = useState([])
   
-  const totalInvested = mirroredAffiliates.reduce((s, a) => s + a.minDeposit, 0)
-  const estimatedReturn = mirroredAffiliates.reduce((s, a) => s + (a.minDeposit * a.monthlyReturn / 100), 0)
+  useEffect(() => {
+    if (user?.id) {
+      api.copy.list(user.id).then(res => {
+        if (res.success) setActiveCopies(res.activeCopies || [])
+      })
+    }
+  }, [user])
+
+  const allAffiliates = getAllAffiliates()
+  const mirroredAffiliates = activeCopies.map(copy => {
+    const affiliate = allAffiliates.find(a => a.id === copy.marketerId)
+    return { ...affiliate, copy } // attach the copy data to the affiliate
+  }).filter(a => a.name) // ensure affiliate exists
+  
+  const totalInvested = activeCopies.reduce((s, c) => s + (c.deposit || 0), 0)
+  const estimatedReturn = activeCopies.reduce((s, c) => s + ((c.deposit || 0) * ((c.profitPercent || 0) / 100) * (c.payoutsPerDay || 1) * 30), 0) // rough 30-day est
   const totalCapital = (user?.balance || 0) + totalInvested
 
   const card = `rounded-xl p-6 shadow-sm border ${isDark ? 'bg-[#1A1D21] border-white/5' : 'bg-white border-slate-200/80'}`
@@ -73,24 +88,48 @@ export default function Portfolio() {
             
             <div className="space-y-6">
               {mirroredAffiliates.map(a => {
-                const pct = ((a.minDeposit / totalInvested) * 100).toFixed(1)
+                const copy = a.copy;
+                const pct = totalInvested > 0 ? ((copy.deposit / totalInvested) * 100).toFixed(1) : 0;
+                const progressPct = copy.totalPayouts > 0 ? Math.min(100, ((copy.payoutsCompleted || 0) / copy.totalPayouts) * 100) : 0;
+                
                 return (
-                  <div key={a.id}>
-                    <div className="flex justify-between items-end mb-2">
+                  <div key={copy.id} className={`p-4 rounded-xl border ${isDark ? 'border-white/5 bg-white/5' : 'border-slate-100 bg-slate-50'}`}>
+                    <div className="flex justify-between items-start mb-4">
                       <div className="flex items-center gap-3">
-                        <img src={a.avatar} alt={a.name} className="w-8 h-8 rounded-full object-cover" />
+                        <img src={a.avatar} alt={a.name} className="w-10 h-10 rounded-full object-cover" />
                         <div>
                           <p className={`font-bold text-sm ${isDark ? 'text-white' : 'text-slate-900'}`}>{a.name}</p>
-                          <p className={`text-xs font-medium ${isDark ? 'text-white/40' : 'text-slate-500'}`}>{a.niche}</p>
+                          <div className="flex items-center gap-2 mt-0.5">
+                            <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400`}>
+                              Active
+                            </span>
+                            <span className={`text-xs font-medium ${isDark ? 'text-white/40' : 'text-slate-500'}`}>
+                              Allocated: {formatCurrency(copy.deposit)}
+                            </span>
+                          </div>
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className={`font-black ${isDark ? 'text-white' : 'text-slate-900'}`}>{formatCurrency(a.minDeposit)}</p>
                         <p className={`text-xs font-extrabold ${isDark ? 'text-[#C3F53C]' : 'text-[#005645]'}`}>{pct}% of portfolio</p>
+                        <p className={`text-[10px] font-medium mt-1 ${isDark ? 'text-white/40' : 'text-slate-500'}`}>
+                          {copy.payoutsPerDay} payouts/day @ {copy.profitPercent}%
+                        </p>
                       </div>
                     </div>
-                    <div className={`w-full h-3 rounded-full overflow-hidden ${isDark ? 'bg-white/5' : 'bg-slate-100'}`}>
-                      <div className="h-full rounded-full bg-[#005645]" style={{ width: `${pct}%` }} />
+                    
+                    <div>
+                      <div className="flex items-center justify-between text-[11px] font-bold mb-1.5">
+                        <span className={isDark ? 'text-white/60' : 'text-slate-500'}>Payout Progress</span>
+                        <span className={isDark ? 'text-emerald-400' : 'text-emerald-600'}>{copy.payoutsCompleted || 0} / {copy.totalPayouts || 0}</span>
+                      </div>
+                      <div className={`w-full h-2.5 rounded-full overflow-hidden ${isDark ? 'bg-black/50' : 'bg-slate-200'}`}>
+                        <div className="h-full rounded-full bg-emerald-500 transition-all duration-1000" style={{ width: `${progressPct}%` }} />
+                      </div>
+                      {copy.nextPayoutTime && copy.payoutsCompleted < copy.totalPayouts && (
+                        <p className={`text-[10px] font-medium mt-2 text-right ${isDark ? 'text-white/40' : 'text-slate-400'}`}>
+                          Next Payout: {new Date(copy.nextPayoutTime).toLocaleString()}
+                        </p>
+                      )}
                     </div>
                   </div>
                 )
