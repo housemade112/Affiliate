@@ -3,15 +3,18 @@ import { Star, CheckCircle2, Layout, Zap, Users, ArrowRight } from 'lucide-react
 import PublicNavbar from '../components/PublicNavbar.jsx'
 
 const PARTNERS = [
-  'ClickBank', 'ShareASale', 'CJ Affiliate', 'Amazon Associates',
-  'Rakuten Advertising', 'Awin', 'Impact', 'Avangate Affiliate Network',
-  'FlexOffers', 'MaxBounty', 'Pepperjam', 'Tradedoubler',
-  'Skimlinks', 'VigLink', 'PartnerStack', 'AvantLink',
-  'Ebay Partner Network', 'Shopify Affiliate Program', 'HubSpot Affiliate Program', 'Fiverr Affiliates',
-  'Bluehost Affiliate', 'HostGator Affiliate', 'ConvertKit Affiliate', 'Getresponse Affiliate',
-  'AWeber Affiliate', 'Constant Contact Affiliate', 'Mailchimp Affiliate', 'ActiveCampaign Affiliate',
-  'ClickFunnels Affiliate', 'Leadpages Affiliate', 'Unbounce Affiliate', 'Instapage Affiliate',
-  'Semrush Affiliate', 'Ahrefs Affiliate', 'Moz Affiliate', 'Mangools Affiliate'
+  { name: 'ClickBank', domain: 'clickbank.com' },
+  { name: 'ShareASale', domain: 'shareasale.com' },
+  { name: 'CJ Affiliate', domain: 'cj.com' },
+  { name: 'Amazon', domain: 'amazon.com' },
+  { name: 'Rakuten', domain: 'rakuten.com' },
+  { name: 'Awin', domain: 'awin.com' },
+  { name: 'Impact', domain: 'impact.com' },
+  { name: 'MaxBounty', domain: 'maxbounty.com' },
+  { name: 'Shopify', domain: 'shopify.com' },
+  { name: 'HubSpot', domain: 'hubspot.com' },
+  { name: 'Fiverr', domain: 'fiverr.com' },
+  { name: 'Semrush', domain: 'semrush.com' }
 ]
 
 export default function About() {
@@ -88,11 +91,13 @@ export default function About() {
           We integrate seamlessly with the world's largest and most lucrative affiliate networks. Our tracking engine pulls in real-time data from these partners so you can manage your entire portfolio from a single dashboard.
         </p>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
           {PARTNERS.map(partner => (
-            <div key={partner} className="flex items-center gap-2 group cursor-default">
-              <div className="w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-[#C3F53C] transition-colors" />
-              <span className="text-sm font-semibold text-slate-400 group-hover:text-white transition-colors">{partner}</span>
+            <div key={partner.name} className="flex flex-col items-center justify-center gap-3 p-4 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 hover:-translate-y-1 transition-all">
+              <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center p-1.5 shadow-lg">
+                <img src={`https://logo.clearbit.com/${partner.domain}`} alt={partner.name} className="w-full h-full object-contain" onError={(e) => { e.target.src = 'https://ui-avatars.com/api/?name=' + partner.name + '&background=random' }} />
+              </div>
+              <span className="text-sm font-bold text-slate-300 text-center">{partner.name}</span>
             </div>
           ))}
         </div>
@@ -144,10 +149,19 @@ export default function About() {
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4 tracking-tight leading-tight">
           Trusted by 5,000+ affiliate companies<br />agencies 1500+ <span className="text-[#C3F53C]">5-star ratings.</span>
         </h2>
-        <div className="flex justify-center items-center gap-6 mb-16 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
-          <img src="https://cdn.simpleicons.org/trustpilot/00B67A" className="h-6" alt="Trustpilot" />
-          <img src="https://cdn.simpleicons.org/g2/FF492C" className="h-6" alt="G2" />
-          <img src="https://cdn.simpleicons.org/capterra/0052CC" className="h-6" alt="Capterra" />
+        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12 mb-16">
+          <div className="flex items-center gap-3 bg-white/5 px-6 py-3 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors">
+            <img src="https://logo.clearbit.com/trustpilot.com" className="w-8 h-8 rounded-full" alt="Trustpilot" />
+            <span className="text-white font-bold text-lg">Trustpilot</span>
+          </div>
+          <div className="flex items-center gap-3 bg-white/5 px-6 py-3 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors">
+            <img src="https://logo.clearbit.com/g2.com" className="w-8 h-8 rounded-lg" alt="G2" />
+            <span className="text-white font-bold text-lg">G2</span>
+          </div>
+          <div className="flex items-center gap-3 bg-white/5 px-6 py-3 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors">
+            <img src="https://logo.clearbit.com/capterra.com" className="w-8 h-8 rounded-lg" alt="Capterra" />
+            <span className="text-white font-bold text-lg">Capterra</span>
+          </div>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6 text-left">
