@@ -7,6 +7,7 @@ import {
   Sparkles, Target, LineChart, PlayCircle, ArrowDown, Sliders, Check, Lock, ChevronRight, Plus, X
 } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import PublicNavbar from '../components/PublicNavbar.jsx'
 
 // Real brand logos with authentic brand colors
 const BRAND_LOGOS = [
@@ -107,20 +108,7 @@ export default function Landing() {
     <div className="min-h-screen bg-[#EFF2F0] text-slate-900 font-sans">
 
       {/* ── TOP NAV ── */}
-      <nav className="absolute top-0 left-0 right-0 z-50 py-6 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2 text-white">
-            <div className="w-8 h-8 rounded-full bg-[#C3F53C] text-[#005645] flex items-center justify-center font-black text-sm">S</div>
-            <span className="font-extrabold text-xl tracking-tight font-mono">scalely.ai</span>
-          </div>
-          <div className="hidden md:flex items-center gap-8 text-sm font-bold text-emerald-100/80">
-            <Link to="/" className="text-white hover:text-white transition-colors">Home</Link>
-            <Link to="/about" className="hover:text-white transition-colors">About</Link>
-            <Link to="/login" className="hover:text-white transition-colors">Platform</Link>
-          </div>
-          <Link to="/login" className="text-sm font-bold text-[#C3F53C] hover:text-white transition-colors">Sign In</Link>
-        </div>
-      </nav>
+      <PublicNavbar />
 
       {/* ── HERO: DARK EMERALD ARCH ── */}
       <section className="realize-hero bg-[#005645] pt-32 pb-20 md:pt-40 md:pb-28">

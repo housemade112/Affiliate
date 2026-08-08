@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.jsx'
 import { useToast } from '../context/ToastContext.jsx'
-import { Eye, EyeOff, ArrowRight, Zap, CheckCircle, Camera, CheckCircle2 } from 'lucide-react'
+import { Eye, EyeOff, ArrowRight, Zap, CheckCircle, Camera, CheckCircle2, X } from 'lucide-react'
 
 const PERKS = [
   'No trading experience required',
@@ -65,7 +65,10 @@ export default function Signup() {
     <div className="min-h-screen flex font-sans">
 
       {/* ── RIGHT (form) first on mobile, LEFT on desktop ── */}
-      <div className="flex-1 flex flex-col items-center justify-center px-6 sm:px-10 py-12 bg-[#FAFAFA]">
+      <div className="flex-1 flex flex-col items-center justify-center px-6 sm:px-10 py-12 bg-[#FAFAFA] relative">
+        <Link to="/" className="absolute top-6 right-6 p-2 rounded-full hover:bg-slate-200/60 transition-colors" title="Go to Home">
+          <X className="w-6 h-6 text-slate-400 hover:text-slate-700" />
+        </Link>
         {/* Mobile logo */}
         <div className="lg:hidden flex items-center gap-2 mb-8">
           <div className="w-8 h-8 rounded-xl bg-[#005645] flex items-center justify-center">

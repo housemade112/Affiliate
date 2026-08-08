@@ -8,6 +8,7 @@ import Layout from './components/Layout.jsx'
 import AdminLayout from './components/AdminLayout.jsx'
 import Landing from './pages/Landing.jsx'
 import About from './pages/About.jsx'
+import Contact from './pages/Contact.jsx'
 import Login from './pages/Login.jsx'
 import Signup from './pages/Signup.jsx'
 import Dashboard from './pages/Dashboard.jsx'
@@ -25,6 +26,7 @@ function AppRoutes() {
     <Routes>
       <Route path="/" element={<Landing />} />
       <Route path="/about" element={<About />} />
+      <Route path="/contact" element={<Contact />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       

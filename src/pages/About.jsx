@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { Star, CheckCircle2, Layout, Zap, Users, ArrowRight } from 'lucide-react'
+import PublicNavbar from '../components/PublicNavbar.jsx'
 
 const PARTNERS = [
   'ClickBank', 'ShareASale', 'CJ Affiliate', 'Amazon Associates',
@@ -16,6 +17,7 @@ const PARTNERS = [
 export default function About() {
   return (
     <div className="bg-[#0A0D14] min-h-screen text-slate-300 font-sans selection:bg-[#C3F53C]/30 pt-24 pb-32">
+      <PublicNavbar />
       
       {/* 1. HERO SECTION */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-32 grid lg:grid-cols-2 gap-16 items-center">
